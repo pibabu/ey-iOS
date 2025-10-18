@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +28,7 @@
 <body class="bg-terminal-bg text-terminal-text font-mono h-screen overflow-hidden">
   <div class="container mx-auto h-full flex flex-col">
     <!-- Status bar -->
-    <div class="p-2 border-b border-gray-800 flex items-center justify-between">
+    <div class="px-2 py-1 border-b border-gray-800 flex items-center justify-between text-sm">
       <div class="flex items-center space-x-2">
         <div id="status-indicator" class="w-2 h-2 rounded-full bg-terminal-error"></div>
         <span id="status-text" class="text-xs text-gray-500">Disconnected</span>
@@ -40,7 +39,7 @@
     </div>
     <!-- Chat history container -->
     <div id="chat-history" class="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
-<div class="text-gray-500 text-sm">
+      <div class="text-gray-500 text-sm">
         <span class="text-terminal-prompt">System:</span> Terminal chat initialized. Waiting for connection...
       </div>
     </div>
@@ -49,28 +48,35 @@
     <div class="p-4 border-t border-gray-800">
       <div class="flex items-center">
         <span class="text-terminal-prompt mr-2">></span>
-        <input 
+        <input
           id="user-input" 
           type="text" 
           class="bg-transparent flex-1 text-terminal-input outline-none caret-terminal-prompt" 
           autofocus 
           placeholder="_"
-          onkeydown="if(event.key === 'Enter') sendMessage()"
-          disabled
+          onkeydown="handleInputKey(event)"
         >
       </div>
     </div>
   </div>
   <style>
     .scrollbar-hide::-webkit-scrollbar {
-      width: 2px;
-      height: 2px;
+      width: 3px;
     }
     .scrollbar-hide::-webkit-scrollbar-thumb {
-      background: #4ade80;
+      background: rgba(74, 222, 128, 0.2);
+      border-radius: 10px;
+    }
+    .scrollbar-hide::-webkit-scrollbar-thumb:hover {
+      background: rgba(74, 222, 128, 0.3);
     }
     .scrollbar-hide::-webkit-scrollbar-track {
       background: transparent;
+    }
+    /* Firefox scrollbar */
+    .scrollbar-hide {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(74, 222, 128, 0.2) transparent;
     }
   </style>
 
@@ -78,13 +84,8 @@
     let ws = null;
     let currentAiMessage = null;
 
-    // Auto-focus input on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      const input = document.getElementById('user-input');
-      input.focus();
-    });
+    const WS_URL = `ws://${window.location.host}/ws`;
 
-const WS_URL = `ws://${window.location.host}/ws`;
     // Update connection status UI
     function updateStatus(connected) {
       const indicator = document.getElementById('status-indicator');
@@ -229,12 +230,22 @@ const WS_URL = `ws://${window.location.host}/ws`;
       ws.send(JSON.stringify({ message }));
       input.value = '';
     }
+
+    // Handle input key events
+    function handleInputKey(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
     // Auto-connect and focus input on page load
     window.addEventListener('load', () => {
-      connectWebSocket();
       const input = document.getElementById('user-input');
+      input.disabled = false;
       input.focus();
+      connectWebSocket();
     });
+
     // Reconnect and focus input on window focus if disconnected
     window.addEventListener('focus', () => {
       if (!ws || ws.readyState === WebSocket.CLOSED) {
@@ -243,6 +254,14 @@ const WS_URL = `ws://${window.location.host}/ws`;
       const input = document.getElementById('user-input');
       input.focus();
     });
-</script>
+
+    // Enable input when typing
+    document.addEventListener('keydown', (e) => {
+      const input = document.getElementById('user-input');
+      if (document.activeElement !== input && e.key.length === 1) {
+        input.focus();
+      }
+    });
+  </script>
 </body>
 </html>
