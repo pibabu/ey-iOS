@@ -152,7 +152,7 @@ cd "$APP_DIR"
 log "Starting uvicorn server"
 nohup "$VENV_DIR/bin/python" -m uvicorn app:app \
     --host 0.0.0.0 \
-    --port 8000 \
+    --port 80 \
     --log-level info \
     > /var/log/fastapi.log 2>&1 &
 
