@@ -90,23 +90,13 @@ log "Virtual environment activated: $(which python)"
 # Why: Install FastAPI, OpenAI SDK, and other requirements
 # This reads your requirements.txt
 
-log "Step 4: Installing Python dependencies"
-
-# Upgrade pip first
-# Why: Older pip versions can have issues with newer packages
-pip install --upgrade pip
-
-# Install requirements
-# Why: This installs fastapi, openai, uvicorn, websockets, etc.
+log "Step 4: Checking Python dependencies"
 if [ -f "requirements.txt" ]; then
-    log "Installing from requirements.txt"
-    pip install -r requirements.txt
-    log "Dependencies installed successfully"
+    log "Updating dependencies if needed"
+    pip install --upgrade --no-deps -r requirements.txt  # Only updates changed packages
 else
-    log "ERROR: requirements.txt not found!"
-    exit 1
+    log "No requirements.txt found, using AMI dependencies"
 fi
-
 # ==========================================
 # STEP 6: Stop Old Application Process
 # ==========================================
