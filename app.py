@@ -2,15 +2,18 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pathlib import Path
 from services.llm import process_message
-import uuid
-
 
 app = FastAPI()
 
 
 @app.get("/")
 async def serve_frontend():
+    """
+    Serves index.html at root URL
+    All frontend code (HTML, CSS, JS) in one file
+    """
     html_file = Path("index.html")
+
     if html_file.exists():
         return HTMLResponse(content=html_file.read_text())
     else:
@@ -21,25 +24,35 @@ async def serve_frontend():
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+    """
+    WebSocket endpoint for real-time chat
+    Delegates AI processing to service layer
+    """
     await websocket.accept()
-    
-    # Create unique session ID for this connection
-    session_id = str(uuid.uuid4())
-    
+    print("✓ Client connected")
+
     try:
         while True:
+            # Receive message from frontend
             data = await websocket.receive_text()
+            import json
+
             message_data = json.loads(data)
             user_message = message_data.get("message", "")
-            
-            # Pass session_id to track conversation
-            await process_message(user_message, websocket, session_id)
-    
+
+            print(f"📩 Received: {user_message}")
+
+            # Process message through AI service (streaming)
+            await process_message(user_message, websocket)
+
     except WebSocketDisconnect:
-        # Clean up this session's history when user disconnects
-        from services.llm import conversation_manager
-        conversation_manager.clear_session(session_id)
+        print("✗ Client disconnected")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        await websocket.close()
+
 
 @app.get("/health")
 async def health_check():
+    """Health check endpoint"""
     return {"status": "ok"}
