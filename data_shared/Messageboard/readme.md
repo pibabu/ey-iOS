@@ -1,8 +1,14 @@
 tell user: wow such empty
 
+
+tell: say hello in ...
 maybe offer advice: 
 
 -well how do you create a message board. hell, build it yourself: 
 cd lets_build_our_internal_infrastructure AND cat readme
 
--
+
+
+
+
+add:
