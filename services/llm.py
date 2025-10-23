@@ -3,7 +3,7 @@ import os
 import json
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
-from services.conversation_manager import BASH_TOOL_SCHEMA
+from services.conversation_manager import BASH_TOOL_SCHEMA, ConversationManager
 
 
 load_dotenv()
@@ -18,7 +18,12 @@ async def process_message(cm, websocket):
     messages = cm.get_messages()
     
     # Stream response from OpenAI (handles tools internally)
-    assistant_response = await _stream_openai_response(messages, cm, websocket)
+    assistant_response = await _stream_openai_response(cm, websocket)
+    #return await _stream_openai_response(
+    #cm,  # Pass the ConversationManager, not the messages list
+    #websocket, 
+    #depth + 1
+#)
     
     # Save assistant's final response to conversation history
     if assistant_response:
@@ -27,7 +32,11 @@ async def process_message(cm, websocket):
     await websocket.send_json({"type": "end"})
 
 
-async def _stream_openai_response(messages, cm, websocket, depth=0):
+
+async def _stream_openai_response(cm: ConversationManager, websocket, depth: int = 0):
+    messages = cm.get_messages()  # Get messages from the ConversationManager
+    
+    # ... rest of your logic
     
     # Prevent infinite loops
     if depth > 3:
@@ -119,7 +128,7 @@ async def _stream_openai_response(messages, cm, websocket, depth=0):
                     # Now messages = [..., tool_call, tool_result]
                     updated_messages = cm.get_messages()
                     return await _stream_openai_response(
-                        updated_messages, cm, websocket, depth + 1
+                        cm, websocket, depth + 1
                     )
         
         # No tool calls → return final text response
