@@ -3,7 +3,8 @@ import os
 import json
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
-from conversation_manager import BASH_TOOL_SCHEMA
+from services.conversation_manager import BASH_TOOL_SCHEMA
+
 
 load_dotenv()
 client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -129,3 +130,25 @@ async def _stream_openai_response(messages, cm, websocket, depth=0):
         await websocket.send_json({"type": "error", "message": error_msg})
         print(error_msg)
         return error_msg
+    
+    
+    
+    
+# Tool schema for OpenAI API
+BASH_TOOL_SCHEMA = {
+    "type": "function",
+    "function": {
+        "name": "bash_tool",
+        "description": "Execute bash commands inside the user's isolated Docker container. Use for file operations, system queries, or running scripts in /data.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "type": "string",
+                    "description": "The bash command to execute (e.g., 'ls -la /data' or 'python /data/script.py')"
+                }
+            },
+            "required": ["command"]
+        }
+    }
+}
