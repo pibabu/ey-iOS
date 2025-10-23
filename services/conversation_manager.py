@@ -12,7 +12,7 @@ class ConversationManager:
             stateful: If True, keeps messages in memory. If False, reloads each time.
         """
         self.user_id = user_id
-        self.container_name = f"user_{user_id}"
+        self.container_name = "david"          #  f"user_{user_id}"
         self.stateful = stateful
         self.messages: List[Dict] = []
         self.system_prompt: Optional[str] = None
@@ -36,7 +36,7 @@ class ConversationManager:
     def load_system_prompt(self) -> str:
    
         if self.system_prompt is None:  # Cache to avoid repeated reads
-            self.system_prompt = self._exec("cat /data/system_prompt.txt")
+            self.system_prompt = self._exec("cat /data_private/.readme.md")
         return self.system_prompt
     
     def add_user_message(self, content: str):
@@ -79,7 +79,7 @@ class ConversationManager:
             "content": result
         })
     
-    def get_messages(self) -> List[Dict]:
+    def get_messages(self) -> List[Dict]:    #  ✗ Error: 'list' object has no attribute 'get_messages'
 
         system_prompt = self.load_system_prompt()
         return [
