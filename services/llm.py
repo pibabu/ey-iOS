@@ -10,20 +10,7 @@ client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 async def process_message(cm, websocket):
-    """
-    Main entry point for processing a user message.
-    
-    What it does:
-    1. Signals client that response is starting
-    2. Gets full conversation history from ConversationManager
-    3. Streams OpenAI response (which may include tool calls)
-    4. Saves the final assistant response to history
-    5. Signals client that response is complete
-    
-    Why we save assistant response here:
-    - Tool calls are saved inside _stream_openai_response
-    - But the final text response needs to be saved after all tools finish
-    """
+
     await websocket.send_json({"type": "start"})
     
     # Get conversation: [system_prompt, user1, assistant1, user2, ...]
@@ -40,49 +27,10 @@ async def process_message(cm, websocket):
 
 
 async def _stream_openai_response(messages, cm, websocket, depth=0):
-    """
-    Stream OpenAI response and handle tool calls recursively.
     
-    CONVERSATION HISTORY TRACKING:
-    ================================
-    This function adds 3 types of messages to cm.messages:
-    
-    1. Tool Call (role="assistant", tool_calls=[...])
-       - When LLM wants to run bash command
-       - Added via cm.add_tool_call()
-    
-    2. Tool Result (role="tool", content="command output")
-       - The bash command's output
-       - Added via cm.add_tool_result()
-    
-    3. Final Text Response (role="assistant", content="text")
-       - The LLM's final answer after tool execution
-       - Returned to process_message() which saves it
-    
-    WHY RECURSIVE:
-    ==============
-    LLM may call bash_tool → we execute → LLM sees result → calls bash_tool again
-    We recurse with updated messages each time, building history:
-    
-    [user: "list files"] 
-      → [assistant: tool_call(ls)]
-      → [tool: "file1.txt file2.txt"]
-      → [assistant: tool_call(cat file1.txt)]
-      → [tool: "contents..."]
-      → [assistant: "Here are the files and contents..."]
-    
-    Args:
-        messages: Full conversation history for OpenAI API
-        cm: ConversationManager (where we save history)
-        websocket: To stream tokens to client
-        depth: Recursion depth (prevents infinite loops)
-    
-    Returns: 
-        Final assistant text response (or error message)
-    """
     # Prevent infinite loops
-    if depth > 5:
-        error_msg = "Error: Too many tool calls (max 5)"
+    if depth > 3:
+        error_msg = "Error: Too many tool calls (max 3)"
         await websocket.send_json({"type": "error", "message": error_msg})
         return error_msg
     
@@ -151,7 +99,7 @@ async def _stream_openai_response(messages, cm, websocket, depth=0):
                         "type": "tool_call",
                         "tool": "bash",
                         "command": command
-                    })
+                    })# thats for ui in frontend?get rid if thats the case
                     
                     # Execute in Docker container
                     output = cm.execute_bash_tool(command)
