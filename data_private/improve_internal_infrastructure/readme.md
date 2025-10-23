@@ -1,0 +1,1 @@
+cd .. from ~ and cat readme.md

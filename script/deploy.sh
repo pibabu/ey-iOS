@@ -19,6 +19,8 @@ echo "Creating .env file..." | tee -a $LOG_FILE
 cat > $APP_DIR/.env << EOF
 OPENAI_API_KEY=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
 EOF
+####  ehhhh
+
 
 # Secure the .env file (only owner can read/write)
 chmod 600 $APP_DIR/.env

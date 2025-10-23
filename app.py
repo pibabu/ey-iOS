@@ -25,7 +25,7 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     print("✓ Client connected")
 
-    user_id = ""  # Will become container "user_123" - adjust to match your actual container name #+#########
+    user_id = ""  # ##### <---
     cm = ConversationManager(user_id, stateful=True)
 
     try:
