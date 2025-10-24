@@ -36,7 +36,7 @@ if [ $# -ne 4 ]; then
 fi
 
 CONTAINER_NAME="$1"
-TAGS="$2"
+TAGS="$2"   ### tags sind nicht sichtbar innerhalb docker netzwerk!! -> da user hash reinpacken!!
 SEED_DATA_PATH="$3"
 USER_INFO_PATH="$4"
 

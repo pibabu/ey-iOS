@@ -8,3 +8,6 @@ frontend: display markdown!
             remove conncted disconnected stuff
         add name
 wie kann ich in prompts auskommentieren?
+
+
+docker compose: network enstellen, ports öffnen
