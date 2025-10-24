@@ -37,23 +37,8 @@ validate_name() {
 }
 
 usage() {
-    cat << 'EOF'
-Usage: ./create_user.sh <container_name> <user_tag>
-
-Create new user container with docker-compose, private data seeding, and shared registry.
-
-Arguments:
-  container_name    - Unique name for the container (alphanumeric, -, _)
-  user_tag          - User identifier tag (e.g., "john_doe" or "user123")
-
-Example:
-  ./create_user.sh my_container "John Doe - Developer"
-
-Directory Structure:
-  /data_private - User's private workspace (isolated per container)
-  /data_shared  - Shared data accessible to all containers
-
-EOF
+    echo "Usage: $0 <container_name> <user_tag>"
+    echo "Example: $0 user_alice development"
     exit 1
 }
 
@@ -76,12 +61,6 @@ PRIVATE_VOLUME="${CONTAINER_NAME}_private"
 # Create user-specific directory for docker-compose
 USER_DIR="./users/${CONTAINER_NAME}"
 mkdir -p "$USER_DIR"
-
-print_info "=============================================="
-print_info "Container Setup: $CONTAINER_NAME"
-print_info "User Tag: $USER_TAG"
-print_info "User Hash: $USER_HASH"
-print_info "=============================================="
 
 # Create shared network if it doesn't exist
 if ! docker network inspect "$NETWORK_NAME" &>/dev/null; then
@@ -107,31 +86,51 @@ else
     docker volume create "$PRIVATE_VOLUME" >/dev/null
 fi
 
-# Copy seed data to private volume
+# Copy seed data to private volume - IMPROVED VERSION
 print_info "Seeding private volume with data..."
-docker run --rm \
-  -v "$PRIVATE_VOLUME:/data_private" \
-  -v "$(realpath "$SEED_DATA_PATH"):/seed_source:ro" \
+SEED_RESULT=$(docker run --rm \
+  -v "$PRIVATE_VOLUME:/mnt/target" \
+  -v "$(realpath "$SEED_DATA_PATH"):/mnt/source:ro" \
   ubuntu:latest \
   bash -c "
+    set -e
     apt-get update -qq && apt-get install -y -qq rsync >/dev/null 2>&1
-    rsync -a --exclude='.venv' --exclude='.env' --exclude='__pycache__' \
-             --exclude='.git' --exclude='node_modules' --exclude='script/' \
-             /seed_source/ /data_private/
-    chown -R 1000:1000 /data_private
-  " 2>&1 | grep -E "(copying|sent|total)" || true
+    
+    echo 'Starting rsync...'
+    rsync -av --stats \
+      --exclude='.venv' \
+      --exclude='.env' \
+      --exclude='__pycache__' \
+      --exclude='.git' \
+      --exclude='node_modules' \
+      --exclude='script/' \
+      /mnt/source/ /mnt/target/
+    
+    echo 'Setting permissions...'
+    chown -R 1000:1000 /mnt/target
+    
+    echo 'Verifying copy...'
+    ls -la /mnt/target/ | head -20
+    echo 'Done'
+  " 2>&1)
 
-print_success "Data seeded to private volume"
+if echo "$SEED_RESULT" | grep -q "Done"; then
+    print_success "Data seeded to private volume"
+    echo "$SEED_RESULT" | grep -E "(files transferred|total size)"
+else
+    print_error "Data seeding may have failed. Check output:"
+    echo "$SEED_RESULT"
+fi
 
 # Seed shared volume if registry doesn't exist
 print_info "Checking shared volume registry..."
 docker run --rm \
-  -v "$SHARED_VOLUME:/data_shared" \
+  -v "$SHARED_VOLUME:/mnt/shared" \
   ubuntu:latest \
   bash -c "
     apt-get update -qq && apt-get install -y -qq jq >/dev/null 2>&1
-    mkdir -p /data_shared
-    REGISTRY='/data_shared/$REGISTRY_FILE'
+    mkdir -p /mnt/shared
+    REGISTRY='/mnt/shared/$REGISTRY_FILE'
     
     if [ ! -f \"\$REGISTRY\" ]; then
       echo '[]' > \"\$REGISTRY\"
@@ -142,13 +141,14 @@ docker run --rm \
 
 # Register container in shared registry with file locking
 print_info "Registering container in shared registry..."
-docker run --rm \
-  -v "$SHARED_VOLUME:/data_shared" \
+REGISTRY_RESULT=$(docker run --rm \
+  -v "$SHARED_VOLUME:/mnt/shared" \
   ubuntu:latest \
   bash -c "
+    set -e
     apt-get update -qq && apt-get install -y -qq jq >/dev/null 2>&1
-    REGISTRY='/data_shared/$REGISTRY_FILE'
-    LOCKFILE='/data_shared/$REGISTRY_LOCK'
+    REGISTRY='/mnt/shared/$REGISTRY_FILE'
+    LOCKFILE='/mnt/shared/$REGISTRY_LOCK'
     
     # Simple file-based locking
     RETRIES=0
@@ -160,13 +160,23 @@ docker run --rm \
     trap 'rmdir \"\$LOCKFILE\" 2>/dev/null || true' EXIT
     
     # Add new entry to JSON array
-    NEW_ENTRY='{\"container_name\":\"$CONTAINER_NAME\",\"user_tag\":\"$USER_TAG\",\"created\":\"$TIMESTAMP\"}'
+    NEW_ENTRY='{\"container_name\":\"$CONTAINER_NAME\",\"user_tag\":\"$USER_TAG\",\"user_hash\":\"$USER_HASH\",\"created\":\"$TIMESTAMP\"}'
     jq --argjson entry \"\$NEW_ENTRY\" '. += [\$entry]' \"\$REGISTRY\" > /tmp/registry_new.json
     mv /tmp/registry_new.json \"\$REGISTRY\"
-    echo 'Registry updated'
-  " 2>&1 | grep -E "(Registry|Created)" || true
+    echo 'SUCCESS: Registry updated'
+    
+    # Verify
+    echo 'Current registry entries:'
+    jq -r '.[] | \"  - \" + .container_name + \" (\" + .user_tag + \")\"' \"\$REGISTRY\"
+  " 2>&1)
 
-print_success "Container registered"
+if echo "$REGISTRY_RESULT" | grep -q "SUCCESS"; then
+    print_success "Container registered"
+    echo "$REGISTRY_RESULT" | grep -A 10 "Current registry"
+else
+    print_error "Registry update failed:"
+    echo "$REGISTRY_RESULT"
+fi
 
 # Copy Dockerfile to user directory
 print_info "Preparing docker-compose configuration..."
@@ -186,7 +196,7 @@ if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
     read -p "Remove and recreate? (yes/no): " confirm
     if [ "$confirm" = "yes" ]; then
         cd "$USER_DIR"
-        docker-compose down 2>/dev/null || true
+        docker compose down 2>/dev/null || docker-compose down 2>/dev/null || true
         cd - >/dev/null
     else
         print_error "Deployment aborted"
@@ -194,30 +204,50 @@ if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
     fi
 fi
 
-# Build and start container using docker-compose
-print_info "Building and starting container with docker-compose..."
+# Build and start container using docker compose
+print_info "Building and starting container with docker compose..."
 cd "$USER_DIR"
 
+# Try modern docker compose first, fall back to docker-compose
+if command -v docker &>/dev/null && docker compose version &>/dev/null; then
+    COMPOSE_CMD="docker compose"
+else
+    COMPOSE_CMD="docker-compose"
+fi
+
+print_info "Using: $COMPOSE_CMD"
+
 # Build the image
-docker-compose build --no-cache 2>&1 | grep -E "(Building|Successfully|Step)" || true
+$COMPOSE_CMD build --no-cache
 
 # Start the container
-docker-compose up -d
+$COMPOSE_CMD up -d
 
 cd - >/dev/null
 
 # Wait for container to be healthy
 print_info "Waiting for container to be ready..."
-sleep 2
+sleep 3
 
 if docker ps --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
     print_success "Container is running"
+    
+    # Verify volumes are mounted
+    print_info "Verifying volume mounts..."
+    docker exec "$CONTAINER_NAME" bash -c "
+      echo 'Private volume contents:'
+      ls -la /app/private/ | head -10
+      echo ''
+      echo 'Shared volume contents:'
+      ls -la /app/shared/ | head -10
+    "
 else
     print_error "Container failed to start"
+    print_error "Check logs with: cd $USER_DIR && $COMPOSE_CMD logs"
     exit 1
 fi
 
-# Add labels to the running container (docker-compose doesn't support all label types)
+# Add labels to the running container
 docker update --label-add "user_hash=$USER_HASH" \
               --label-add "user_tag=$USER_TAG" \
               --label-add "created=$TIMESTAMP" \
@@ -237,13 +267,13 @@ echo "💡 Quick Access:"
 echo "   docker exec -it $CONTAINER_NAME bash"
 echo ""
 echo "📂 Configuration: $USER_DIR"
-echo "📂 Private Data: /data_private (read-write)"
-echo "📂 Shared Data: /data_shared (read-only)"
+echo "📂 Private Data: /app/private (read-write)"
+echo "📂 Shared Data: /app/shared (read-only)"
 echo ""
 echo "🔧 Management Commands:"
 echo "   cd $USER_DIR"
-echo "   docker-compose logs -f      # View logs"
-echo "   docker-compose restart      # Restart container"
-echo "   docker-compose down         # Stop and remove"
+echo "   $COMPOSE_CMD logs -f      # View logs"
+echo "   $COMPOSE_CMD restart      # Restart container"
+echo "   $COMPOSE_CMD down         # Stop and remove"
 echo ""
 echo "=============================================="

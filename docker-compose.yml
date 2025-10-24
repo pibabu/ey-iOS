@@ -1,74 +1,70 @@
 services:
-  # Service name - will be used as the container name
   {{CONTAINER_NAME}}:
-    
     build: .
     container_name: "{{CONTAINER_NAME}}"
-    
     hostname: "{{CONTAINER_NAME}}"
     
-    working_dir: /data_private
+    # Working directory inside container - now under /app
+    working_dir: /app/private
     
+    # Volume mounts - now using /app prefix to avoid root conflicts
     volumes:
-      - "{{PRIVATE_VOLUME}}:/data_private"
-      - shared_data:/data_shared
+      - "{{PRIVATE_VOLUME}}:/app/private"
+      - shared_data:/app/shared:ro  # Read-only for shared data
     
-    restart: always
-
+    restart: unless-stopped
+    
     environment:
       - CONTAINER_NAME={{CONTAINER_NAME}}
       - TAGS={{TAGS}}
-
+      - PRIVATE_DATA_PATH=/app/private
+      - SHARED_DATA_PATH=/app/shared
+    
     labels:
       - "user.name={{CONTAINER_NAME}}"
       - "user.tags={{TAGS}}"
-      - "managed_by=spin_up_script"
+
     
+    # Resource limits
     deploy:
       resources:
         limits:
-          cpus: '1.0'      # Max 1 CPU core
-          memory: 512M      # Max 512 MB RAM
+          cpus: '1.0'
+          memory: 512M
         reservations:
-          cpus: '0.25'     # Guaranteed 0.25 CPU
-          memory: 128M      # Guaranteed 128 MB RAM
+          cpus: '0.25'
+          memory: 128M
     
     networks:
-      - user_network
+      - user_network 
     
-   
-    #   - "8080:8080"  # add!
-    #   - "5432:5432"  # Database
-   
+    # Uncomment ports as needed:
+    # ports:
+    #   - "8080:8080"
+    #   - "5432:5432"
+    
+    # Health check
     healthcheck:
-      test: ["CMD", "pgrep", "-f", "sleep infinity"]
+      test: ["CMD-SHELL", "test -d /app/private && test -d /app/shared"]
       interval: 30s
       timeout: 3s
       retries: 3
-      start_period: 5s
+      start_period: 10s
 
 ################################################################################
 # Networks
-# Why custom network? Enables container-to-container communication by name
 ################################################################################
 networks:
   user_network:
-    # Create network if it doesn't exist, or use existing one
-    # Why external: true? Network created by spin_up script, shared by all
     external: true
     name: user_shared_network
 
 ################################################################################
 # Volumes
-# Why declare volumes here? Makes them explicit and manageable
 ################################################################################
 volumes:
-  # Private volume - unique per container
   {{PRIVATE_VOLUME}}:
-    # External means Docker won't try to create it
-    # We create it in the spin_up script instead
     external: true
   
-  # Shared volume - same across all containers
   shared_data:
     external: true
