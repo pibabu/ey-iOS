@@ -1,70 +1,98 @@
-import subprocess
 import json
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Optional
 
+from services.bash_tool import execute_bash_command 
+
 
 class ConversationManager:
-    def __init__(self, user_id: str, stateful: bool = True):
-        self.user_id = user_id
-        self.container_name = self._find_container_by_hash(user_id)  # ← Find by label
+    """
+    Manage conversation state and execute commands asynchronously
+    inside a Docker container identified by its 'user_hash' label.
+    """
+
+    def __init__(self, user_hash: str, stateful: bool = True):
+        self.user_hash = user_hash
+        self.container_name = self._find_container_by_hash(user_hash)
         self.stateful = stateful
         self.messages: List[Dict] = []
         self.system_prompt: Optional[str] = None
-    
+
+    # ----------------------------------------------------------------------
+    # Docker container lookup
+    # ----------------------------------------------------------------------
     def _find_container_by_hash(self, user_hash: str) -> str:
-        """Find container by user_hash label, return container name/id."""
-        result = subprocess.run(
-            ["docker", "ps", "--filter", f"label=user_hash={user_hash}", 
-             "--format", "{{.Names}}"],
-            capture_output=True,
-            text=True,
-            timeout=5
-        )
+        """Find running container with a matching user_hash label."""
+        try:
+            result = subprocess.run(
+                [
+                    "docker", "ps",
+                    "--filter", f"label=user_hash={user_hash}",
+                    "--format", "{{.Names}}"
+                ],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+        except subprocess.TimeoutExpired:
+            raise RuntimeError("Timeout: could not query Docker for container label")
+
         container = result.stdout.strip()
         if not container:
-            raise ValueError(f"No container found for hash: {user_hash}")
+            raise ValueError(f"No active container found for user_hash: {user_hash}")
         return container
-        
-    def _exec(self, command: str) -> str:
-        
-        full_cmd = ["docker", "exec", self.container_name, "bash", "-c", command]
+
+    def container_exists(self) -> bool:
+        """Check if container is still running."""
         result = subprocess.run(
-            full_cmd, 
-            capture_output=True,  # Capture both stdout and stderr
-            text=True,           # Return strings, not bytes
-            timeout=30           # Prevent hanging commands
+            [
+                "docker", "ps",
+                "--filter", f"label=user_hash={self.user_hash}",
+                "--format", "{{.Names}}"
+            ],
+            capture_output=True,
+            text=True
         )
-        
-        # Return stdout if successful, stderr if failed
-        if result.returncode != 0:
-            return f"Error (exit {result.returncode}): {result.stderr.strip()}"
-        return result.stdout.strip()
-    
-    def load_system_prompt(self) -> str:
-   
-        if self.system_prompt is None:  # Cache to avoid repeated reads
-            self.system_prompt = self._exec("cat /data_private/.readme.md")
+        return bool(result.stdout.strip())
+
+    # ----------------------------------------------------------------------
+    # Async command execution
+    # ----------------------------------------------------------------------
+    async def _exec(self, command: str) -> str:
+        """Run a bash command asynchronously inside the user container."""
+        return await execute_bash_command(command, self.container_name)
+
+    async def execute_bash_tool(self, command: str) -> str:
+        """Execute user-supplied bash command safely inside the container."""
+
+        return await self._exec(command)
+
+    # ----------------------------------------------------------------------
+    # System prompt handling
+    # ----------------------------------------------------------------------
+    async def load_system_prompt(self) -> str:
+        """Load system prompt from container (cached after first read)."""
+        if self.system_prompt is None:
+            self.system_prompt = await self._exec("cat /data_private/.readme.md")
         return self.system_prompt
-    
+
+    async def get_messages(self) -> List[Dict]:
+        """Return system + user/assistant messages as a single list."""
+        system_prompt = await self.load_system_prompt()
+        return [{"role": "system", "content": system_prompt}] + self.messages
+
+    # ----------------------------------------------------------------------
+    # Conversation history
+    # ----------------------------------------------------------------------
     def add_user_message(self, content: str):
-        """Add user message to conversation history."""
-        self.messages.append({
-            "role": "user",
-            "content": content
-        })
-    
+        self.messages.append({"role": "user", "content": content})
+
     def add_assistant_message(self, content: str):
-        """Add assistant text response to conversation history."""
-        self.messages.append({
-            "role": "assistant",
-            "content": content
-        })
-    
+        self.messages.append({"role": "assistant", "content": content})
+
     def add_tool_call(self, tool_name: str, arguments: Dict, tool_call_id: str):
-        
-        # Add the assistant's tool call message
         self.messages.append({
             "role": "assistant",
             "content": None,
@@ -79,75 +107,87 @@ class ConversationManager:
         })
 
     def add_tool_result(self, tool_call_id: str, result: str):
-        # Add the tool's response message
         self.messages.append({
             "role": "tool",
             "tool_call_id": tool_call_id,
             "content": result
         })
-    
-    def get_messages(self) -> List[Dict]:    #  ✗ Error: 'list' object has no attribute 'get_messages'
 
-        system_prompt = self.load_system_prompt()
-        return [
-            {"role": "system", "content": system_prompt}
-        ] + self.messages
-    
-    def execute_bash_tool(self, command: str) -> str:
-
-        # Optional: Add command filtering here
-        # dangerous = ["rm -rf", ":(){ :|:& };:"]
-        # if any(d in command for d in dangerous):
-        #     return "Command rejected: potentially dangerous"
-        
-        return self._exec(command)
-    
+    # ----------------------------------------------------------------------
+    # Persistence
+    # ----------------------------------------------------------------------
     def save(self, conversation_dir: str = "/data/conversations"):
-
+        """Save conversation state as a JSON file inside the container."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"conv_{self.user_id}_{timestamp}.json"
-        
-        # Create temp file on host
+        filename = f"conv_{self.user_hash}_{timestamp}.json"
         tmpfile = f"/tmp/{filename}"
+
         with open(tmpfile, "w") as f:
             json.dump({
-                "user_id": self.user_id,
+                "user_hash": self.user_hash,
                 "timestamp": timestamp,
                 "messages": self.messages
             }, f, indent=2)
-        
+
         # Copy to container
-        self._exec(f"mkdir -p {conversation_dir}")
-        copy_cmd = ["docker", "cp", tmpfile, 
-                    f"{self.container_name}:{conversation_dir}/{filename}"]
-        subprocess.run(copy_cmd)
-        
-        # Cleanup temp file
-        Path(tmpfile).unlink()
-        
-    def reset(self):
+        subprocess.run(
+            ["docker", "cp", tmpfile, f"{self.container_name}:{conversation_dir}/{filename}"],
+            check=False
+        )
 
+        Path(tmpfile).unlink(missing_ok=True)
+
+    async def reset(self):
+        """Save current conversation, reset session inside the container."""
         self.save()
-        self._exec("bash /data/scripts/start_new_conversation.sh") ##???
+        await self._exec("bash /data/scripts/start_new_conversation.sh")
         self.messages = []
-        self.system_prompt = None  # Will reload on next get_messages()
+        self.system_prompt = None
 
 
-# Tool schema for OpenAI API
+# Tool schema for OpenAI integration
 BASH_TOOL_SCHEMA = {
     "type": "function",
     "function": {
         "name": "bash_tool",
-        "description": "Execute bash commands inside the user's isolated Docker container. Use for file operations, system queries, or running scripts in /data.",
+        "description": (
+            "Execute bash commands inside the user's Docker container. "
+            "Use for file operations, system queries, or running scripts in /data."
+        ),
         "parameters": {
             "type": "object",
             "properties": {
                 "command": {
                     "type": "string",
-                    "description": "The bash command to execute (e.g., 'ls -la /data' or 'python /data/script.py')"
+                    "description": "The bash command to execute (e.g. 'ls -la /data')."
                 }
             },
             "required": ["command"]
         }
     }
 }
+
+
+
+# we need other way of def reset similar to this:
+
+# When LLM calls tool  -> we dont call a tool, only tool call is bash_tool , we regex <<./scripts/new_conversation.sh>> 
+# tool_result = await manager.execute_bash_tool("bash /data/scripts/new_conv_script.sh")
+# manager.add_tool_result(tool_call_id, tool_result)
+
+# # After that, ConversationManager.messages = [] can be cleared if desired
+# manager.messages = []
+# If you want to ensure that every time this particular script is executed, you also clear the host-side history, you can adjust execute_bash_tool() like this:
+
+# python
+# Code kopieren
+# async def execute_bash_tool(self, command: str) -> str:
+#     """Execute bash command asynchronously in the user's container."""
+#     result = await self._exec(command)
+
+#     # If new conversation script was triggered, reset host-side state
+#     if "new_conv_script.sh" in command:
+#         self.messages = []
+#         self.system_prompt = None  # will reload on next message
+
+#     return result

@@ -42,7 +42,8 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
     print(f"✓ Client connected: {user_hash}")
 
     #user_id = ""  # ##### <---
-    cm = ConversationManager(user_hash, stateful=True)
+    #cm = ConversationManager(user_hash, stateful=True)
+    manager = ConversationManager(user_hash=user_hash)
 
     try:
         while True:
@@ -52,10 +53,10 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
             user_message = message_data.get("message", "")
 
             # Add user message using correct method
-            cm.add_user_message(user_message)
+            manager.add_user_message(user_message)
             
             # Process message with LLM (streams response via websocket)
-            await process_message(cm, websocket)
+            await process_message(manager, websocket)
             
             # Note: process_message handles streaming,
             # actual response tracking would need to be added
@@ -65,7 +66,7 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
     except Exception as e:
         print(f"✗ Error: {e}")
     finally:
-        cm.save()
+        manager.save()
         try:
             await websocket.close()
         except:
@@ -78,12 +79,12 @@ async def health_check():
     return {"status": "ok"}
 
 
-@app.post("/reset/{user_id}")
-async def reset_conversation(user_id: str):
+@app.post("/reset/{user_hash}")   ###change ??
+async def reset_conversation(user_hash: str):
 
     try:
-        cm = ConversationManager(user_id)
-        cm.reset()
-        return {"status": "success", "message": f"Conversation reset for user {user_id}"}
+        manager = ConversationManager(user_hash)
+        manager.reset()
+        return {"status": "success", "message": f"Conversation reset for user {user_hash}"}
     except Exception as e:
         return {"status": "error", "message": str(e)}

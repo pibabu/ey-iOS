@@ -11,7 +11,7 @@ NC='\033[0m'
 SHARED_VOLUME="shared_data"
 REGISTRY_FILE="container_registry.json"
 DEFAULT_IMAGE="ubuntu:latest"
-BASE_URL="app.com/ws"
+BASE_URL="ey-ios.com/ws"
 
 print_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
@@ -83,13 +83,12 @@ docker run --rm \
 
 print_success "Data copied"
 
-# Register in shared registry - ONLY name for "who's here"
+# Register container
 print_info "Registering..."
 ENTRY=$(cat <<EOF
 {
   "timestamp": "$TIMESTAMP",
   "container_name": "$CONTAINER_NAME",
-  "status": "active"
 }
 EOF
 )
@@ -117,8 +116,6 @@ print_info "Starting container..."
 docker run -d \
   --name "$CONTAINER_NAME" \
   --label user_hash="$USER_HASH" \
-  --label username="$USERNAME" \
-  --label password="$PASSWORD" \
   --restart unless-stopped \
   -v "$PRIVATE_VOLUME:/data_private" \
   -v "$SHARED_VOLUME:/data_shared" \
@@ -136,15 +133,8 @@ echo ""
 echo "📦 Container: $CONTAINER_NAME"
 echo "🔗 Access URL: https://$BASE_URL/$USER_HASH"
 echo ""
-echo "🔐 Credentials (stored in container labels):"
-echo "   Username: $USERNAME"
-echo "   Password: $PASSWORD"
 echo ""
 echo "💡 Quick Access:"
 echo "   docker exec -it $CONTAINER_NAME bash"
 echo ""
-echo "⚠️  SAVE THESE CREDENTIALS!"
-echo "   Password is NOT implemented in this script."
-echo "   You need to implement authentication at the"
-echo "   web gateway/proxy level using the hash + password."
 echo "=============================================="

@@ -36,7 +36,7 @@ async def process_message(cm, websocket):
 async def _stream_openai_response(cm: ConversationManager, websocket, depth: int = 0):
     messages = cm.get_messages()  # Get messages from the ConversationManager
     
-    # ... rest of your logic
+
     
     # Prevent infinite loops
     if depth > 3:

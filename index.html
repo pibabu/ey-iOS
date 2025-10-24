@@ -174,7 +174,10 @@
       appendMessage('system', 'Connecting to server...');
       
     
-      ws = new WebSocket(WS_URL);
+
+
+      const userHash = "your_user_hash_here"; // Label -> 
+      const ws = new WebSocket(`ws://127.0.0.1:8000/ws?user_hash=${userHash}`);
 
       ws.onopen = () => {
         clearTimeout(timeout1);

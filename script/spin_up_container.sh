@@ -48,7 +48,7 @@ usage
 fi
 
 CONTAINER_NAME="$1"
-TAGS="$2"
+TAGS="$2"     ###keine Tas -> LABELS!
 SEED_DATA_PATH="$3"
 
 # Validate seed data path exists

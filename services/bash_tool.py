@@ -1,13 +1,10 @@
-# mehr error handling und regex für andere tool calls, doppelte commands wie ls und cat in einem!
 import asyncio
 
-CONTAINER_NAME = "my_tool_container" #### set varalbe
-
-async def execute_bash_command(command: str) -> str:
- 
+async def execute_bash_command(command: str, container_name: str) -> str:
+    """Execute a bash command asynchronously inside a Docker container."""
     try:
         proc = await asyncio.create_subprocess_shell(
-            f"docker exec {CONTAINER_NAME} bash -c '{command}'",
+            f"docker exec {container_name} bash -c '{command}'",
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
         )
@@ -16,6 +13,3 @@ async def execute_bash_command(command: str) -> str:
         return output or "(no output)"
     except Exception as e:
         return f"Error executing command: {e}"
-
-
-
