@@ -2,6 +2,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from pathlib import Path
 import json
+import subprocess
 from services.llm import process_message
 from services.conversation_manager import ConversationManager, BASH_TOOL_SCHEMA
 
@@ -20,13 +21,28 @@ async def serve_frontend():
         )
 
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    print("✓ Client connected")
+def container_exists_by_hash(user_hash: str) -> bool:
+    """Check if container with user_hash label exists."""
+    result = subprocess.run(
+        ["docker", "ps", "--filter", f"label=user_hash={user_hash}", 
+         "--format", "{{.Names}}"],
+        capture_output=True,
+        text=True
+    )
+    return bool(result.stdout.strip())
 
-    user_id = ""  # ##### <---
-    cm = ConversationManager(user_id, stateful=True)
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket, user_hash: str):
+    # Validate by label, not name
+    if not container_exists_by_hash(user_hash):
+        await websocket.close(code=1008)
+        return
+    
+    await websocket.accept()
+    print(f"✓ Client connected: {user_hash}")
+
+    #user_id = ""  # ##### <---
+    cm = ConversationManager(user_hash, stateful=True)
 
     try:
         while True:

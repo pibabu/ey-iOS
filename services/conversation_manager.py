@@ -6,16 +6,26 @@ from typing import List, Dict, Optional
 
 
 class ConversationManager:
-    
     def __init__(self, user_id: str, stateful: bool = True):
-        """
-            stateful: If True, keeps messages in memory. If False, reloads each time.
-        """
         self.user_id = user_id
-        self.container_name = "david"          #  f"user_{user_id}"
+        self.container_name = self._find_container_by_hash(user_id)  # ← Find by label
         self.stateful = stateful
         self.messages: List[Dict] = []
         self.system_prompt: Optional[str] = None
+    
+    def _find_container_by_hash(self, user_hash: str) -> str:
+        """Find container by user_hash label, return container name/id."""
+        result = subprocess.run(
+            ["docker", "ps", "--filter", f"label=user_hash={user_hash}", 
+             "--format", "{{.Names}}"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        container = result.stdout.strip()
+        if not container:
+            raise ValueError(f"No container found for hash: {user_hash}")
+        return container
         
     def _exec(self, command: str) -> str:
         

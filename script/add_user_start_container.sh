@@ -11,6 +11,7 @@ NC='\033[0m'
 SHARED_VOLUME="shared_data"
 REGISTRY_FILE="container_registry.json"
 DEFAULT_IMAGE="ubuntu:latest"
+BASE_URL="app.com/ws"
 
 print_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
@@ -22,111 +23,73 @@ generate_password() {
 }
 
 generate_hash() {
-    echo -n "$1" | sha256sum | cut -d' ' -f1 | cut -c1-16
+    openssl rand -hex 16
 }
 
 usage() {
-    echo "Usage: $0 <container_name> <tags> <seed_data_path> <user_info_path>"
+    echo "Usage: $0 <container_name> <seed_data_path> <user_info_path>"
     exit 1
 }
 
-if [ $# -ne 4 ]; then
-    print_error "Invalid number of arguments"
-    usage
-fi
+[ $# -ne 3 ] && { print_error "Invalid arguments"; usage; }
 
 CONTAINER_NAME="$1"
-TAGS="$2"   ### tags sind nicht sichtbar innerhalb docker netzwerk!! -> da user hash reinpacken!!
-SEED_DATA_PATH="$3"
-USER_INFO_PATH="$4"
+SEED_DATA_PATH="$2"
+USER_INFO_PATH="$3"
 
-if [ ! -d "$SEED_DATA_PATH" ]; then
-    print_error "Seed data path '$SEED_DATA_PATH' does not exist"
-    exit 1
-fi
-
-if [ ! -f "$USER_INFO_PATH" ]; then
-    print_error "User info file '$USER_INFO_PATH' does not exist"
-    exit 1
-fi
+[ ! -d "$SEED_DATA_PATH" ] && { print_error "Seed data path not found"; exit 1; }
+[ ! -f "$USER_INFO_PATH" ] && { print_error "User info file not found"; exit 1; }
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-UNIQUE_HASH=$(generate_hash "${CONTAINER_NAME}${TIMESTAMP}")
+USER_HASH=$(generate_hash)
 USERNAME="${CONTAINER_NAME}"
 PASSWORD=$(generate_password)
 
 print_info "=============================================="
 print_info "Container Setup: $CONTAINER_NAME"
-print_info "Tags: $TAGS"
 print_info "=============================================="
 
-# Step 1: Shared volume
-print_info "Step 1: Checking shared volume..."
-if ! docker volume inspect "$SHARED_VOLUME" &>/dev/null; then
-    docker volume create "$SHARED_VOLUME"
-    print_success "Shared volume created"
-else
-    print_success "Shared volume exists"
-fi
+# Ensure shared volume exists
+docker volume inspect "$SHARED_VOLUME" &>/dev/null || docker volume create "$SHARED_VOLUME" >/dev/null
 
-# Step 2: Private volume
-print_info "Step 2: Setting up private volume..."
+# Setup private volume
 PRIVATE_VOLUME="${CONTAINER_NAME}_private"
-
 if docker volume inspect "$PRIVATE_VOLUME" &>/dev/null; then
-    print_warning "Volume '$PRIVATE_VOLUME' exists"
-    read -p "Delete and recreate? (yes/no): " confirm
-    if [ "$confirm" = "yes" ]; then
-        docker volume rm "$PRIVATE_VOLUME"
-        docker volume create "$PRIVATE_VOLUME"
-        print_success "Volume recreated"
-    else
-        print_warning "Using existing volume"
-    fi
-else
-    docker volume create "$PRIVATE_VOLUME"
-    print_success "Private volume created"
+    print_warning "Volume exists"
+    read -p "Recreate? (yes/no): " confirm
+    [ "$confirm" = "yes" ] && docker volume rm "$PRIVATE_VOLUME" >/dev/null
 fi
+docker volume create "$PRIVATE_VOLUME" >/dev/null
 
-# Step 3: Copy seed data
-print_info "Step 3: Copying seed data..."
+# Copy seed data
+print_info "Copying seed data..."
 docker run --rm \
   -v "$PRIVATE_VOLUME:/data_private" \
   -v "$(realpath "$SEED_DATA_PATH"):/seed_source:ro" \
   "$DEFAULT_IMAGE" \
   bash -c "
-    apt-get update -qq && apt-get install -y -qq rsync > /dev/null 2>&1
+    apt-get update -qq && apt-get install -y -qq rsync >/dev/null 2>&1
     rsync -a --exclude='.venv' --exclude='.env' --exclude='__pycache__' \
              --exclude='.git' --exclude='node_modules' /seed_source/ /data_private/
     chown -R 1000:1000 /data_private
-    find /data_private -type f | wc -l
-  "
-print_success "Seed data copied"
+  " >/dev/null 2>&1
 
-# Step 4: Copy user info
-print_info "Step 4: Adding user info..."
+# Copy user info
 docker run --rm \
   -v "$PRIVATE_VOLUME:/data_private" \
   -v "$(realpath "$USER_INFO_PATH"):/user_info_source:ro" \
   "$DEFAULT_IMAGE" \
-  bash -c "
-    mkdir -p /data_private/own
-    cp /user_info_source /data_private/own/user_info.md
-    chown -R 1000:1000 /data_private/own
-  "
-print_success "User info added"
+  bash -c "mkdir -p /data_private/own && cp /user_info_source /data_private/own/user_info.md" >/dev/null 2>&1
 
-# Step 5: Register in shared registry
-print_info "Step 5: Registering container..."
+print_success "Data copied"
+
+# Register in shared registry - ONLY name for "who's here"
+print_info "Registering..."
 ENTRY=$(cat <<EOF
 {
   "timestamp": "$TIMESTAMP",
   "container_name": "$CONTAINER_NAME",
-  "tags": "$TAGS",
-  "private_volume": "$PRIVATE_VOLUME", ##whyy??
-  "unique_hash": "$UNIQUE_HASH",   ####Why? thats priv data
-  "username": "$USERNAME",
-  "status": "active" ###just nanme and tag
+  "status": "active"
 }
 EOF
 )
@@ -137,34 +100,31 @@ docker run --rm \
   bash -c "
     mkdir -p /data_shared
     REGISTRY='/data_shared/$REGISTRY_FILE'
-    if [ ! -f \"\$REGISTRY\" ]; then
-      echo '[]' > \"\$REGISTRY\"
-    fi
+    [ ! -f \"\$REGISTRY\" ] && echo '[]' > \"\$REGISTRY\"
     echo '$ENTRY' >> \"\$REGISTRY\"
-  "
-print_success "Container registered"
+  " >/dev/null 2>&1
 
-# Step 6: Start container
-print_info "Step 6: Starting container..."
+# Remove existing container if present
 if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
     print_warning "Container exists"
-    read -p "Remove and recreate? (yes/no): " confirm
-    if [ "$confirm" = "yes" ]; then
-        docker rm -f "$CONTAINER_NAME"
-    else
-        print_error "Cannot proceed. Exiting."
-        exit 1
-    fi
+    read -p "Remove? (yes/no): " confirm
+    [ "$confirm" != "yes" ] && { print_error "Aborted"; exit 1; }
+    docker rm -f "$CONTAINER_NAME" >/dev/null
 fi
 
+# Start container with hash and credentials as labels
+print_info "Starting container..."
 docker run -d \
   --name "$CONTAINER_NAME" \
+  --label user_hash="$USER_HASH" \
+  --label username="$USERNAME" \
+  --label password="$PASSWORD" \
   --restart unless-stopped \
   -v "$PRIVATE_VOLUME:/data_private" \
   -v "$SHARED_VOLUME:/data_shared" \
   --hostname "$CONTAINER_NAME" \
   "$DEFAULT_IMAGE" \
-  tail -f /dev/null
+  tail -f /dev/null >/dev/null
 
 print_success "Container started"
 
@@ -173,27 +133,18 @@ echo "=============================================="
 print_success "SETUP COMPLETE"
 echo "=============================================="
 echo ""
-echo "📦 Container Details:"
-echo "   Name:           $CONTAINER_NAME"
-echo "   Status:         Running"
-echo "   Private Volume: $PRIVATE_VOLUME"
-echo "   Shared Volume:  $SHARED_VOLUME"
+echo "📦 Container: $CONTAINER_NAME"
+echo "🔗 Access URL: https://$BASE_URL/$USER_HASH"
 echo ""
-echo "🔐 Credentials:"
-echo "   Username:       $USERNAME"
-echo "   Password:       $PASSWORD"
-echo "   Unique Hash:    $UNIQUE_HASH"
+echo "🔐 Credentials (stored in container labels):"
+echo "   Username: $USERNAME"
+echo "   Password: $PASSWORD"
 echo ""
-echo "📂 Mounted Volumes:"
-echo "   /data_private  -> Container-specific data"
-echo "   /data_shared   -> Shared across all containers"
-echo ""
-echo "🏷️  Tags: $TAGS"
-echo ""
-echo "💡 Next Steps:"
-echo "   - Access:  docker exec -it $CONTAINER_NAME bash"
-echo "   - Logs:    docker logs $CONTAINER_NAME"
-echo "   - Stop:    docker stop $CONTAINER_NAME"
+echo "💡 Quick Access:"
+echo "   docker exec -it $CONTAINER_NAME bash"
 echo ""
 echo "⚠️  SAVE THESE CREDENTIALS!"
+echo "   Password is NOT implemented in this script."
+echo "   You need to implement authentication at the"
+echo "   web gateway/proxy level using the hash + password."
 echo "=============================================="
