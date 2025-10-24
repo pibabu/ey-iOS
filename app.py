@@ -5,8 +5,17 @@ import json
 import subprocess
 from services.llm import process_message
 from services.conversation_manager import ConversationManager, BASH_TOOL_SCHEMA
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, specify your domains: ["https://yourdomain.com"]
+    allow_credentials=True,
+    allow_methods=["*"],  # Or specify: ["GET", "POST", "PUT", "DELETE"]
+    allow_headers=["*"],  # Or specify headers you need
+)
 
 
 @app.get("/")

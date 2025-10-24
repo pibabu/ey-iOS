@@ -36,20 +36,10 @@ services:
     networks:
       - user_network
     
-    # Port mapping (if needed)
-    # Format: host_port:container_port
-    # Uncomment if your container needs to expose services:
-    # ports:
-    #   - "8080:8080"  # Web server
+   
+    #   - "8080:8080"  # add!
     #   - "5432:5432"  # Database
-    
-    # Command override (optional)
-    # Default is 'sleep infinity' to keep container alive
-    # Uncomment to run a different command:
-    # command: ["python", "app.py"]
-    
-    # Health check (optional but recommended)
-    # Why healthcheck? Docker can monitor if container is functioning
+   
     healthcheck:
       test: ["CMD", "pgrep", "-f", "sleep infinity"]
       interval: 30s
@@ -82,31 +72,3 @@ volumes:
   # Shared volume - same across all containers
   shared_data:
     external: true
-
-################################################################################
-# Additional Configuration Examples
-################################################################################
-
-# Example: Container that needs internet access disabled
-#   services:
-#     isolated_container:
-#       network_mode: none  # No network access at all
-
-# Example: Container with custom DNS
-#   services:
-#     custom_dns_container:
-#       dns:
-#         - 8.8.8.8
-#         - 1.1.1.1
-
-# Example: Container with specific user
-#   services:
-#     specific_user_container:
-#       user: "1000:1000"  # Run as UID 1000
-
-# Example: Container with capabilities
-#   services:
-#     privileged_container:
-#       cap_add:
-#         - NET_ADMIN  # For network operations
-#         - SYS_ADMIN  # For system operations

@@ -26,6 +26,13 @@ usage() {
     cat << 'EOF'
 Usage: ./deploy.sh <container_name> <user_tag>
 
+create new user with invitation link and seed data  we need to seed shared as well
+also;st:/# ls
+bin   data_private  dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  data_shared   etc  lib   media  opt  root  sbin  sys  usr
+thats not what we want....we want root with 
+
+
 Arguments:
   container_name    - Unique name for the container
   user_tag          - User identifier tag (e.g., "john_doe" or "user123")
@@ -82,14 +89,12 @@ docker run --rm \
 
 print_success "Data copied to private volume"
 
-# Register container in shared registry
+# Register container in shared registry, never userhash
 print_info "Registering container..."
 ENTRY=$(cat <<EOF
 {
   "container_name": "$CONTAINER_NAME",
-  "user_tag": "$USER_TAG",
-  "user_hash": "$USER_HASH"
-}
+  "user_tag": "$USER_TAG"}
 EOF
 )
 

@@ -13,3 +13,4 @@ async def execute_bash_command(command: str, container_name: str) -> str:
         return output or "(no output)"
     except Exception as e:
         return f"Error executing command: {e}"
+    
