@@ -11,19 +11,10 @@ client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 async def process_message(cm, websocket):
-
     await websocket.send_json({"type": "start"})
-    
-    # Get conversation: [system_prompt, user1, assistant1, user2, ...]
-    messages = cm.get_messages()
     
     # Stream response from OpenAI (handles tools internally)
     assistant_response = await _stream_openai_response(cm, websocket)
-    #return await _stream_openai_response(
-    #cm,  # Pass the ConversationManager, not the messages list
-    #websocket, 
-    #depth + 1
-#)
     
     # Save assistant's final response to conversation history
     if assistant_response:
@@ -32,11 +23,9 @@ async def process_message(cm, websocket):
     await websocket.send_json({"type": "end"})
 
 
-
 async def _stream_openai_response(cm: ConversationManager, websocket, depth: int = 0):
-    messages = cm.get_messages()  # Get messages from the ConversationManager
-    
-
+    # FIX: Await the async method
+    messages = await cm.get_messages()
     
     # Prevent infinite loops
     if depth > 3:
@@ -49,14 +38,14 @@ async def _stream_openai_response(cm: ConversationManager, websocket, depth: int
         stream = await client.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages,
-            tools=[BASH_TOOL_SCHEMA],  # Tell LLM it can call bash_tool
+            tools=[BASH_TOOL_SCHEMA],
             stream=True,
             temperature=0.7,
         )
         
         # Accumulate streamed response
-        full_content = ""           # Text response
-        tool_calls_buffer = {}      # Tool calls (streamed in chunks)
+        full_content = ""
+        tool_calls_buffer = {}
         
         # Process each chunk from OpenAI
         async for chunk in stream:
@@ -79,7 +68,7 @@ async def _stream_openai_response(cm: ConversationManager, websocket, depth: int
                             "arguments": ""
                         }
                     
-                    # Accumulate tool call data (streamed piece by piece)
+                    # Accumulate tool call data
                     if tool_call_chunk.id:
                         tool_calls_buffer[idx]["id"] = tool_call_chunk.id
                     if tool_call_chunk.function.name:
@@ -109,10 +98,10 @@ async def _stream_openai_response(cm: ConversationManager, websocket, depth: int
                         "type": "tool_call",
                         "tool": "bash",
                         "command": command
-                    })# thats for ui in frontend?get rid if thats the case
+                    })
                     
-                    # Execute in Docker container
-                    output = cm.execute_bash_tool(command)
+                    # FIX: Await the async method
+                    output = await cm.execute_bash_tool(command)
                     
                     # SAVE TO HISTORY: Tool call + result
                     cm.add_tool_call("bash_tool", args, tool_call["id"])
@@ -125,7 +114,6 @@ async def _stream_openai_response(cm: ConversationManager, websocket, depth: int
                     })
                     
                     # RECURSE: Send updated conversation back to LLM
-                    # Now messages = [..., tool_call, tool_result]
                     return await _stream_openai_response(
                         cm, websocket, depth + 1
                     )
@@ -138,25 +126,3 @@ async def _stream_openai_response(cm: ConversationManager, websocket, depth: int
         await websocket.send_json({"type": "error", "message": error_msg})
         print(error_msg)
         return error_msg
-    
-    
-    
-    
-# Tool schema for OpenAI API
-BASH_TOOL_SCHEMA = {
-    "type": "function",
-    "function": {
-        "name": "bash_tool",
-        "description": "Execute bash commands inside the user's isolated Docker container. Use for file operations, system queries, or running scripts in /data.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "command": {
-                    "type": "string",
-                    "description": "The bash command to execute (e.g., 'ls -la /data' or 'python /data/script.py')"
-                }
-            },
-            "required": ["command"]
-        }
-    }
-}

@@ -176,8 +176,14 @@
     
 
 
-      const userHash = "your_user_hash_here"; // Label -> 
-      const ws = new WebSocket(`ws://127.0.0.1:8000/ws?user_hash=${userHash}`);
+      const urlParams = new URLSearchParams(window.location.search);
+      const userHash = urlParams.get('hash');
+      if (!userHash) {
+        alert('No user hash provided! Add ?hash=YOUR_HASH to URL');
+      } else {
+        ws = new WebSocket(`ws://127.0.0.1:8000/ws/${userHash}`);
+      }
+    
 
       ws.onopen = () => {
         clearTimeout(timeout1);

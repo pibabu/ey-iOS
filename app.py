@@ -31,12 +31,19 @@ def container_exists_by_hash(user_hash: str) -> bool:
     )
     return bool(result.stdout.strip())
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, user_hash: str):
-    # Validate by label, not name
+
+@app.websocket("/ws/{user_hash}")
+async def websocket_endpoint(
+    websocket: WebSocket, 
+    user_hash: str  # From URL path
+):
+    print(f"DEBUG: WebSocket connection attempt for user_hash={user_hash}")
+    
     if not container_exists_by_hash(user_hash):
-        await websocket.close(code=1008)
+        print(f"ERROR: No container found for user_hash={user_hash}")
+        await websocket.close(code=1008, reason="Container not found")
         return
+    
     
     await websocket.accept()
     print(f"✓ Client connected: {user_hash}")

@@ -11,7 +11,8 @@ NC='\033[0m'
 SHARED_VOLUME="shared_data"
 REGISTRY_FILE="container_registry.json"
 DEFAULT_IMAGE="ubuntu:latest"
-BASE_URL="ey-ios.com/ws"
+BASE_URL="http://127.0.0.1:8000/"
+#"ey-ios.com/ws" /ws??
 
 print_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 print_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
@@ -43,7 +44,7 @@ USER_INFO_PATH="$3"
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 USER_HASH=$(generate_hash)
 USERNAME="${CONTAINER_NAME}"
-PASSWORD=$(generate_password)
+#PASSWORD=$(generate_password)
 
 print_info "=============================================="
 print_info "Container Setup: $CONTAINER_NAME"
@@ -79,7 +80,7 @@ docker run --rm \
   -v "$PRIVATE_VOLUME:/data_private" \
   -v "$(realpath "$USER_INFO_PATH"):/user_info_source:ro" \
   "$DEFAULT_IMAGE" \
-  bash -c "mkdir -p /data_private/own && cp /user_info_source /data_private/own/user_info.md" >/dev/null 2>&1
+  bash -c "mkdir -p /data_private/own && cp /user_info_source /data_private/own/user_info.md" >/dev/null 2>&1 # warum liegt dir own in root? es liegt nicht in data_private
 
 print_success "Data copied"
 
