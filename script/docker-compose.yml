@@ -27,6 +27,7 @@ services:
     labels:
       - "user.name={{CONTAINER_NAME}}"
       - "user.tags={{TAGS}}"
+      - "user_hash={{USER_HASH}}"
     
     
     networks:
