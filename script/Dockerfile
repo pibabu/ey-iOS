@@ -24,5 +24,5 @@ USER 1000:1000
 # Set working directory
 WORKDIR /app/private
 
-# Keep container running
+# Keep container running 
 CMD ["sleep", "infinity"]
