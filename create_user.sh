@@ -160,7 +160,7 @@ REGISTRY_RESULT=$(docker run --rm \
     trap 'rmdir \"\$LOCKFILE\" 2>/dev/null || true' EXIT
     
     # Add new entry to JSON array
-    NEW_ENTRY='{\"container_name\":\"$CONTAINER_NAME\",\"user_tag\":\"$USER_TAG\",\"user_hash\":\"$USER_HASH\",\"created\":\"$TIMESTAMP\"}'
+    NEW_ENTRY='{\"container_name\":\"$CONTAINER_NAME\",\"user_tag\":\"$USER_TAG\",\"created\":\"$TIMESTAMP\"}'
     jq --argjson entry \"\$NEW_ENTRY\" '. += [\$entry]' \"\$REGISTRY\" > /tmp/registry_new.json
     mv /tmp/registry_new.json \"\$REGISTRY\"
     echo 'SUCCESS: Registry updated'

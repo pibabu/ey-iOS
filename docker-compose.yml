@@ -1,29 +1,32 @@
 services:
   {{CONTAINER_NAME}}:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: "{{CONTAINER_NAME}}"
     hostname: "{{CONTAINER_NAME}}"
     
-    # Working directory inside container - now under /app
+    # Start in private data directory
     working_dir: /app/private
     
-    # Volume mounts - now using /app prefix to avoid root conflicts
+    # Volume mounts - shared is now read-write
     volumes:
       - "{{PRIVATE_VOLUME}}:/app/private"
-      - shared_data:/app/shared:ro  # Read-only for shared data
+      - shared_data:/app/shared:rw
     
     restart: unless-stopped
     
+    # Environment variables available inside container
     environment:
       - CONTAINER_NAME={{CONTAINER_NAME}}
       - TAGS={{TAGS}}
       - PRIVATE_DATA_PATH=/app/private
       - SHARED_DATA_PATH=/app/shared
     
+    # Labels for container metadata
     labels:
       - "user.name={{CONTAINER_NAME}}"
       - "user.tags={{TAGS}}"
-
     
     # Resource limits
     deploy:
@@ -36,12 +39,7 @@ services:
           memory: 128M
     
     networks:
-      - user_network 
-    
-    # Uncomment ports as needed:
-    # ports:
-    #   - "8080:8080"
-    #   - "5432:5432"
+      - user_network
     
     # Health check
     healthcheck:
@@ -51,17 +49,11 @@ services:
       retries: 3
       start_period: 10s
 
-################################################################################
-# Networks
-################################################################################
 networks:
   user_network:
     external: true
     name: user_shared_network
 
-################################################################################
-# Volumes
-################################################################################
 volumes:
   {{PRIVATE_VOLUME}}:
     external: true
