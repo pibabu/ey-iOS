@@ -216,8 +216,10 @@ else
     exit 1
 fi
 
-# Add labels
-docker update --label-add "user_tag=$USER_TAG" \
+
+
+              docker update --label-add "user_tag=$USER_TAG" \
+              --label-add "user_hash=$USER_HASH" \
               --label-add "created=$TIMESTAMP" \
               "$CONTAINER_NAME" 2>/dev/null || true
 
