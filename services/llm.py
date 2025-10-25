@@ -93,7 +93,7 @@ async def _stream_openai_response(cm: ConversationManager, websocket, depth: int
                     args = json.loads(tool_call["arguments"])
                     command = args["command"]
                     
-                    # Notify client we're running a command
+                    # Notify client we're running a command  ##überflüssig?
                     await websocket.send_json({
                         "type": "tool_call",
                         "tool": "bash",

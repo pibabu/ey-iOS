@@ -80,7 +80,7 @@ fi
 # Setup private volume
 if docker volume inspect "$PRIVATE_VOLUME" &>/dev/null; then
     print_warning "Volume '$PRIVATE_VOLUME' already exists"
-    read -p "Recreate? (yes/no): " confirm
+    read -p "Recreate private volume? (yes/no): " confirm
     if [ "$confirm" = "yes" ]; then
         docker volume rm "$PRIVATE_VOLUME" >/dev/null
         docker volume create "$PRIVATE_VOLUME" >/dev/null
@@ -100,24 +100,40 @@ if [ -d "$SEED_DATA_PRIVATE" ]; then
     print_success "Private data seeded"
 fi
 
-# Seed shared volume (one-time) ####ask in cli if override!
+# Seed shared volume with CLI prompt
 if [ -d "$SEED_DATA_SHARED" ]; then
     IS_EMPTY=$(docker run --rm -v "$SHARED_VOLUME:/mnt/shared" ubuntu:latest bash -c "[ -z \"\$(ls -A /mnt/shared 2>/dev/null)\" ] && echo 'yes' || echo 'no'")
     
     if [ "$IS_EMPTY" = "yes" ]; then
-        print_info "Seeding shared volume (first time)..."
+        print_info "Shared volume is empty. Seeding with data from: $SEED_DATA_SHARED"
+        SHOULD_SEED="yes"
+    else
+        print_warning "Shared volume already contains data!"
+        echo ""
+        echo "Current files in shared volume:"
+        docker run --rm -v "$SHARED_VOLUME:/mnt/shared" ubuntu:latest ls -lh /mnt/shared 2>/dev/null | tail -n +2 || echo "  (unable to list)"
+        echo ""
+        read -p "Overwrite shared volume with fresh data? (yes/no): " SHOULD_SEED
+    fi
+    
+    if [ "$SHOULD_SEED" = "yes" ]; then
+        print_info "Clearing and reseeding shared volume..."
         docker run --rm \
           -v "$SHARED_VOLUME:/mnt/target" \
           -v "$SEED_DATA_SHARED:/mnt/source:ro" \
           ubuntu:latest \
-          bash -c "cp -r /mnt/source/* /mnt/target/ 2>/dev/null || true; chown -R 1000:1000 /mnt/target" 2>&1 | grep -v "debconf" || true
+          bash -c "
+            rm -rf /mnt/target/* /mnt/target/.*  2>/dev/null || true
+            cp -r /mnt/source/* /mnt/target/ 2>/dev/null || true
+            chown -R 1000:1000 /mnt/target
+          " 2>&1 | grep -v "debconf" || true
         print_success "Shared data seeded"
     else
-        print_info "Shared volume already has data, skipping seed"
+        print_info "Keeping existing shared volume data"
     fi
 fi
 
-# Initialize registry
+# Initialize registry (always ensure it exists)
 print_info "Checking shared volume registry..."
 docker run --rm \
   -v "$SHARED_VOLUME:/mnt/shared" \
@@ -180,7 +196,6 @@ if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
     fi
 fi
 
-
 # Build and start container
 print_info "Building and starting container..."
 
@@ -216,9 +231,6 @@ else
     print_error "Check logs: cd $USER_DIR && docker-compose logs"
     exit 1
 fi
-
-
-
 
 echo ""
 echo "=============================================="
