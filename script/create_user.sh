@@ -217,11 +217,13 @@ else
 fi
 
 
-
-              docker update --label-add "user_tag=$USER_TAG" \
+sleep 2
+docker update --label-add "user_tag=$USER_TAG" \
               --label-add "user_hash=$USER_HASH" \
               --label-add "created=$TIMESTAMP" \
-              "$CONTAINER_NAME" 2>/dev/null || true
+              "$CONTAINER_NAME"
+
+
 
 echo ""
 echo "=============================================="
