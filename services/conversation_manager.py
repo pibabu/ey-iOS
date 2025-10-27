@@ -75,7 +75,7 @@ class ConversationManager:
     async def load_system_prompt(self) -> str:
         """Load system prompt from container (cached after first read)."""
         if self.system_prompt is None:
-            self.system_prompt = await self._exec("cat /data_private/.readme.md")# thats the right path, didnt work tho
+            self.system_prompt = await self._exec("cat /data_private/readme.md")
         return self.system_prompt
 
     async def get_messages(self) -> List[Dict]:
@@ -142,7 +142,7 @@ class ConversationManager:
         self.save()
         await self._exec("bash /data/scripts/start_new_conversation.sh") # !!!! endpoint bauen
         self.messages = []
-        self.system_prompt = None # set to privdata /.readme.md
+        self.system_prompt = None 
 
 
 # Tool schema for OpenAI integration
