@@ -252,3 +252,4 @@ echo ""
 echo ""
 echo "=============================================="
 
+### change...no user dir on source with dockerfile etc. logs should be sorted by name only, not numbers or date
