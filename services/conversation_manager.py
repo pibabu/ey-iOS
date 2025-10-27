@@ -11,9 +11,9 @@ class ConversationManager:
     """
     Manages conversation state and executes commands inside a Docker container.
     
-    Key responsibilities:
+    Responsibilities:
     1. Find and track user's Docker container by user_hash label
-    2. Load system prompt from container's /llm/private/readme.md  # !!!
+    2. Load system prompt from container's /llm/private/readme.md
     3. Maintain conversation history (user/assistant/tool messages)
     4. Execute bash commands inside container via bash_tool
     5. Persist conversations to container storage
@@ -72,6 +72,8 @@ class ConversationManager:
         Run bash command inside user's container.
         Uses bash_tool.execute_bash_command() for async execution.
         """
+        # This executes the command inside the container filesystem
+        # via docker exec. The command sees the container's full FS.
         return await execute_bash_command(command, self.container_name)
 
     async def execute_bash_tool(self, command: str) -> str:
@@ -81,7 +83,8 @@ class ConversationManager:
         """
         print(f"🔧 Executing bash command: {command}")
         result = await self._exec(command)
-        print(f"✓ Command output: {result[:200]}...")  # Log first 200 chars ##what does comment mean? where is logfile??our app output.explain concept here, what happens under hood
+        # Log first 200 chars to avoid console flooding; full result is returned
+        print(f"✓ Command output preview: {result[:200]}...")
         return result
 
     # ----------------------------------------------------------------------
@@ -89,34 +92,28 @@ class ConversationManager:
     # ----------------------------------------------------------------------
     async def load_system_prompt(self) -> str:
         """
-        Load system prompt from //readme.md inside container.
-        Caches result to avoid repeated file reads.#
+        Load system prompt from /llm/private/readme.md inside container.
+        Caches result to avoid repeated file reads.
         """
         if self.system_prompt is None:
             print("📄 Loading system prompt from container...")
             try:
-                # Read the system prompt file
-                self.system_prompt = await self._exec("cat /data_private/readme.md") ###change: its : llm/private  where does it execute from?since we have working dir set to llm??
+                self.system_prompt = await self._exec("cat /llm/private/readme.md")
                 
-                # Validate we got content
-                if not self.system_prompt or self.system_prompt.strip() == "":
-                    print("⚠️  WARNING: System prompt is empty!")
+                if not self.system_prompt.strip():
+                    print("⚠️ WARNING: System prompt is empty!")
                     self.system_prompt = "You are a helpful AI assistant with access to bash commands."
                 else:
                     print(f"✓ System prompt loaded ({len(self.system_prompt)} chars)")
                     
             except Exception as e:
                 print(f"✗ ERROR loading system prompt: {e}")
-                # Fallback prompt
                 self.system_prompt = "You are a helpful AI assistant with access to bash commands."
         
         return self.system_prompt
 
     async def get_messages(self) -> List[Dict]:
-        """
-        Return complete message list for OpenAI API:
-        [system_message, ...conversation_history]
-        """
+        """Return complete message list for OpenAI API: [system_message, ...conversation_history]"""
         system_prompt = await self.load_system_prompt()
         return [{"role": "system", "content": system_prompt}] + self.messages
 
@@ -124,20 +121,15 @@ class ConversationManager:
     # Conversation history management
     # ----------------------------------------------------------------------
     def add_user_message(self, content: str):
-        """Add user message to conversation history."""
         self.messages.append({"role": "user", "content": content})
         print(f"👤 User message added ({len(content)} chars)")
 
     def add_assistant_message(self, content: str):
-        """Add assistant's text response to conversation history."""
         self.messages.append({"role": "assistant", "content": content})
         print(f"🤖 Assistant message added ({len(content)} chars)")
 
     def add_tool_call(self, tool_name: str, arguments: Dict, tool_call_id: str):
-        """
-        Record that assistant called a tool.
-        This follows OpenAI's tool calling format.
-        """
+        """Record that assistant called a tool (OpenAI tool format)."""
         self.messages.append({
             "role": "assistant",
             "content": None,
@@ -153,10 +145,7 @@ class ConversationManager:
         print(f"🔧 Tool call recorded: {tool_name}({arguments})")
 
     def add_tool_result(self, tool_call_id: str, result: str):
-        """
-        Record the output from a tool execution.
-        This allows LLM to see what the tool returned.
-        """
+        """Record output from tool execution."""
         self.messages.append({
             "role": "tool",
             "tool_call_id": tool_call_id,
@@ -167,7 +156,7 @@ class ConversationManager:
     # ----------------------------------------------------------------------
     # Persistence
     # ----------------------------------------------------------------------
-    def save(self, conversation_dir: str = "/data_private//conversations"): 
+    def save(self, conversation_dir: str = "/llm/private/conversations"):
         """
         Save conversation to JSON file inside container.
         File format: conv_{user_hash}_{timestamp}.json
@@ -178,7 +167,7 @@ class ConversationManager:
 
         print(f"💾 Saving conversation to {filename}...")
 
-        # Create JSON file locally first
+        # Save JSON locally first
         with open(tmpfile, "w") as f:
             json.dump({
                 "user_hash": self.user_hash,
@@ -186,7 +175,7 @@ class ConversationManager:
                 "messages": self.messages
             }, f, indent=2)
 
-        # Copy to container's /data_private/conversations directory  ---change as well
+        # Copy to container
         result = subprocess.run(
             ["docker", "cp", tmpfile, f"{self.container_name}:{conversation_dir}/{filename}"],
             capture_output=True,
@@ -194,30 +183,28 @@ class ConversationManager:
         )
         
         if result.returncode != 0:
-            print(f"⚠️  WARNING: Failed to copy conversation to container: {result.stderr}")
+            print(f"⚠️ WARNING: Failed to copy conversation to container: {result.stderr}")
         else:
-            print(f"✓ Conversation saved to container")
+            print(f"✓ Conversation saved to container: {conversation_dir}/{filename}")
 
-        # Clean up temp file
         Path(tmpfile).unlink(missing_ok=True)
 
     async def reset(self):
         """
-        Save current conversation and start fresh session.
+        Save current conversation and start a fresh session.
         Calls container's start_new_conversation.sh script.
         """
         print("🔄 Resetting conversation...")
         self.save()
         
         try:
-            await self._exec("bash /data/scripts/start_new_conversation.sh")
+            await self._exec("bash /llm/scripts/start_new_conversation.sh")
             print("✓ Container session reset")
         except Exception as e:
-            print(f"⚠️  WARNING: Reset script failed: {e}")
+            print(f"⚠️ WARNING: Reset script failed: {e}")
         
-        # Clear in-memory state
         self.messages = []
-        self.system_prompt = None  # Will reload on next get_messages()
+        self.system_prompt = None
         print("✓ Conversation state cleared")
 
 
@@ -231,19 +218,17 @@ BASH_TOOL_SCHEMA = {
         "description": (
             "Execute bash commands inside the user's Docker container. "
             "Use this to read/write files, run scripts, check system state, "
-            "or interact with anything in /data or /data_private directories."
+            "or interact with anything in /llm/private directories."
         ),
         "parameters": {
             "type": "object",
             "properties": {
                 "command": {
                     "type": "string",
-                    "description": "The bash command to execute (e.g. 'ls -la /data' or 'cat file.txt')."
+                    "description": "The bash command to execute (e.g., 'ls -la /llm/private' or 'cat file.txt')."
                 }
             },
             "required": ["command"]
         }
     }
 }
-
-##where does all the debugging print go? explain
