@@ -18,8 +18,7 @@ class ConversationManager:
         self.container_name = self._find_container_by_hash(user_hash)
         self.stateful = stateful
         self.messages: List[Dict] = []
-        self.system_prompt: Optional[str] = None # Cached system prompt where cached when it soud get use prompt in  container, how would it look
-        #explaain class syntax with our example.
+        self.system_prompt: Optional[str] = None # async def load_system_prompt(self) sirekt triggern
 
     # ----------------------------------------------------------------------
     # Docker container lookup
@@ -59,9 +58,9 @@ class ConversationManager:
         return bool(result.stdout.strip())
 
     # ----------------------------------------------------------------------
-    # Async command execution #explain, whats diff?
+    # Async command execution 
     # ----------------------------------------------------------------------
-    async def _exec(self, command: str) -> str:##explai thats connection o docker?
+    async def _exec(self, command: str) -> str:
         """Run a bash command asynchronously inside the user container."""
         return await execute_bash_command(command, self.container_name)
 
@@ -117,7 +116,7 @@ class ConversationManager:
     # ----------------------------------------------------------------------
     # Persistence
     # ----------------------------------------------------------------------
-    def save(self, conversation_dir: str = "/data/conversations"): #why temporary file?thats temporary in memory?
+    def save(self, conversation_dir: str = "/data/conversations"): 
         """Save conversation state as a JSON file inside the container."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"conv_{self.user_hash}_{timestamp}.json"
@@ -141,7 +140,7 @@ class ConversationManager:
     async def reset(self):
         """Save current conversation, reset session inside the container."""
         self.save()
-        await self._exec("bash /data/scripts/start_new_conversation.sh") # we do that already in code? saving data. do we need script?
+        await self._exec("bash /data/scripts/start_new_conversation.sh") # !!!! endpoint bauen
         self.messages = []
         self.system_prompt = None # set to privdata /.readme.md
 
