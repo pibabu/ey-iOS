@@ -1,6 +1,5 @@
 FROM ubuntu:latest
 
-# Install basic tools
 
 RUN apt-get update && apt-get install -y \
     apt-utils \
@@ -10,9 +9,12 @@ RUN apt-get update && apt-get install -y \
     tree \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /llm/private/conversation_history
 
-# Set working directory
+
 WORKDIR /llm
+RUN 
+
 
 # Keep container running
 CMD ["sleep", "infinity"]

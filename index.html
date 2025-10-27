@@ -35,8 +35,8 @@
         <span id="status-text" class="text-xs text-gray-500">Disconnected</span>
       </div>
       <button id="reconnect-btn" class="text-xs text-terminal-prompt hover:underline hidden" onclick="connectWebSocket()">
-        Reconnect
-      </button>
+          Reconnect
+        </button>
     </div>
     <!-- Chat history container -->
     <div id="chat-history" class="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
@@ -206,21 +206,21 @@
         if (role === 'user') {
           messageDiv.innerHTML = `
             <div class="flex items-start space-x-2">
-              <span class="text-terminal-prompt">You:</span>
+              <span class="text-terminal-prompt flex-shrink-0">You:</span>
               <span class="message-content text-terminal-input">${escapeHtml(content)}</span>
             </div>
           `;
         } else if (role === 'ai') {
           messageDiv.innerHTML = `
             <div class="flex items-start space-x-2">
-              <span class="text-terminal-prompt">LLM:</span>
+              <span class="text-terminal-prompt flex-shrink-0">LLM:</span>
               <span class="message-content markdown-content text-gray-300">${parseMarkdown(content)}</span>
             </div>
           `;
         } else if (role === 'tool') {
           messageDiv.innerHTML = `
             <div class="flex items-start space-x-2">
-              <span class="text-yellow-500">🔧</span>
+              <span class="text-yellow-500 flex-shrink-0">🔧</span>
               <span class="message-content text-yellow-400">${escapeHtml(content)}</span>
             </div>
           `;

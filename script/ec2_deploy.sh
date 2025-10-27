@@ -271,7 +271,7 @@ if [ "$CREATE_RANDOM_USER" = true ]; then
         # Create logs directory if it doesn't exist
         mkdir -p "$APP_DIR/logs"
         
-        # Run script and capture output to both deployment log and separate file
+        # Run script and capture output to both deployment log and separate file  #thats time??:create_user_20251027_190538.lo #just create_user_NAME
         SCRIPT_LOG="$APP_DIR/logs/create_user_$(date '+%Y%m%d_%H%M%S').log"
         
         # Run script with 'no' as default answer to shared data question
@@ -307,11 +307,6 @@ log "Application directory: $APP_DIR"
 log "Application logs: $APP_DIR/logs/fastapi.log"
 log "Deployment logs: $LOG_FILE"
 log ""
-log "Useful commands:"
-log "  View app logs: tail -f $APP_DIR/logs/fastapi.log"
-log "  View nginx logs: sudo tail -f /var/log/nginx/error.log"
-log "  Check process: pgrep -f 'uvicorn app:app'"
-log "  Stop app: pkill -f 'uvicorn app:app'"
-log "  Test websocket: wscat -c wss://ey-ios.com/ws"
+
 
 exit 0

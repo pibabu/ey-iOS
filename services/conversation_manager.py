@@ -10,204 +10,97 @@ from services.bash_tool import execute_bash_command
 class ConversationManager:
     """
     Manages conversation state and executes commands inside a Docker container.
-    
-    Responsibilities:
-    1. Find and track user's Docker container by user_hash label
-    2. Load system prompt from container's /llm/private/readme.md
-    3. Maintain conversation history (user/assistant/tool messages)
-    4. Execute bash commands inside container via bash_tool
-    5. Persist conversations to container storage
     """
 
-    def __init__(self, user_hash: str, stateful: bool = True):
+    def __init__(self, user_hash: str):
         self.user_hash = user_hash
         self.container_name = self._find_container_by_hash(user_hash)
-        self.stateful = stateful
         self.messages: List[Dict] = []
         self.system_prompt: Optional[str] = None
-        print(f"✓ ConversationManager initialized for container: {self.container_name}")
 
     # ----------------------------------------------------------------------
     # Docker container management
     # ----------------------------------------------------------------------
     def _find_container_by_hash(self, user_hash: str) -> str:
         """Find running container with matching user_hash label."""
-        try:
-            result = subprocess.run(
-                [
-                    "docker", "ps",
-                    "--filter", f"label=user_hash={user_hash}",
-                    "--format", "{{.Names}}"
-                ],
-                capture_output=True,
-                text=True,
-                timeout=5
-            )
-        except subprocess.TimeoutExpired:
-            raise RuntimeError("Timeout: could not query Docker for container label")
-
+        result = subprocess.run(
+            ["docker", "ps", "--filter", f"label=user_hash={user_hash}", 
+             "--format", "{{.Names}}"],
+            capture_output=True, text=True, timeout=5
+        )
         container = result.stdout.strip()
         if not container:
-            raise ValueError(f"No active container found for user_hash: {user_hash}")
+            raise ValueError(f"No container found for user_hash: {user_hash}")
         return container
 
-    def container_exists(self) -> bool:
-        """Check if container is still running."""
-        result = subprocess.run(
-            [
-                "docker", "ps",
-                "--filter", f"label=user_hash={self.user_hash}",
-                "--format", "{{.Names}}"
-            ],
-            capture_output=True,
-            text=True
-        )
-        return bool(result.stdout.strip())
-
     # ----------------------------------------------------------------------
-    # Command execution inside container
+    # Command execution
     # ----------------------------------------------------------------------
-    async def _exec(self, command: str) -> str:
-        """
-        Run bash command inside user's container.
-        Uses bash_tool.execute_bash_command() for async execution.
-        """
-        # This executes the command inside the container filesystem
-        # via docker exec. The command sees the container's full FS.
+    async def execute_bash_tool(self, command: str) -> str:
+        """Execute bash command inside container."""
         return await execute_bash_command(command, self.container_name)
 
-    async def execute_bash_tool(self, command: str) -> str:
-        """
-        Execute user-supplied bash command inside container.
-        This is called when LLM invokes the bash_tool.
-        """
-        print(f"🔧 Executing bash command: {command}")
-        result = await self._exec(command)
-        # Log first 200 chars to avoid console flooding; full result is returned
-        print(f"✓ Command output preview: {result[:200]}...")
-        return result
-
     # ----------------------------------------------------------------------
-    # System prompt handling
+    # System prompt
     # ----------------------------------------------------------------------
     async def load_system_prompt(self) -> str:
-        """
-        Load system prompt from /llm/private/readme.md inside container.
-        Caches result to avoid repeated file reads.
-        """
+        """Load system prompt from container's /llm/private/readme.md"""
         if self.system_prompt is None:
-            print("📄 Loading system prompt from container...")
             try:
-                self.system_prompt = await self._exec("cat /llm/private/readme.md")
-                
-                if not self.system_prompt.strip():
-                    print("⚠️ WARNING: System prompt is empty!")
-                    self.system_prompt = "You are a helpful AI assistant with access to bash commands."
-                else:
-                    print(f"✓ System prompt loaded ({len(self.system_prompt)} chars)")
-                    
-            except Exception as e:
-                print(f"✗ ERROR loading system prompt: {e}")
-                self.system_prompt = "You are a helpful AI assistant with access to bash commands."
-        
+                self.system_prompt = await execute_bash_command(
+                    "cat /llm/private/readme.md", 
+                    self.container_name
+                )
+            except Exception:
+                self.system_prompt = "You are a helpful AI assistant."
         return self.system_prompt
 
     async def get_messages(self) -> List[Dict]:
-        """Return complete message list for OpenAI API: [system_message, ...conversation_history]"""
+        """Return full message list with system prompt."""
         system_prompt = await self.load_system_prompt()
         return [{"role": "system", "content": system_prompt}] + self.messages
 
     # ----------------------------------------------------------------------
-    # Conversation history management
+    # Message history
     # ----------------------------------------------------------------------
     def add_user_message(self, content: str):
         self.messages.append({"role": "user", "content": content})
-        print(f"👤 User message added ({len(content)} chars)")
 
     def add_assistant_message(self, content: str):
         self.messages.append({"role": "assistant", "content": content})
-        print(f"🤖 Assistant message added ({len(content)} chars)")
 
     def add_tool_call(self, tool_name: str, arguments: Dict, tool_call_id: str):
-        """Record that assistant called a tool (OpenAI tool format)."""
         self.messages.append({
             "role": "assistant",
             "content": None,
             "tool_calls": [{
                 "id": tool_call_id,
                 "type": "function",
-                "function": {
-                    "name": tool_name,
-                    "arguments": json.dumps(arguments)
-                }
+                "function": {"name": tool_name, "arguments": json.dumps(arguments)}
             }]
         })
-        print(f"🔧 Tool call recorded: {tool_name}({arguments})")
 
     def add_tool_result(self, tool_call_id: str, result: str):
-        """Record output from tool execution."""
         self.messages.append({
             "role": "tool",
             "tool_call_id": tool_call_id,
             "content": result
         })
-        print(f"✓ Tool result recorded ({len(result)} chars)")
 
     # ----------------------------------------------------------------------
-    # Persistence
+    # Export conversation state
     # ----------------------------------------------------------------------
-    def save(self, conversation_dir: str = "/llm/private/conversations"):
-        """
-        Save conversation to JSON file inside container.
-        File format: conv_{user_hash}_{timestamp}.json
-        """
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"conv_{self.user_hash}_{timestamp}.json"
-        tmpfile = f"/tmp/{filename}"
-
-        print(f"💾 Saving conversation to {filename}...")
-
-        # Save JSON locally first
-        with open(tmpfile, "w") as f:
-            json.dump({
-                "user_hash": self.user_hash,
-                "timestamp": timestamp,
-                "messages": self.messages
-            }, f, indent=2)
-
-        # Copy to container
-        result = subprocess.run(
-            ["docker", "cp", tmpfile, f"{self.container_name}:{conversation_dir}/{filename}"],
-            capture_output=True,
-            text=True
-        )
+    def get_conversation_data(self) -> Dict:
+        """Return conversation data as dict (for external persistence)."""
+        return {
+            "user_hash": self.user_hash,
+            "timestamp": datetime.now().isoformat(),
+            "messages": self.messages
+        }
         
-        if result.returncode != 0:
-            print(f"⚠️ WARNING: Failed to copy conversation to container: {result.stderr}")
-        else:
-            print(f"✓ Conversation saved to container: {conversation_dir}/{filename}")
-
-        Path(tmpfile).unlink(missing_ok=True)
-
-    async def reset(self):
-        """
-        Save current conversation and start a fresh session.
-        Calls container's start_new_conversation.sh script.
-        """
-        print("🔄 Resetting conversation...")
-        self.save()
         
-        try:
-            await self._exec("bash /llm/scripts/start_new_conversation.sh")
-            print("✓ Container session reset")
-        except Exception as e:
-            print(f"⚠️ WARNING: Reset script failed: {e}")
         
-        self.messages = []
-        self.system_prompt = None
-        print("✓ Conversation state cleared")
-
-
+        
 # ----------------------------------------------------------------------
 # Tool schema for OpenAI API
 # ----------------------------------------------------------------------
