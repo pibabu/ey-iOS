@@ -1,4 +1,4 @@
-## setup:
+## 100 % open source - you share system prompt!
 
 #### here: dir structure überblick
 
@@ -44,10 +44,9 @@ struktur erklären , dann ganz am ende gesrcipteter anfang
 
 
 
-## Zwei? Arten von Tool Call
+## Two different System Calls - safe token!
 # alles in conv history
-# subagent
-# system call
+# subagent - to retrieve condensed info
 
 
 ### structure of YOUR answer
