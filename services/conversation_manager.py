@@ -3,8 +3,9 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Optional
+from services.bash_tool import BASH_TOOL_SCHEMA, execute_bash_command
+from services.subagent_manager import SubAgentManager
 
-from services.bash_tool import execute_bash_command 
 
 
 class ConversationManager:
@@ -114,7 +115,7 @@ class ConversationManager:
         })
 
     # ----------------------------------------------------------------------
-    # Persistence
+    # Persistence nötig?--->
     # ----------------------------------------------------------------------
     def save(self, conversation_dir: str = "/data/conversations"): 
         """Save conversation state as a JSON file inside the container."""
@@ -143,29 +144,23 @@ class ConversationManager:
         await self._exec("bash /data/scripts/start_new_conversation.sh") # !!!! endpoint bauen
         self.messages = []
         self.system_prompt = None # set to privdata /.readme.md
-
-
-# Tool schema for OpenAI integration
-BASH_TOOL_SCHEMA = {
-    "type": "function",
-    "function": {
-        "name": "bash_tool",
-        "description": (
-            "Execute bash commands inside the user's Docker container. "
-            "Use for file operations, system queries, or running scripts in /data."
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "command": {
-                    "type": "string",
-                    "description": "The bash command to execute (e.g. 'ls -la /data')."
-                }
-            },
-            "required": ["command"]
-        }
-    }
-}
+        
+        ##<---- nötig?###
+        
+    async def run_agent_task(self, task: str, system_prompt: Optional[str] = None) -> str:
+        """
+        Spawn a subagent to handle a task with its own conversation loop.
+        Returns only the final result.
+        """
+        if system_prompt is None:
+            system_prompt = "You are a helpful assistant with access to bash commands."
+        
+        agent = SubAgentManager(
+            container_name=self.container_name,
+            system_prompt=system_prompt
+        )
+        
+        return await agent.run(task)
 
 
 
