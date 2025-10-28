@@ -88,9 +88,6 @@ class ConversationManager:
             "content": result
         })
 
-    # ----------------------------------------------------------------------
-    # Export conversation state
-    # ----------------------------------------------------------------------
     def get_conversation_data(self) -> Dict:
         """Return conversation data as dict (for external persistence)."""
         return {
@@ -98,33 +95,30 @@ class ConversationManager:
             "timestamp": datetime.now().isoformat(),
             "messages": self.messages
         }
-        
-        
-        
+    
 
+    async def reset(self):
+        """Save current conversation, reset session inside the container."""
+        self.save()
+        await self._exec("bash /data/scripts/start_new_conversation.sh") # !!!! endpoint bauen
+        self.messages = []
+        self.system_prompt = None # set to privdata /.readme.md
         
+        ##<---- nötig?###
         
-# ----------------------------------------------------------------------
-# Tool schema for OpenAI API
-# ----------------------------------------------------------------------
-BASH_TOOL_SCHEMA = {
-    "type": "function",
-    "function": {
-        "name": "bash_tool",
-        "description": (
-            "Execute bash commands inside the user's Docker container. "
-            "Use this to read/write files, run scripts, check system state, "
-            "or interact with anything in /llm/private directories."
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "command": {
-                    "type": "string",
-                    "description": "The bash command to execute (e.g., 'ls -la /llm/private' or 'cat file.txt')."
-                }
-            },
-            "required": ["command"]
-        }
-    }
-}
+    async def run_agent_task(self, task: str, system_prompt: Optional[str] = None) -> str:
+        """
+        Spawn a subagent to handle a task with its own conversation loop.
+        Returns only the final result.
+        """
+        if system_prompt is None:
+            system_prompt = "You are a helpful assistant with access to bash commands."
+        
+        agent = SubAgentManager(
+            container_name=self.container_name,
+            system_prompt=system_prompt
+        )
+        
+        return await agent.run(task)
+
+
