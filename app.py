@@ -111,24 +111,36 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
             pass
 
 
-@app.post("/api/agent/run")
-async def run_agent_task(
-    user_hash: str,
-    task: str,
-    system_prompt: Optional[str] = None
-):
+@app.post("/api/llm/quick")
+async def quick_llm_response(request: QuickLLMRequest):
     """
-    Run an isolated agent task that can use tools internally.
-    Returns only the final result.
+    Single LLM call, returns text response only.
+    No conversation history, no complexity.
     """
-    if not container_exists_by_hash(user_hash):
-        raise HTTPException(404, "Container not found")
+    try:
+        response = await client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": request.system_prompt},
+                {"role": "user", "content": request.prompt}
+            ],
+            temperature=0.7,
+        )
+        
+        result = response.choices[0].message.content or ""
+        return {"result": result}
     
-    cm = ConversationManager(user_hash=user_hash)
-    result = await cm.run_agent_task(task, system_prompt)
-    
-    return {"result": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
+
+@app.post("/api/conversation/export")
+async def export_conversation(request: dict):
+    """Return current conversation state for bash to save."""
+    user_hash = request["user_hash"]
+    conv = ConversationManager(user_hash)
+    
+    return conv.get_conversation_data()
 
         
 @app.get("/health")
