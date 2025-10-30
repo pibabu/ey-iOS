@@ -3,8 +3,8 @@
 # Clear all conversation history and start fresh
 
 ### add: start new conversation + DIR readme or + parameter input 
-
-source /llm/bin/common.sh
+export API_BASE="${API_BASE:-http://localhost:8000}"
+export USER_HASH="${USER_HASH:-unknown}"
 
 echo "🔄 Starting new conversation..."
 
