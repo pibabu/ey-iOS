@@ -16,3 +16,6 @@ runonetimellm() {
         )" | jq -r '.result'
 }
 ###mit bash
+
+
+###überhaupt nötig?? für cron
