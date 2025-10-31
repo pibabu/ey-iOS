@@ -1,5 +1,4 @@
-FROM ubuntu:latest
-
+FROM python:3.12-slim
 
 RUN apt-get update && apt-get install -y \
     apt-utils \
@@ -12,11 +11,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN mkdir -p /llm/private/conversation_history
 
-
 WORKDIR /llm
 
+# Install Jinja2
+RUN pip install --no-cache-dir Jinja2
 
-
-# Keep container running
 CMD ["sleep", "infinity"]
-
