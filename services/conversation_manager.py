@@ -42,22 +42,73 @@ class ConversationManager:
     # ----------------------------------------------------------------------
     # System prompt
     # ----------------------------------------------------------------------
-    async def load_system_prompt(self) -> str:
-        """Load system prompt from container's /llm/private/readme.md"""
-        if self.system_prompt is None:
+
+async def load_system_prompt(self) -> str:
+    """Load and compose system prompt from multiple sources."""
+    if self.system_prompt is None:
+        try:
+            readme = await execute_bash_command(
+                "cat /llm/private/readme.md",
+                self.container_name
+            )
+            
             try:
-                self.system_prompt = await execute_bash_command(
-                    "cat /llm/private/readme.md", 
+                req = await execute_bash_command(
+                    "cat /llm/private/requirements.md",
                     self.container_name
                 )
             except Exception:
-                self.system_prompt = "You are a helpful AI assistant."
-        return self.system_prompt
+                req = ""
+            
+            working_dir = ""
+            try:
+                pwd = await execute_bash_command(
+                    "pwd",
+                    self.container_name
+                )
+                working_dir = pwd.strip()
+                
+                if working_dir:
+                    tree_output = await execute_bash_command(
+                        f"tree -L 3 -I 'node_modules|__pycache__|.git|venv' {working_dir}",
+                        self.container_name
+                    )
+                else:
+                    tree_output = "Project structure unavailable"
+            except Exception:
+                tree_output = "Project structure unavailable"
+            
+            self.system_prompt = self._compose_system_prompt(
+                readme, req, tree_output, working_dir
+            )
+            
+        except Exception:
+            self.system_prompt = "You are a helpful AI assistant."
+    
+    return self.system_prompt
 
-    async def get_messages(self) -> List[Dict]:
-        """Return full message list with system prompt."""
-        system_prompt = await self.load_system_prompt()
-        return [{"role": "system", "content": system_prompt}] + self.messages
+
+def _compose_system_prompt(self, readme: str, req: str, tree: str, working_dir: str) -> str:
+    """Combine all context into a structured system prompt."""
+    parts = [readme]
+    
+    if req.strip():
+        parts.append("\n\n# Project Requirements\n" + req)
+    
+    if tree.strip() and tree != "Project structure unavailable":
+        parts.append(
+            f"\n\n# Current Project Structure\n"
+            f"Working Directory: {working_dir}\n\n"
+            f"```\n{tree}\n```"
+        )
+    
+    return "\n".join(parts)
+
+
+async def get_messages(self) -> List[Dict]:
+    """Return full message list with system prompt."""
+    system_prompt = await self.load_system_prompt()
+    return [{"role": "system", "content": system_prompt}] + self.messages
 
     # ----------------------------------------------------------------------
     # Message history
