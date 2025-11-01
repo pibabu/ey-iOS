@@ -20,4 +20,5 @@ get_conversation_data() {
     echo "💾 Saved to: $filename"
 }
 
-### name as  parameter!!
+### name as  parameter!!....
+#aufräumen! append nur neues zum file...und naming fragwürdig

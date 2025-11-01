@@ -14,7 +14,7 @@ sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 
-## compose noch instalieren??war nicht drauf
+## compose noch installieren??war nicht drauf
 sudo yum install -y nginx
 Start Nginx
 sudo systemctl start nginx
