@@ -19,7 +19,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PARENT_DIR="$(dirname "$SCRIPT_DIR")"
 DOCKERFILE_TEMPLATE="$SCRIPT_DIR/Dockerfile"
 COMPOSE_TEMPLATE="$SCRIPT_DIR/docker-compose.yml"
-SEED_DATA_PRIVATE="$PARENT_DIR/data_private"
+SEED_DATA_PRIVATE="$PARENT_DIR/workdir"
 SEED_DATA_SHARED="$PARENT_DIR/data_shared"
 
 print_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
@@ -89,7 +89,10 @@ else
     docker volume create "$PRIVATE_VOLUME" >/dev/null
 fi
 
-# Seed private volume
+
+
+
+# Seed private volume   ### warum sind noch sehr alte files in workdir??
 if [ -d "$SEED_DATA_PRIVATE" ]; then
     print_info "Seeding private volume..."
     docker run --rm \
