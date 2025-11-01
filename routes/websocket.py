@@ -23,11 +23,22 @@ def container_exists_by_hash(user_hash: str) -> bool:
 async def websocket_endpoint(websocket: WebSocket, user_hash: str):
     """
     WebSocket chat endpoint.
-    Uses shared conversation registry for state management.
+    
+    Flow:
+    1. Get shared ConversationManager from registry
+    2. Receive user messages
+    3. Add to cm.messages (Python list in memory)
+    4. Process with LLM
+    5. Add responses to cm.messages
+    
+    NO SAVING - cm.messages lives in RAM until:
+    - Server restarts (lost)
+    - User calls /edit with action="clear"
+    - LLM manually saves via bash tool
     """
     print(f"DEBUG: WebSocket connection attempt for user_hash={user_hash}")
     
-    # Verify container exists before accepting connection
+    # Verify container exists
     if not container_exists_by_hash(user_hash):
         print(f"ERROR: No container found for user_hash={user_hash}")
         await websocket.close(code=1008, reason="Container not found")
@@ -36,15 +47,16 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
     await websocket.accept()
     print(f"✓ Client connected: {user_hash}")
     
-    # ✓ Get shared conversation instance from registry
-    # This is the SAME instance that /api/conversation/edit uses!
+    # Get shared instance - THIS IS THE KEY!
+    # Same instance that /api/conversation/edit uses
     manager = get_conversation(user_hash)
+    print(f"DEBUG: Loaded manager with {len(manager.messages)} existing messages")
     
     try:
         while True:
-            # Receive message from client
+            # Receive message
             data = await websocket.receive_text()
-            print(f"DEBUG: Received data: {data[:100]}")
+            print(f"DEBUG: Received: {data[:100]}")
             
             # Parse JSON
             try:
@@ -53,11 +65,11 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
                 print(f"✗ Invalid JSON: {e}")
                 await websocket.send_json({
                     "type": "error",
-                    "message": f"Invalid JSON format. Expected: {{'message': 'your text'}}"
+                    "message": "Invalid JSON. Expected: {'message': 'text'}"
                 })
                 continue
             
-            # Extract user message
+            # Extract message
             user_message = message_data.get("message", "")
             if not user_message:
                 await websocket.send_json({
@@ -66,25 +78,24 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
                 })
                 continue
             
-            # Process message
-            print(f"DEBUG: Processing message: {user_message}")
+            # Add to conversation (modifies Python list in memory)
+            print(f"DEBUG: Processing: {user_message}")
             manager.add_user_message(user_message)
             
-            # Send to LLM and stream response
+            # Process with LLM (will add responses to manager.messages)
             await process_message(manager, websocket)
             
-            # Now if someone calls /api/conversation/edit with this user_hash,
-            # they'll modify THIS manager instance (shared state!)
+            # That's it! Everything is in manager.messages (in RAM)
+            # If /edit endpoint clears messages, THIS manager sees it
     
     except WebSocketDisconnect:
         print(f"✗ Client disconnected: {user_hash}")
     
     except Exception as e:
-        print(f"✗ Unexpected error in WebSocket: {e}")
+        print(f"✗ Unexpected error: {e}")
         import traceback
         traceback.print_exc()
         
-        # Try to send error to client
         try:
             await websocket.send_json({
                 "type": "error",
@@ -94,20 +105,18 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
             pass
     
     finally:
-        # Cleanup on disconnect
-        print(f"DEBUG: Cleaning up connection for {user_hash}")
-        
-        # Save conversation state
-        try:
-            manager.save()
-            print("DEBUG: Conversation saved successfully")
-        except Exception as e:
-            print(f"DEBUG: Save failed: {e}")
-        
+        # Close connection
+        print(f"DEBUG: Closing connection for {user_hash}")
         try:
             await websocket.close()
         except:
             pass
+        
+        # Note: We DON'T remove from registry here
+        # The CM stays in memory for future connections
+        # If you want to clear on disconnect:
+        # from services.conversation_registry import remove_conversation
+        # remove_conversation(user_hash)
 
 
 @router.get("/ws/health")
