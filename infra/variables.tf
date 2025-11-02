@@ -1,34 +1,37 @@
-variable "region" {
-  description = "AWS region for deployment"
+variable "aws_region" {
+  description = "AWS region"
   type        = string
-  default     = "eu-central-1"
+  default     = "eu-central-1"  
+}
+
+variable "app_name" {
+  description = "Application name"
+  type        = string
+  default     = "fastapi-app"
+}
+
+variable "environment" {
+  type    = string
+  default = "production"
 }
 
 variable "instance_type" {
-  description = "EC2 instance type"
-  type        = string
-  default     = "t3.medium"
+  type    = string
+  default = "t3.micro"  # Your current type
 }
 
-variable "ec2_key_name" {
-  description = "SSH key pair name"
+variable "ssh_key_name" {
+  description = "EC2 SSH key pair name"
   type        = string
 }
 
-variable "domain_name" {
-  description = "Application domain"
+variable "github_repo" {
+  description = "GitHub repo (owner/repo)"
   type        = string
-  default     = "ey-ios.com"
 }
 
-variable "app_port" {
-  description = "Port FastAPI runs on"
-  type        = number
-  default     = 8000
-}
-
-variable "openai_api_key" {
-  description = "Your OpenAI API key to be stored in SSM"
-  type        = string
-  sensitive   = true
+variable "allowed_ssh_cidr" {
+  description = "CIDR blocks allowed to SSH"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]  # RESTRICT IN PRODUCTION
 }

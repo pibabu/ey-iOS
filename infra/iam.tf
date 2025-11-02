@@ -1,54 +1,82 @@
-resource "aws_iam_role" "fastapi_role" {
-  name = "fastapi-ec2-role"
-
+# ==========================================
+# EC2 ROLE
+# ==========================================
+# AWS IAM Role
+resource "aws_iam_role" "ec2_role" {
+  name = "${var.app_name}-ec2-role"
+  
+  # AWS trust policy: WHO can assume this role
   assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        },
-        Action = "sts:AssumeRole"
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"  # EC2 service can use it
       }
-    ]
+    }]
   })
 }
 
-# Managed policy for SSM agent + EC2 basic ops
-resource "aws_iam_role_policy_attachment" "ssm_managed" {
-  role       = aws_iam_role.fastapi_role.name
+# Terraform: Attach AWS managed policies
+resource "aws_iam_role_policy_attachment" "ec2_ssm_default" {
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_ssm_core" {
+  role       = aws_iam_role.ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-# Allow EC2 to read specific SSM parameters
-resource "aws_iam_policy" "fastapi_ssm_policy" {
-  name        = "fastapi-ssm-read"
-  description = "Allow read access to FastAPI app parameters"
-
+# Custom policy for S3 artifact access
+resource "aws_iam_role_policy" "ec2_s3_artifacts" {
+  name = "s3-artifacts-access"
+  role = aws_iam_role.ec2_role.id
+  
+  # AWS permissions policy: WHAT this role can do
   policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Action = [
-          "ssm:GetParameter",
-          "ssm:GetParameters",
-          "ssm:GetParametersByPath"
-        ],
-        Effect   = "Allow",
-        Resource = "arn:aws:ssm:${var.region}:*:parameter/fastapi-app/*"
-      }
-    ]
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ]
+      Resource = [
+        aws_s3_bucket.artifacts.arn,
+        "${aws_s3_bucket.artifacts.arn}/*"
+      ]
+    }]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ssm_custom" {
-  role       = aws_iam_role.fastapi_role.name
-  policy_arn = aws_iam_policy.fastapi_ssm_policy.arn
+# AWS Instance Profile (wrapper for EC2 to use role)
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "${var.app_name}-ec2-profile"
+  role = aws_iam_role.ec2_role.name
 }
 
-# Instance profile for EC2
-resource "aws_iam_instance_profile" "fastapi_profile" {
-  name = "fastapi-instance-profile"
-  role = aws_iam_role.fastapi_role.name
+# ==========================================
+# CODEDEPLOY ROLE  ehhhhhhhhhhhh
+# ==========================================
+resource "aws_iam_role" "codedeploy_role" {
+  name = "${var.app_name}-codedeploy-role"
+  
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "codedeploy.amazonaws.com"
+      }
+    }]
+  })
+}
+
+# AWS managed policy has everything CodeDeploy needs
+resource "aws_iam_role_policy_attachment" "codedeploy" {
+  role       = aws_iam_role.codedeploy_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRole"
 }
