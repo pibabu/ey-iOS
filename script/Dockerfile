@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN mkdir -p /llm/private/conversation_history
 
-WORKDIR /llm
+WORKDIR /llm    
+## checken: Workdir in dockerfile /llm ; in d-compose: llm/private
 
 
 #RUN pip install --no-cache-dir Jinja2

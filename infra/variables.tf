@@ -17,7 +17,7 @@ variable "environment" {
 
 variable "instance_type" {
   type    = string
-  default = "t3.micro"  # free tier
+  default = "t3.micro"  # free tier 
 }
 
 variable "ssh_key_name" {
