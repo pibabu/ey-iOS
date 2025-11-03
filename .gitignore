@@ -8,3 +8,27 @@ Scripts
 favicon
 tfvars 
 variables.tf
+
+
+
+
+# Terraform directories and files
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform variable files with secrets
+terraform.tfvars
+*.tfvars
+
+# CLI configuration files
+.terraformrc
+terraform.rc
+
+# Optional lock file (if you don’t want to commit it)
+.terraform.lock.hcl
