@@ -1,27 +1,48 @@
 #!/bin/bash
-# set -e: If any command in the script fails (exits with a non-zero status), the shell will terminate the script immediately.
-set -e
 
-# Install the CodeDeploy agent
+
 sudo yum update -y
-yum install -y ruby
-wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
-chmod +x ./install
-./install auto
+sudo yum install -y python3 python3-pip python3-devel gcc
 
-service codedeploy-agent start
-chkconfig codedeploy-agent on
 
-#install the docker 
-yum install -y docker
-service docker start
-chkconfig docker on
-usermod -aG docker ec2-user
+sudo yum install -y docker
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -a -G docker ec2-user
 
-#install docker compose
-curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-# install caddy_data volume
-docker volume create caddy_data
 
+## compose noch installieren??war nicht drauf
+sudo yum install -y nginx
+Start Nginx
+sudo systemctl start nginx
+Enable Nginx to start on boot
+sudo systemctl enable nginx
+
+
+# Create application directory
+sudo mkdir -p /home/ec2-user/fastapi-app
+sudo chown ec2-user:ec2-user /home/ec2-user/fastapi-app
+
+# Pre-create the venv and install common dependencies
+sudo -u ec2-user python3 -m venv /home/ec2-user/fastapi-app/venv
+sudo -u ec2-user /home/ec2-user/fastapi-app/venv/bin/pip install --upgrade pip
+sudo -u ec2-user /home/ec2-user/fastapi-app/venv/bin/pip install \
+    fastapi \
+    uvicorn[standard] \
+    websockets \
+    openai \
+    pydantic \
+    python-dotenv
+
+
+
+
+# #### nginx fehlt: wo bei terraform implement einbauen?
+# Configure Nginx
+# cat > /etc/nginx/sites-available/fastapi << 'EOF'
+# upstream fastapi_backend {
+#     server 127.0.0.1:8000;
+# }  ........etc

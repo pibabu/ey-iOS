@@ -19,10 +19,10 @@ module "ec2_instance_module" {
   ssh_allowed_ip = var.ssh_allowed_ip
   tags           = local.common_tags
 }
-  module "parameter_store_module" {
-   source               = "./module/parameter_store_module"
-   parameter_store_name = var.parameter_store_name
-   tags                 = local.common_tags
+module "parameter_store_module" {
+  source               = "./module/parameter_store_module"
+  parameter_store_name = var.parameter_store_name
+  tags                 = local.common_tags
  }
 
 # module "code_pipeline_module" {
