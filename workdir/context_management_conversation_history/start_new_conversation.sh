@@ -3,7 +3,8 @@
 # Clear all conversation history and start fresh
 
 ### add: start new conversation + DIR readme or + parameter input 
-export API_BASE="${API_BASE:-http://localhost:8000}"
+export API_BASE="http://host.docker.internal:8000"
+# same as ??  NEIN!  -> API_HOST: export API_BASE="${API_BASE:-http://localhost:8000}"
 export USER_HASH="${USER_HASH:-unknown}"
 
 echo "🔄 Starting new conversation..."
