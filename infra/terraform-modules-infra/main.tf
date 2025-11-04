@@ -13,17 +13,17 @@ locals {
 
 module "ec2_instance_module" {
   source         = "./module/ec2_instance_module"
-  ami            = "ami-0a3c3a20c09d6f377" # ami: aws linux machine
-  instance_type  = "t2.micro"
+  ami            = "ami-0a5b0d219e493191b" # ami: aws linux machine
+  instance_type  = "t3.micro"
   instance_name  = "production_instance"
   ssh_allowed_ip = var.ssh_allowed_ip
   tags           = local.common_tags
 }
-module "parameter_store_module" {
-  source               = "./module/parameter_store_module"
-  parameter_store_name = var.parameter_store_name
-  tags                 = local.common_tags
- }
+# module "parameter_store_module" {
+#   source               = "./module/parameter_store_module"
+#   parameter_store_name = var.parameter_store_name
+#   tags                 = local.common_tags
+#  }
 
 # module "code_pipeline_module" {
 #   source                   = "./module/code_pipeline_module"
@@ -43,9 +43,9 @@ module "parameter_store_module" {
 # ----------------------------------------------------------------
 
 
-output "parameter_store_name" {
-  value = module.parameter_store_module.parameter_store_name
-}
+# # output "parameter_store_name" {
+# #   value = module.parameter_store_module.parameter_store_name
+# }
 output "module_ec2_instance_details" {
   value = module.ec2_instance_module.instance_details
 }
