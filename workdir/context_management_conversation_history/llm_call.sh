@@ -1,7 +1,6 @@
 #!/bin/bash
-export API_BASE="http://host.docker.internal:8000"
-export USER_HASH="${USER_HASH:-unknown}"
-
+export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
+export USER_HASH="${USER_HASH}"
 
 
 runonetimellm() {

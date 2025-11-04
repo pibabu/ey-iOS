@@ -1,8 +1,8 @@
 #!/bin/bash
 # Inject context messages into conversation without actual back-and-forth
 # Useful for adding background info, priming, or "fake" conversation history
-export API_BASE="http://host.docker.internal:8000"
-export USER_HASH="${USER_HASH:-unknown}"
+export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
+export USER_HASH="${USER_HASH}"
 
 
 if [ $# -eq 0 ]; then

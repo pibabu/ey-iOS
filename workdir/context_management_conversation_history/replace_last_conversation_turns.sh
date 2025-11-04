@@ -1,8 +1,8 @@
 #!/bin/bash
 # Replace the last conversation turn(s) with new content
 # Usage: replace_last_turns.sh <count> <user_msg> <assistant_msg>
-export API_BASE="http://host.docker.internal:8000"
-export USER_HASH="${USER_HASH:-unknown}"
+export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
+export USER_HASH="${USER_HASH}"
 
 COUNT=${1:-1}
 USER_MSG=${2:-""}
