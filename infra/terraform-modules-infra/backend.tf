@@ -1,7 +1,15 @@
+# terraform {
+#   backend "s3" {
+#     bucket = "jojobucksss"
+#     key    = "terraform.tfstate"
+#     region = "eu-central-1"
+#   }
+# }
+
 terraform {
-  backend "s3" {
-    bucket = "your-project-terraform-file"
-    key    = "terraform.tfstate"
-    region = "us-east-1"
+  backend "local" {
+    path = "terraform.tfstate"
   }
 }
+
+# oder löschen -  Terraform defaults to local state
