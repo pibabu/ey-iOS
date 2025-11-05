@@ -20,8 +20,8 @@ module "vpc" {
 }
 
 
-module "ec2" {
-  source = "./modules/ec2"
+module "ec2_instance_module" {
+  source = "./modules/ec2_instance_module"
   
   vpc_id               = module.vpc.vpc_id
   subnet_id            = module.vpc.public_subnet_id
