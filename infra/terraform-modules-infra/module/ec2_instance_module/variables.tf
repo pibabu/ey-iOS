@@ -20,6 +20,13 @@ variable "ec2_role_permissions" {
   ]
 }
 
+variable "codepipeline_s3_bucket" {
+  description = "S3 bucket name for CodePipeline artifacts"
+  type        = string
+  default     = "codepipeline-eu-central-1-fdd7ab796ddd-49eb-9554-347fb077325a"
+}
+
+
 #### neeed to add:
     # "Version": "2012-10-17",
     # "Statement": [
@@ -65,3 +72,23 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "vpc_id" {
+  description = "VPC ID where EC2 will be created"
+  type        = string
+}
+
+variable "subnet_id" {
+  description = "Subnet ID where EC2 will be created"
+  type        = string
+}
+
+
+# enablen??:
+# Answer RBN DNS hostname IPv4
+# Enabled
+
+
+# # aws internes dns anstellen?
+# Answer private resource DNS name
+# IPv4 (A)

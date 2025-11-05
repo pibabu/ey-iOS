@@ -15,6 +15,21 @@ variable "aws_region" {
 # }
 
 
+# ------------------    VPC    -----------------------
+
+variable "vpc_cidr" {
+  description = "CIDR block for VPC"
+  type        = string
+  default     = "10.0.0.0/16"
+}
+
+variable "availability_zone" {
+  description = "Availability zone"
+  type        = string
+  default     = "eu-central-1a"
+}
+
+
 
 # ----------------------------------------------------------------
 # ---------------------- AWS Resource Tags -----------------------
@@ -37,7 +52,11 @@ variable "account_id" {
   default = "366101697591"
 }
 
-
+variable "codepipeline_s3_bucket" {
+  description = "S3 bucket name for CodePipeline artifacts"
+  type        = string
+  default     = "codepipeline-eu-central-1-fdd7ab796ddd-49eb-9554-347fb077325a"
+}
 
 # ----------------------------------------------------------------
 # # --------------- AWS PARAMETER STORE VARIABLES ------------------

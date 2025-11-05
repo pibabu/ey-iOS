@@ -7,3 +7,20 @@ output "instance_details" {
 output "elastic_ip" {
   value = aws_eip.aws_instance_elastic_ip.public_ip
 } 
+
+
+output "public_ip" {
+  description = "EC2 public IP"
+  value       = aws_instance.ec2_instance.public_ip
+}
+
+output "private_ip" {
+  description = "EC2 private IP"
+  value       = aws_instance.ec2_instance.private_ip
+}
+
+output "private_key_pem" {
+  description = "Private key for SSH"
+  value       = tls_private_key.key.private_key_pem
+  sensitive   = true
+}
