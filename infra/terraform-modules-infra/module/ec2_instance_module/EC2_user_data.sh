@@ -61,3 +61,7 @@ sudo certbot --nginx -d ey-ios.com --non-interactive --agree-tos -m admin@ey-ios
 echo "0 3 * * * root certbot renew --quiet && systemctl reload nginx" | sudo tee /etc/cron.d/certbot-renew
 
 echo "=== User data script completed successfully ==="
+
+
+# ## debug:
+# sudo cat /var/log/cloud-init-output.log
