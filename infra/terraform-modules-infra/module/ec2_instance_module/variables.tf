@@ -27,18 +27,6 @@ variable "codepipeline_s3_bucket" {
 }
 
 
-#### neeed to add:
-    # "Version": "2012-10-17",
-    # "Statement": [
-    #     {
-    #         "Sid": "AllowS3ArtifactGetObject",
-    #         "Effect": "Allow",
-    #         "Action": [
-    #             "s3:GetObject"
-    #         ],
-    #         "Resource": [
-    #             "arn:aws:s3:::codepipeline-eu-central-1-fdd7ab796ddd-49eb-9554-347fb077325a/*"
- 
 # variable "ssh_allowed_ip" {
 #   type        = string
 #   description = "IP address allowed for SSH (e.g., '1.2.3.4/32')"

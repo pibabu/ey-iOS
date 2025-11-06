@@ -19,4 +19,9 @@ $env:TF_LOG = "ERROR"   # Errors only
 
 alles löschen außer eip:
 
-terraform destroy -target=aws_eip_association.eip_assoc -target=module.ec2_instance_module -target=module.vpc
+terraform destroy \
+  -target=aws_eip_association.eip_assoc \
+  -target=module.ec2_instance_module \
+  -target=module.vpc
+
+###geht nicht
