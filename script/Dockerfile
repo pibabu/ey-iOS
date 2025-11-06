@@ -15,6 +15,6 @@ WORKDIR /llm
 ## checken: Workdir in dockerfile /llm ; in d-compose: llm/private 
 
 
-#RUN pip install --no-cache-dir Jinja2
+#RUN pip install --no-cache-dir Jinja2 
 
 CMD ["sleep", "infinity"]
