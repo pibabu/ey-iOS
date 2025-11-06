@@ -22,7 +22,6 @@ module "vpc" {
 
 module "ec2_instance_module" {
   source = "./module/ec2_instance_module"
-  
   vpc_id               = module.vpc.vpc_id
   subnet_id            = module.vpc.public_subnet_id
   ami            = "ami-0a5b0d219e493191b" 
@@ -41,10 +40,8 @@ resource "aws_eip" "static_ip" {
     prevent_destroy = true
   }
 }
-
-# Associate EIP with EC2 instance
 resource "aws_eip_association" "eip_assoc" {
-  instance_id   = module.ec2.instance_id
+  instance_id   = module.ec2_instance_module.instance_id
   allocation_id = aws_eip.static_ip.id
 }
 
@@ -82,5 +79,5 @@ output "module_ec2_instance_details" {
   value = module.ec2_instance_module.instance_details
 }
 output "ec2_instance_ssh_details" {
-  value = "ssh -i \"private-key.pem\" ec2-user@${module.ec2_instance_module.elastic_ip}.compute-1.amazonaws.com"
+  value = "ssh -i \"first.pem\" ec2-user@${aws_eip.static_ip.public_ip}"
 }

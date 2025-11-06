@@ -114,8 +114,8 @@ resource "aws_instance" "ec2_instance" {
   })
 }
 
-resource "aws_eip" "aws_instance_elastic_ip" {
-  domain   = "vpc"
-  instance = aws_instance.ec2_instance.id
-  tags     = var.tags
-}
+# resource "aws_eip" "aws_instance_elastic_ip" {
+#   domain   = "vpc"
+#   instance = aws_instance.ec2_instance.id
+#   tags     = var.tags
+# }

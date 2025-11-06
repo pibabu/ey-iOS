@@ -14,3 +14,9 @@ $env:TF_LOG = "DEBUG"   # Detailed API calls
 $env:TF_LOG = "INFO"    # General info (recommended start)
 $env:TF_LOG = "WARN"    # Warnings only
 $env:TF_LOG = "ERROR"   # Errors only
+
+## Lifecycle elastic IP Problem
+
+alles löschen außer eip:
+
+terraform destroy -target=aws_eip_association.eip_assoc -target=module.ec2_instance_module -target=module.vpc
