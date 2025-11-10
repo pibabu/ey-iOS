@@ -1,5 +1,4 @@
 #!/bin/bash
-# /llm/bin/undo_last_messages.sh
 # Remove last N messages from conversation
 # Usage: undo_last_messages.sh <count>
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"

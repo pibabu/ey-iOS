@@ -47,8 +47,7 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
     await websocket.accept()
     print(f"✓ Client connected: {user_hash}")
     
-    # Get shared instance - THIS IS THE KEY!
-    # Same instance that /api/conversation/edit uses
+
     manager = get_conversation(user_hash)
     print(f"DEBUG: Loaded manager with {len(manager.messages)} existing messages")
     
@@ -84,9 +83,7 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
             
             # Process with LLM (will add responses to manager.messages)
             await process_message(manager, websocket)
-            
-            # That's it! Everything is in manager.messages (in RAM)
-            # If /edit endpoint clears messages, THIS manager sees it
+
     
     except WebSocketDisconnect:
         print(f"✗ Client disconnected: {user_hash}")
