@@ -71,7 +71,8 @@ sudo -u $APP_USER $APP_DIR/venv/bin/pip install \
     websockets \
     openai \
     pydantic \
-    python-dotenv
+    python-dotenv \
+    supervisor
 
 # ==========================================
 # FETCH SECRETS FROM SSM PARAMETER STORE
