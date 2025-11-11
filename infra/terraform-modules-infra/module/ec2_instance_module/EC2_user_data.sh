@@ -202,7 +202,7 @@ echo "$SSL_CERT" | sudo tee /etc/pki/tls/certs/my-cert.pem > /dev/null
 echo "$SSL_KEY" | sudo tee /etc/pki/tls/private/my-key.pem > /dev/null
 sudo chmod 644 /etc/pki/tls/certs/my-cert.pem
 sudo chmod 600 /etc/pki/tls/private/my-key.pem
-set -e  # Re-enable exit on error
+set -e  # Re-enable exit on error 
 
 # ==========================================
 # NGINX CONFIGURATION
