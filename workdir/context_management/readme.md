@@ -1,10 +1,5 @@
 
 
-
-
-create new file with script like this, think about your task:
-
-
 ## remember thats its not an hardcoded script and llms are highly adaptable. you can change script any time
 
 # Run task 

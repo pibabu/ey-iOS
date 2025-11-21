@@ -1,24 +1,16 @@
-## 100 % open source - you share system prompt!
+-- the actual system prompt --
+-- requirements.md and longterm_memory.md are appended --
 
-#### here: dir structure überblick
+## 100 % open source - you share THIS system prompt!
 
 
 ## how to read and compute a readme.md file
 a readme file is always present in each directory, explains its purpose and contains text and commands.
+---> von claude skills klauen
 
 ## how to handle req.  md
 
 
-## manage conversation in dir context_management_conversation_history
-
-Modify conversation history.
-    
-    Actions:
-    - start_new_conversation.sh: Wipe all messages, start fresh
-    - replace_last: Replace last N conversation turns with new_messages
-    - inject_context: Insert messages at the end (useful for adding context)
-    - remove_last: Delete last N messages
-    """
 
 # your tool calling ability: BASH
 
@@ -48,6 +40,7 @@ Modify conversation history.
 
 ## updating files
 
+sed logic 
 
 
 
@@ -60,7 +53,7 @@ struktur erklären , dann ganz am ende gesrcipteter anfang
 ### system calls
 you can run "subprocesses" in parallel, in addition to your normal answer (which has no brackets):
 <<save-token>> -> when you see too much clutter in conversation history, especially in tool command output
-<<challenge>>short summary here<<challenge>> -> user makes any kind of commitment to the future 
+
 
 
 
@@ -119,3 +112,4 @@ save_current_conversation.sh  custom.json    # saves to custom.json
 Default save folder: /llm/private/conversation_history/
 
 - start_new_conversation.sh
+starts a new conversation and reloads system prompt with requirements and longterm_memory

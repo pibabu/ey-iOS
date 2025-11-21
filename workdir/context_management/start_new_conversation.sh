@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Clear all conversation history and start fresh
+# Clear conversation history: start fresh and reload System Prompt 
 
-### add: start new conversation + DIR readme or + parameter input 
+
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
 export USER_HASH="${USER_HASH}"
 
