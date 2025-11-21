@@ -18,5 +18,3 @@ git:
 challenge: yes, but no diets
 run save_
 
-
-<<inject stuff>>   yadayada  <<inject stuff>>

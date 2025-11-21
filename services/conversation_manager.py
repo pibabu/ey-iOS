@@ -3,6 +3,7 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Optional
+
 from services.bash_tool import BASH_TOOL_SCHEMA, execute_bash_command
 
 
@@ -59,6 +60,14 @@ class ConversationManager:
                 except Exception:
                     req = ""
 
+                try:
+                    memory = await execute_bash_command(
+                        "cat /llm/private/longterm-memory.md",
+                        self.container_name
+                    )
+                except Exception:
+                    memory = ""
+
                 working_dir = ""
                 try:
                     pwd = await execute_bash_command("pwd", self.container_name)
@@ -75,7 +84,7 @@ class ConversationManager:
                     tree_output = "Project structure unavailable"
 
                 self.system_prompt = self._compose_system_prompt(
-                    readme, req, tree_output, working_dir
+                    readme, req, memory, tree_output, working_dir
                 )
 
             except Exception:
@@ -84,13 +93,16 @@ class ConversationManager:
         return self.system_prompt
 
     def _compose_system_prompt(
-        self, readme: str, req: str, tree: str, working_dir: str
+        self, readme: str, req: str, memory: str, tree: str, working_dir: str
     ) -> str:
         """Combine all context into a structured system prompt."""
         parts = [readme]
 
         if req.strip():
             parts.append("\n\n# Project Requirements\n" + req)
+
+        if memory.strip():
+            parts.append("\n\n# Long-term Memory\n" + memory)
 
         if tree.strip() and tree != "Project structure unavailable":
             parts.append(
@@ -101,14 +113,14 @@ class ConversationManager:
 
         return "\n".join(parts)
 
+    # ----------------------------------------------------------------------
+    # Message history
+    # ----------------------------------------------------------------------
     async def get_messages(self) -> List[Dict]:
         """Return full message list with system prompt."""
         system_prompt = await self.load_system_prompt()
         return [{"role": "system", "content": system_prompt}] + self.messages
 
-    # ----------------------------------------------------------------------
-    # Message history
-    # ----------------------------------------------------------------------
     def add_user_message(self, content: str):
         self.messages.append({"role": "user", "content": content})
 
