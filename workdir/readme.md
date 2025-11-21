@@ -106,10 +106,16 @@ Don't store random, trivial, or overly personal facts. In particular, avoid:
 # directories and files you need to know
 
 ## ./context_management
+---explain setp and use cases----
 
-undo_last_messages.sh:
-- Remove last N messages from conversation
-- Usage: undo_last_messages.sh <count>
+- undo_last_messages.sh:
+Remove last N messages from conversation
+Usage: undo_last_messages.sh <count>
 
-save_current_conversation.sh:
-- 
+- save_current_conversation.sh:
+Usage:
+save_current_conversation.sh                # saves to conv_<timestamp>.json
+save_current_conversation.sh  custom.json    # saves to custom.json
+Default save folder: /llm/private/conversation_history/
+
+- start_new_conversation.sh

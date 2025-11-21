@@ -1,6 +1,10 @@
 #!/bin/bash
 # Replace the last conversation turn(s) with new content
 # Usage: replace_last_turns.sh <count> <user_msg> <assistant_msg>
+
+
+## weg?
+
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
 export USER_HASH="${USER_HASH}"
 

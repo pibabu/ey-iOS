@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import List, Optional, Literal
-from services.conversation_registry import get_conversation
+from services.conversation_registry import get_conversation 
 
 router = APIRouter(prefix="/api/conversation", tags=["conversation"])
 
@@ -40,6 +40,7 @@ async def edit_conversation(request: ConversationEditRequest):
         
         if request.action == "clear":
             cm.messages.clear()
+            cm.system_prompt = None   # für system prompt reset...noch checken
             return {
                 "status": "success",
                 "action": "cleared",

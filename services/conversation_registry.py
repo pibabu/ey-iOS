@@ -5,9 +5,6 @@ Ensures WebSocket and API endpoints use the SAME conversation object.
 from typing import Dict
 from services.conversation_manager import ConversationManager
 
-# ============================================
-# GLOBAL REGISTRY - The "locker system"
-# ============================================
 _active_conversations: Dict[str, ConversationManager] = {}
 
 

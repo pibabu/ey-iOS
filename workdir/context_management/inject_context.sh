@@ -1,20 +1,11 @@
 #!/bin/bash
 # Inject context messages into conversation without actual back-and-forth
 # Useful for adding background info, priming, or "fake" conversation history
+
+
+## weg?
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
 export USER_HASH="${USER_HASH}"
-
-
-if [ $# -eq 0 ]; then
-    echo "Usage: inject_context.sh <context_file.json>"
-    echo ""
-    echo "Example context_file.json:"
-    echo '['
-    echo '  {"role": "user", "content": "What is the project structure?"},'
-    echo '  {"role": "assistant", "content": "The project has /app, /data, /llm folders..."}'
-    echo ']'
-    exit 1
-fi
 
 CONTEXT_FILE=$1
 
