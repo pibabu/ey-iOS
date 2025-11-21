@@ -64,14 +64,14 @@ you can run "subprocesses" in parallel, in addition to your normal answer (which
 
 
 
+
+## how to chnage files:  sed !! req und longterm-memory
+
 Your Settings - requirements.md
 
 append to llm/private/requirements.md:
 
-User Section (DONT CHANGE):
--
-
-
+ - sed - logik einbaueen:
 LLM Section:
 
 
