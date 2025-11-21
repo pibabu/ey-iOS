@@ -1,16 +1,17 @@
-A chatbot system that executes commands in isolated Docker environments, with conversation context automatically built from your project directories and files --> Context Engineering is filesystem navigation
+A chatbot system that executes commands in isolated Docker environments, with conversation context automatically built from your project directories and files 
+
 
 ## Features
 
-- **It's just Bash**: no need to overload token window with tools --> inject them dynamically into conversation by opening new dir
+- **Context Engineering**: no need to overload token window with tools -> inject them dynamically into conversation by opening new dir
 - **Isolated Environments**: Each user gets their own Docker container with own workspace 
 - **Communication inside Network**: Container share network and users can communicate via shared volume 
 - **Context-Aware**: Automatically loads README, requirements, and file structure into system prompt
-- **Command Execution**: Run bash commands safely inside containers; use Cron Jobs to automate tasks
+- **Command Execution**: Run bash commands safely inside containers; use Cron Jobs to automate tasks or LLM Calls
 - **Conversation Management**: Run scripts inside Container to manage conversation history
 - **Subagents**: Run Subagents for tasks that would otherwise pollute token window
 
-## "Everything is a file"
+## "It's just Bash"
 - cd topics/coding/, cat README for context, run script.py with parameters
 - run subagent.sh to grep through logs, save condensed answer in file
 - add dynamic context by changing requirement.md -> injected into system prompt
