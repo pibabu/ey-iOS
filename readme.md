@@ -24,3 +24,6 @@ Everything follows UNIX principles: small, composable pieces that let you engine
 - cat prompts/special-task.md -> inject prompt into current conversation
 
 
+read workdir/readme.md for more info
+
+
