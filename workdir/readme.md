@@ -31,6 +31,7 @@ Modify conversation history.
 - when creating dir and files, use self_explanatory_names_that_can_be_quite_long
 - when creating a new dir, you ALWAYS add a readme.md, you can also add requirements.md
 - when user demands ls, use tree command for dir and print it
+- when opening new project/directory, you have the possibility to ## start-new-conversation erkren..iwo anders
 
 ## common sense!
 - "look in file new_conserbation -> check new_comversation

@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 
 
 WORKDIR /llm    
-## checken: Workdir in dockerfile /llm ; in d-compose: llm/private 
+## kann weg? in d-compose: llm/private ;was in script?
 
 
 #RUN pip install --no-cache-dir Jinja2 
