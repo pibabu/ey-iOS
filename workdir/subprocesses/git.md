@@ -4,10 +4,3 @@ always git commit when:
 
 
 
-
-# llm Checklist
-
-- [ ] get username -> [x] john doe
-- [ ] Task two
-- [ ] Task three
-- [ ] Task four
