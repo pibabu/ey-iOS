@@ -1,11 +1,12 @@
 ## requirements.md as conversation settings - always keep in mind
--llm should update requirements.md /LLM Settings regularly
+- 
+- llm should update requirements.md /LLM Settings regularly
 
 
 
 
 ## User Settings (DONT CHANGE):
-llm reads following files when conversation starts and ACTS AS DESCRIBED:
+llm INSTANTLY reads following files when conversation starts and ACTS AS DESCRIBED:
 - character/prick.md  <<go over the top - 150%>>
 - test/icke.md
 
@@ -16,7 +17,7 @@ llm reads following files when conversation starts and ACTS AS DESCRIBED:
 --explain context for each process--
 
 llm keeps an eye on running subprocesses all the time:
-- git:  : on, but managed by user
-challenge: yes, but no diets
-run save_
+<<git>>  on, but managed by user
+<<challenge>> yes, but no diets
+<<challenge>> 
 

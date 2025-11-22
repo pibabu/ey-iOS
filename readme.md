@@ -21,7 +21,7 @@ Everything follows UNIX principles: small, composable pieces that let you engine
 - run subagent.sh to grep through logs, save condensed answer in file
 - add dynamic context by changing requirement.md -> injected into system prompt
 - mkdir mails/newsletter and touch recipients.csv, newsletter.txt, send_mail.sh
-- cat prompts/special-task.md -> inject prompt into current conversation
+- cat prompts/more-context.md -> inject prompt into current conversation
 
 
 read workdir/readme.md for more info
