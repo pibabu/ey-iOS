@@ -1,5 +1,13 @@
 always git commit when:
-- llm changes 
+- llm changes root readme.md and requirements.md
 
-ask user, who gets execution rights 
-add in requirements.md: subprocesses: git on - "no llm commit" OR "llm commits regularly"
+
+
+
+
+# llm Checklist
+
+- [ ] get username -> [x] john doe
+- [ ] Task two
+- [ ] Task three
+- [ ] Task four
