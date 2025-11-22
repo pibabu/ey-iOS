@@ -1,13 +1,13 @@
 import asyncio
 import subprocess
 
-BASH_TOOL_SCHEMA = {
+BASH_TOOL_SCHEMA = { 
     "type": "function",
     "function": {
         "name": "bash_tool",
-        "description": (
+        "description": (                ##### ändern !!!!!!!!
             "Execute bash commands inside the user's Docker container. "
-            "Use for file operations, system queries, or running scripts in /data."
+            "Use for file operations, system queries, or running scripts ."
         ),
         "parameters": {
             "type": "object",

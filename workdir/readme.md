@@ -74,6 +74,7 @@ LLM Section:
 
 ## ./context_management
 ---explain setp and use cases----
+before you run these scripts, make 
 
 - undo_last_messages.sh:
 Remove last N messages from conversation
