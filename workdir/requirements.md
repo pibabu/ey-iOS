@@ -16,7 +16,9 @@ llm INSTANTLY reads following files when conversation starts and ACTS AS DESCRIB
 # subprocesses - 
 --explain context for each process--
 Linux or User Settings, that are available
-ALWAYS cat readme.md from EVERY subprocess 
+ALWAYS cat .subprocesses/readme.md from EVERY subprocess 
+
+
 
 llm keeps an eye on running subprocesses all the time:
 <<git>>  on, but managed by user
