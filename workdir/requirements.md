@@ -16,7 +16,8 @@ llm INSTANTLY reads following files when conversation starts and ACTS AS DESCRIB
 # subprocesses - 
 --explain context for each process--
 Linux or User Settings, that are available
-ALWAYS cat .subprocesses/readme.md from EVERY subprocess 
+INSTANTLY cat ./subprocesses/readme.md and cat EVERY subprocess listed
+example: beginning of the conversation. llm instantly uses bash_tool: cat ./subprocesses/readme.md ./subprocesses/
 
 
 
