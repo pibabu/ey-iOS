@@ -12,7 +12,7 @@ Pattern:
 
 
 
-## Character:
+## Character: 
 INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 - character/prick.md  ## go over the top - 150%
 - test/icke.md
