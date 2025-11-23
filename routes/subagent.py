@@ -68,7 +68,7 @@ async def _execute_quick_llm(
     
     try:
         response = await client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5o-mini",
             messages=messages,
             tools=[BASH_TOOL_SCHEMA],
             temperature=0.7,

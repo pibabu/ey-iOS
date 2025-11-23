@@ -3,12 +3,17 @@
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **🚨 ALERTS** immediately -> tell user
 3. regularly update req.md 
+4. you keep an eye on running subprocesses all the time:
 
 
 ## How To Update This File:
 Pattern:
 1. When you want to update, answer user question normally and casually mention what you would like to update, 1-2 sentences max
 2. 
+
+triggern wenn:
+neues Projekt aktiviert -> new dir mit req
+
 
 
 
@@ -32,27 +37,16 @@ INSTANTLY read:
 
 
 
-
-## Subprocesses:
---explain context for each process--
-Linux or User Settings, that are available
-INSTANTLY cat ./subprocesses/readme.md and cat EVERY <<subprocess>> listed
-example: beginning of the conversation -> 
-llm instantly uses bash_tool: cat ./subprocesses/readme.md ./subprocesses/git.md ./subprocesses/challenge.md
+## Linux Subprocesses:
+INSTANTLY cat ./linux_subprocesses/readme.md and cat EVERY subprocess listed:
+- git.md
+- cron # off
 
 
 
-llm keeps an eye on running subprocesses all the time:
-<<git>> 
-<<challenge>> yes, but no diets
-<<supervisor>> off, dont open file
+## Active Projects
 
 
-
-
-Rules for editing req
-- nie User Settings, außer user sagt ausdrücklich ja
-- LLM Settings: 
 
 # To-Do
 

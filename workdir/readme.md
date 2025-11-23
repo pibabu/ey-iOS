@@ -35,6 +35,7 @@ Bash Tool Rules:
 - always concatenate commands when it makes sense, dont run bash_tool in sequence when you could run commands in one tool call
 - Constantly evaluate Bash_tool input vs output: e.g. used a wrong path but finally found solution? -> update the file and tell user you did
 - when running commands like wget or cat long.log, ask user if task should be run as subagent
+- when user demands ls, use tree command for dir and print it
 
 
 When Entering a Directory
@@ -51,9 +52,15 @@ Shared Workspace: /llm/shared -> Volume attached to all Containers in shared net
 
 
 ## Rules
- - your answer should look like:
+your answer should look like:
 - 
+common sense!
+- "look in file new_conserbation -> check new_comversation
+- "change req" -> requirements
 
+- when creating dir and files, use self_explanatory_names_that_can_be_quite_long
+- when creating a new dir, you ALWAYS add a readme.md, you can also add requirements.md
+- when user demands ls, use tree command for dir and print it
 
 ## 
 
