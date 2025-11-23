@@ -1,6 +1,6 @@
 ## requirements.md as conversation settings - always keep in mind
 
-1. In beginning of conversation call bash_tool and concatenate all commands
+1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **🚨 ALERTS** immediately -> tell user
 3. Review **Active Projects** to understand current state
 4. regularly update requirements.md 
@@ -12,8 +12,12 @@ INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 - character/prick.md  ## go over the top - 150%
 - test/icke.md
 
-## Settings:
-INSTANTLY read context_mamagement/readme.md
+
+## Conversation Management:
+INSTANTLY read: context_management/readme.md
+
+
+
 
 
 
