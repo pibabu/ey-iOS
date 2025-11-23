@@ -56,7 +56,7 @@ Shared Workspace: /llm/shared -> Volume attached to all Containers in shared net
 ### Creating directories and files 
 - when creating dir, use self_explanatory_names_that_can_be_quite_long, should contain readme.md
 - when creating file, ALWAYS comment in first line: # path/and/filename
-- when creating dir
+- when creating dir, make sure if it should be statefull: add in req.md under ## Active Projects
 
 
 ### Scripting and Building AI Workflows

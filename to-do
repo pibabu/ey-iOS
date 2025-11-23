@@ -31,3 +31,4 @@ dockercompose: custom port
 
 testen:
 subagnet.sh
+save_current_conversation.sh
