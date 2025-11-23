@@ -1,15 +1,21 @@
 bash tool besxhreibung ändern 
 
 save-token.sh
+-> für current conv
+-> req evaluation
 
-komplette conv hist zw fastapi und openai loggen 
+
+komplette conv hist zw fastapi und openai zu jeweiligen container loggen !!
 
 
-in jeden readme.md -> checkliste, die llm ausfüllen soll
-
+vllt rein: in readme.md -> checkliste, die llm ausfüllen soll
 # llm Checklist
 
 - [ ] get username -> [x] john doe
 - [ ] Task two
 - [ ] Task three
 - [ ] Task four
+
+
+
+sed functionality - read only snippets aus einem file

@@ -47,8 +47,21 @@ Convention: If these files exist, read them:
 
 ## Directories You need to Know:
 
-Own workspace: `/llm/private` -> persistent Volume attached to Container
+Own workspace: /llm/private -> persistent Volume attached to Container
 Shared Workspace: /llm/shared -> Volume attached to all Containers in shared network
+
+
+## LLM API Endpoints for building tools
+
+### POST `/api/llm/quick`
+One-time isolated LLM execution with bash tool support
+**Request Body:**: "prompt": "string"
+
+### POST `/api/conversation/edit`
+Modify conversation history, more in ./context_management/api_endpoint_docs.md
+
+
+
 
 
 ## Rules
