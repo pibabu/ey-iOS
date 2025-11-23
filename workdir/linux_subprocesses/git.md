@@ -1,6 +1,7 @@
+# git.md
 
 always git commit when:
-- llm changes root readme.md and requirements.md
+- llm changes root readme.md and req.md
 
 
 

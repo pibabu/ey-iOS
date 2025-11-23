@@ -39,7 +39,3 @@ runonetimellm() {
     echo "=== End ===" >> "$log_file"
     echo "" >> "$log_file"
 }
-
-# Example usage in cron
-runonetimellm "Check disk usage and create a report in /app/reports/disk_usage.txt"
-runonetimellm "Backup all Python files to /app/backups/ with timestamp" "You are a backup assistant. Use bash commands to complete the task."

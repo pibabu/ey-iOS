@@ -1,4 +1,3 @@
-# acts as symlink
-llm INSTANTLY reads following files:
+# linux_subprocesses/readme
 
-data_shared/become_a_white_hat_hacker_or_build_a_bot_network/readme.md
+put cron jobs, superv
