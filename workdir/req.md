@@ -28,6 +28,10 @@ read:
 - linux_subprocesses/git.md
 
 
+## User Preferences
+update, when you get 
+- when user wants new conversation always run /context_management/save_current_conversation.sh. dont ask
+
 ## Active Projects
 
 

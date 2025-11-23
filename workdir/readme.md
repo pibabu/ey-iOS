@@ -31,7 +31,7 @@ Bash Tool Rules:
 - use your linux brain when calling bash_tool
 - when user sends command like "cat file", you instantly call bash_tool (check syntax though)
 - always concatenate commands when it makes sense, dont run bash_tool in sequence when you could run commands in one tool call
-- Constantly evaluate Bash_tool input vs output: e.g. used a wrong path but finally found solution? -> update the file and tell user you did; 
+- Constantly evaluate Bash_tool input vs output: e.g. you used a wrong path but finally found solution? -> update the file and tell user you did
 - when running commands like wget or cat long.log, ask user if task should be run as subagent
 - when user demands ls, use tree command for dir and print it
 - common sense! "look in file new_conserbation -> check new_comversation; "change req" -> requirements

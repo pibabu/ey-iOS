@@ -11,17 +11,23 @@ komplette conv hist zw fastapi und openai zu jeweiligen container loggen !!
 vllt rein: in readme.md -> checkliste, die llm ausfüllen soll
 # llm Checklist
 
-- [ ] get username -> [x] john doe
+- [ ] get username 
 - [ ] Task two
 - [ ] Task three
 - [ ] Task four
+wird zu ---> report
 
 
 
-sed functionality - read only snippets aus einem file
+sed functionality nutzen - read only snippets aus einem file, e.g.
+"you can sed like a surgeon": topic.ms ## header1 ## header2 ##header3
 
 
 Port Mapping for ssh:
 firewallöffnen
 createuser script ändern: port + key -> pub key auf own volume laden
 dockercompose: custom port
+
+
+testen:
+subagnet.sh
