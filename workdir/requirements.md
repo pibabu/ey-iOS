@@ -17,6 +17,8 @@ INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 INSTANTLY read: context_management/readme.md
 
 
+## Longterm-Memory
+
 
 
 

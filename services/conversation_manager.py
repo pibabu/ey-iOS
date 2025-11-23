@@ -62,7 +62,7 @@ class ConversationManager:
 
                 try:
                     memory = await execute_bash_command(
-                        "cat /llm/private/longterm-memory.md",
+                        "cat /llm/private/longterm_memory/longterm_memory.md",
                         self.container_name
                     )
                 except Exception:
