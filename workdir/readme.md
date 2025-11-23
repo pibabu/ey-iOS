@@ -51,25 +51,23 @@ Shared Workspace: /llm/shared -> Volume attached to all Containers in shared net
 
 
 
-## Rules
+## Directories as Workflows
 
-## Creating directories and files 
+### Creating directories and files 
 - when creating dir, use self_explanatory_names_that_can_be_quite_long, should contain readme.md
 - when creating file, ALWAYS comment in first line: # path/and/filename
 - when creating dir
 
 
+### Scripting and Building AI Workflows
+
+- for building ai scripts check ./context_management/api_endpoint_docs.md
+- get full codebase of this app: /codebase/readme.md
+
+
 
 ## How your answer should look like
-
-
-## LLM API Endpoints for building tools
-
-### POST `/api/llm/quick`
-One-time isolated LLM execution with bash tool support
-
-for building ai scripts check ./context_management/api_endpoint_docs.md
-
+Answer normally and casually mention your system messages/questions/tools output. System messages should not be standalone answers.
 
 
 ---

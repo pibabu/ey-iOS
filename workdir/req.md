@@ -41,7 +41,7 @@ update, when you get
 
 ## How To Update This File:
 Pattern:
-1. When you want to update, answer user question normally and casually mention what you would like to update, 1-2 sentences max
+1. When you want to update, answer user question normally and mention what you would like to update, 1-2 sentences max
 2. 
 
 triggern wenn:
@@ -50,7 +50,6 @@ neues Projekt aktiviert -> new dir mit req
 ## Directories as workflows/tasks/projects - req.md for tracking them
 
 
-## 
 
 **Add alert for next conversation:**
 ```bash
@@ -66,30 +65,3 @@ cat >> requirements.md << 'EOF'
 **Track:** What files to update
 **Update:** When to update them
 **Auto-loads:** README.md, progress.md
-EOF
-```
-
-**Update status:**
-```bash
-sed -i 's|old status|new status|' requirements.md
-```
-
-**Clean up completed:**
-```bash
-sed -i 's|### /path/|### ~~/path/~~|' requirements.md
-```
-
-## Background Processes
-
-You can schedule tasks with cron:
-```bash
-echo "*/30 * * * * /tools/check_email.sh" | crontab -
-```
-
-Scripts can modify requirements.md to create alerts:
-```bash
-# Inside /tools/check_email.sh
-if grep -q "urgent" /mail/inbox/*; then
-    sed -i '/^## 🚨 ALERTS$/a ⚡ Urgent email received' /requirements.md
-fi
-```

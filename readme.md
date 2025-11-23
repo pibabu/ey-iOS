@@ -8,9 +8,9 @@ Everything follows UNIX principles: small, composable pieces that let you engine
 
 ## Features
 
-- **Context Engineering**: no need to overload token window with tools -> inject them dynamically into conversation by opening new dir
+- **Context Engineering**: no need to overload token window with tools -> inject them dynamically into conversation by opening file
 - **Context-Aware**: Automatically loads long-term memory, user settings and file structure into system prompt
-- **Isolated Environments**: Each user gets their own Debian container with own workspace 
+- **Isolated Environments**: Each user gets their own Debian container with own workspace and internet access
 - **Communication inside Network**: Container share network and users can communicate via shared volume 
 - **Command Execution**: Run bash commands safely inside containers; use Cron Jobs to automate tasks or LLM Calls
 - **Conversation Management**: Run scripts inside Container to manage conversation history
