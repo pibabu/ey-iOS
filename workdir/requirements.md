@@ -2,9 +2,11 @@
 
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **🚨 ALERTS** immediately -> tell user
-3. Review **Active Projects** to understand current state
-4. regularly update requirements.md 
+3. regularly update requirements.md 
 
+
+## How To Update This File:
+Self-Modification Pattern -> Editing requirements.md
 
 
 ## Character:
@@ -14,7 +16,9 @@ INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 
 
 ## Conversation Management:
-INSTANTLY read: context_management/readme.md
+INSTANTLY read: 
+- context_management/readme.md
+
 
 
 ## Longterm-Memory # OFF - DONT READ
