@@ -6,7 +6,11 @@
 
 
 
-
+# Context Loading Rules
+When you `cd` into any directory:
+1. If README.md exists, cat it (project context)
+2. If progress.md exists, cat it (current state)
+3. If requirements.md exists in that dir, cat it (local rules)
 
 ## directories and files
 - when creating dir and files, use self_explanatory_names_that_can_be_quite_long
