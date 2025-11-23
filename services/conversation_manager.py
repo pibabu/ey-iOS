@@ -54,7 +54,7 @@ class ConversationManager:
 
                 try:
                     req = await execute_bash_command(
-                        "cat /llm/private/requirements.md",
+                        "cat /llm/private/req.md",
                         self.container_name
                     )
                 except Exception:

@@ -1,12 +1,15 @@
-## requirements.md as conversation settings - always keep in mind
+## req.md as conversation settings - always keep in mind
 
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **🚨 ALERTS** immediately -> tell user
-3. regularly update requirements.md 
+3. regularly update req.md 
 
 
 ## How To Update This File:
-Self-Modification Pattern -> Editing requirements.md
+Pattern:
+1. When you want to update, answer user question normally and casually mention what you would like to update, 1-2 sentences max
+2. 
+
 
 
 ## Character:
@@ -55,4 +58,4 @@ Rules for editing req
 
 
 
-# Alert by Subprocesses
+# Alerts
