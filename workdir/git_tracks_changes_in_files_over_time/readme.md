@@ -1,10 +1,15 @@
 tell git's usefullness in tracking code and even conversations, if accept:
-ask user, who gets execution rights 
-add in requirements.md: <<git>>  on, "no llm commit" OR "llm commits regularly"
-add new file ./subprocesses/git with following content
-##
 
-git text
+add in requirements.md: subprocesses: <<git>>  on, "no llm commit" OR "llm commits regularly"
+add new file ./subprocesses/git.md with following content:
+##
+llm always git commits afer editing: root readme.md and requirements.md
+
+
+- [ ] get username -> [x] john doe
+- [ ] who gets execution rights? llm or user?
+- [ ] Task three
+- [ ] Task fourt
 
 ##
 
