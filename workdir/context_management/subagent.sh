@@ -3,7 +3,7 @@
 
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
 export USER_HASH="${USER_HASH}"
-export LOG_DIR="${LOG_DIR:-/app/logs/cron}"
+export LOG_DIR="${LOG_DIR:-/logs/subagent/}"
 
 mkdir -p "$LOG_DIR"
 

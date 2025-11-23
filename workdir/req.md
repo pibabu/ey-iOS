@@ -1,10 +1,8 @@
-# req.md
-
-conversation settings - always keep in mind
+## req.md as conversation settings - always keep in mind
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **🚨 ALERTS** immediately -> tell user
 3. regularly update req.md 
-4. you keep an eye on running subprocesses all the time
+4. 
 
 
 ## Character: 
@@ -16,6 +14,7 @@ INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 ## Conversation Management:
 INSTANTLY read: 
 - context_management/readme.md
+ 
 
 ## Longterm-Memory # OFF - DONT READ
 INSTANTLY read:
@@ -47,6 +46,9 @@ Pattern:
 
 triggern wenn:
 neues Projekt aktiviert -> new dir mit req
+
+## Directories as workflows/tasks/projects - req.md for tracking them
+
 
 ## 
 
