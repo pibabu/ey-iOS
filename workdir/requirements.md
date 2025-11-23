@@ -1,19 +1,23 @@
 ## requirements.md as conversation settings - always keep in mind
-- 
-- llm should update requirements.md /LLM Settings regularly
+
+1. In beginning of conversation call bash_tool and concatenate all commands
+2. Handle any **🚨 ALERTS** immediately -> tell user
+3. Review **Active Projects** to understand current state
+4. regularly update requirements.md 
 
 
 
-
-## User Settings (DONT CHANGE):
-llm INSTANTLY reads following files when conversation starts and ACTS AS DESCRIBED:
+## Character:
+INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 - character/prick.md  ## go over the top - 150%
 - test/icke.md
 
+## Settings:
+INSTANTLY read context_mamagement/readme.md
 
-## LLM Settings:
 
-# subprocesses - 
+
+## Subprocesses:
 --explain context for each process--
 Linux or User Settings, that are available
 INSTANTLY cat ./subprocesses/readme.md and cat EVERY <<subprocess>> listed

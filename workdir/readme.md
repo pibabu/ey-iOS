@@ -70,8 +70,6 @@ LLM Section:
 
 # directories and files you need to know
 
-## current directory: /llm/private
-
 ## ./context_management
 ---explain setp and use cases----
 before you run these scripts, make 
@@ -89,7 +87,7 @@ Default save folder: /llm/private/conversation_history/
 - start_new_conversation.sh
 starts a new conversation and reloads system prompt with requirements and longterm_memory
 
- 
+
 ## ./requirements.md
 
 ## ./longterm_memory.md
