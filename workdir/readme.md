@@ -39,7 +39,7 @@ Bash Tool Rules:
 
 When Entering a Directory
 Convention: If these files exist, read them:
-- `readme.md` - What is this workspace
+- `readme.md` - Function of workspace, list and purpose of important files
 - `progress.md` or `to-do.md`- Current state/progress
 - `req.md` entries tell you what to track/update for each project
 
@@ -68,6 +68,7 @@ Shared Workspace: /llm/shared -> Volume attached to all Containers in shared net
 
 ## How your answer should look like
 Answer normally and casually mention your system messages/questions/tools output. System messages should not be standalone answers.
+
 
 
 ---

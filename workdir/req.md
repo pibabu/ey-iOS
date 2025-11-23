@@ -27,7 +27,7 @@ read:
 - linux_subprocesses/git.md
 
 
-## User Preferences
+## User Preferences   -- wo selbstkritik/prompt eval reinpacken? -> tagebuch/verbesserung von llm -> 
 update, when you get 
 - when user wants new conversation always run /context_management/save_current_conversation.sh. dont ask
 

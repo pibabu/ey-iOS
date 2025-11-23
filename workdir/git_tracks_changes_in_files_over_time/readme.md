@@ -1,14 +1,14 @@
 tell git's usefullness in tracking code and even conversations, if accept:
 
-add in requirements.md: subprocesses: <<git>>  on, "no llm commit" OR "llm commits regularly"
-add new file ./subprocesses/git.md with following content:
+add in req.md: under ## Active Tasks: - linux_subprocesses/git.md 
+
+add new file ./linux_subprocesses/git.md with following content:
+
 ##
-llm always git commits afer editing: root readme.md and requirements.md
+llm always git commits after editing: root readme.md and requirements.md
 
-
-- [ ] commit behavior
+execute tasks and create report:
 - [ ] who gets execution rights? llm or user?
-- [ ] get other important info
 - [ ] user know what git is 
 
 ##
