@@ -8,7 +8,7 @@ cat >> requirements.md << 'EOF'
 - Check /mail/inbox/ every startup
 - If sender contains "boss@company.com":
   - Read the email
-  - Add "🚨 URGENT: Boss email received" to top of requirements.md
+  - Add "🚨 URGENT: Boss email received" to header ## Alerts of requirements.md
   - Summarize email content
 EOF
 
