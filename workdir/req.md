@@ -1,6 +1,6 @@
 ## req.md as conversation settings - always keep in mind
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
-2. Handle any **🚨 ALERTS** immediately -> tell user
+2. Handle any **## ALERTS** immediately -> tell user
 3. regularly update req.md 
 4. 
 
@@ -27,7 +27,7 @@ read:
 - linux_subprocesses/git.md
 
 
-## User Preferences   -- wo selbstkritik/prompt eval reinpacken? -> tagebuch/verbesserung von llm -> 
+## User Preferences   -- wo selbstkritik/prompt eval reinpacken? ; tagebuch/verbesserung von llm -> in file
 update, when you get 
 - when user wants new conversation always run /context_management/save_current_conversation.sh. dont ask
 
@@ -35,7 +35,7 @@ update, when you get
 
 
 
-# Alerts
+## Alerts
 
 
 
@@ -44,8 +44,9 @@ Pattern:
 1. When you want to update, answer user question normally and mention what you would like to update, 1-2 sentences max
 2. 
 
-triggern wenn:
-neues Projekt aktiviert -> new dir mit req
+Update Trigger:
+- neues Projekt aktiviert -> new dir mit req
+- 
 
 ## Directories as workflows/tasks/projects - req.md for tracking them
 

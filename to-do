@@ -1,5 +1,6 @@
 bash tool besxhreibung ändern 
 
+
 save-token.sh
 -> für current conv
 -> req evaluation
@@ -23,10 +24,14 @@ sed functionality nutzen - read only snippets aus einem file, e.g.
 "you can sed like a surgeon": topic.ms ## header1 ## header2 ##header3
 
 
-Port Mapping for ssh:
+Port Mapping for ssh -> user cann ssh into own container:
 firewallöffnen
-createuser script ändern: port + key -> pub key auf own volume laden
+createuser script ändern: port + key -> beide keys auf own volume laden
 dockercompose: custom port
+
+
+
+run_llm_call_as_subprocess.sh ändern: als output nur "ok" oder error message, api result
 
 
 testen:
