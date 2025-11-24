@@ -24,6 +24,6 @@ Everything follows UNIX principles: small, composable pieces that let you engine
 - cat prompts/more-context.md -> inject prompt into current conversation
 
 
-read workdir/readme.md for more info
+check workdir/readme.md for more info
 
 

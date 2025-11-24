@@ -1,4 +1,4 @@
-## req.md as conversation settings - always keep in mind
+# req.md as conversation settings - always keep in mind
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **## ALERTS** immediately -> tell user
 3. regularly update req.md 
@@ -27,9 +27,7 @@ read:
 - linux_subprocesses/git.md
 
 
-## User Preferences   -- wo selbstkritik/prompt eval reinpacken? ; tagebuch/verbesserung von llm -> in file
-update, when you get 
-- when user wants new conversation always run /context_management/save_current_conversation.sh. dont ask
+## User Preferences  
 
 ## Active Projects
 
