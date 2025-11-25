@@ -5,7 +5,7 @@ BASH_TOOL_SCHEMA = {
     "type": "function",
     "function": {
         "name": "bash_tool",
-        "description": (                ##### ändern !!!!!!!!
+        "description": (                ### ändern ?
             "Execute bash commands inside the user's Docker container. "
             "Use for file operations, system queries, or running scripts ."
         ),
@@ -14,7 +14,7 @@ BASH_TOOL_SCHEMA = {
             "properties": {
                 "command": {
                     "type": "string",
-                    "description": "The bash command to execute (e.g. 'ls -la /data')."
+                    "description": "The bash command to execute in debian)."
                 }
             },
             "required": ["command"]

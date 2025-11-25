@@ -22,6 +22,12 @@ wird zu ---> report
 
 sed functionality nutzen - read only snippets aus einem file, e.g.
 "you can sed like a surgeon": topic.ms ## header1 ## header2 ##header3
+**Add alert for next conversation:**
+```bash
+sed -i '/^## ALERTS$/a ⚡ Your message' requirements.md
+```
+
+
 
 
 Port Mapping for ssh -> user can ssh into own container:

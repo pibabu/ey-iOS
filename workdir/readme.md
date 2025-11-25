@@ -59,6 +59,11 @@ Convention: If these files exist, read them:
 - when creating file, ALWAYS comment in first line: # path/and/filename
 - when creating dir,  ## Active Projects
 
+### How to deal with Checklists
+In some directories you'll find "llm tasks". Update file
+
+
+
 
 ### Scripting and Building AI Workflows
 

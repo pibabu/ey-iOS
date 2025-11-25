@@ -1,27 +1,29 @@
 #!/bin/bash
 
-# Completely separate from conversation history - creates isolated execution context.
-###  mehr testen!!! 
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
 export USER_HASH="${USER_HASH}"
-export LOG_DIR="${LOG_DIR:-/app/logs/cron}"
-
-# Ensure log directory exists
-mkdir -p "$LOG_DIR"
 
 runonetimellm() {
     local prompt="$1"
     local system_prompt="${2:-Execute the task and save results to a file using the bash tool.}"
-    local log_file="${LOG_DIR}/cron_$(date +%Y%m%d_%H%M%S).log"
-    
-    echo "=== Cron LLM Execution ===" >> "$log_file"
+    local output_path="${3:-/logs/single_shot/}"
+
+    # Create output directory
+    mkdir -p "$output_path"
+
+    # Log file
+    local log_file="${output_path}/single_$(date +%Y%m%d_%H%M%S).log"
+
+    echo "=== Single-Shot LLM Execution ===" >> "$log_file"
     echo "Timestamp: $(date -Iseconds)" >> "$log_file"
+    echo "Output Path: $output_path" >> "$log_file"
     echo "Prompt: $prompt" >> "$log_file"
-    echo "System: $system_prompt" >> "$log_file"
+    echo "System Prompt: $system_prompt" >> "$log_file"
     echo "---" >> "$log_file"
-    
-    # Make API call and capture full response
-    local response=$(curl -s -X POST "${API_BASE}/api/llm/quick" \
+
+    # API call
+    local response
+    response=$(curl -s -X POST "${API_BASE}/api/llm/quick" \
         -H "Content-Type: application/json" \
         -d "$(jq -n \
             --arg prompt "$prompt" \
@@ -29,13 +31,16 @@ runonetimellm() {
             --arg hash "$USER_HASH" \
             '{prompt: $prompt, system_prompt: $system, user_hash: $hash}'
         )")
-    
+
     # Log full response
     echo "$response" | jq '.' >> "$log_file"
-    
-    # Extract and return result
-    echo "$response" | jq -r '.result'
-    
+
+    # Extract result
+    local result
+    result=$(echo "$response" | jq -r '.result')
+
     echo "=== End ===" >> "$log_file"
     echo "" >> "$log_file"
+
+    echo "$result"
 }

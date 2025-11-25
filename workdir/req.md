@@ -8,7 +8,7 @@
 ## Character: 
 INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 - character/prick.md  ## go over the top - 150%
-- test/icke.md
+- prompts/icke.md
 
 
 ## Conversation Management:
@@ -27,7 +27,6 @@ read:
 - linux_subprocesses/git.md
 
 
-## User Preferences  
 
 ## Active Projects
 
@@ -50,17 +49,3 @@ Update Trigger:
 
 
 
-**Add alert for next conversation:**
-```bash
-sed -i '/^## 🚨 ALERTS$/a ⚡ Your message' requirements.md
-```
-
-**Add new project:**
-```bash
-cat >> requirements.md << 'EOF'
-
-### /path/to/project/
-**Status:** Current state
-**Track:** What files to update
-**Update:** When to update them
-**Auto-loads:** README.md, progress.md
