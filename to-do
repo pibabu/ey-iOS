@@ -9,7 +9,7 @@ save-token.sh
 komplette conv hist zw fastapi und openai zu jeweiligen container loggen !!
 
 
-vllt rein: in readme.md -> checkliste, die llm ausfüllen soll
+
 # llm Checklist
 
 - [ ] get username 
@@ -24,7 +24,7 @@ sed functionality nutzen - read only snippets aus einem file, e.g.
 "you can sed like a surgeon": topic.ms ## header1 ## header2 ##header3
 
 
-Port Mapping for ssh -> user cann ssh into own container:
+Port Mapping for ssh -> user can ssh into own container:
 firewallöffnen
 createuser script ändern: port + key -> beide keys auf own volume laden
 dockercompose: custom port

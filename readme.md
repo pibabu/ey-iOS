@@ -1,6 +1,6 @@
 ## A chatbot that actually understands your project because it runs inside it
 
-No more "here's my project structure again" or pasting the same setup instructions into every new chat.
+No more "here's my project structure again" or pasting the same stuff into every new chat.
 **Prompts become files and workflows become directories.**
 
 Everything follows UNIX principles: small, composable pieces that let you engineer LLM interactions the same way you'd build any reliable system.
