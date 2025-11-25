@@ -19,6 +19,7 @@ class ConversationEditRequest(BaseModel):
     action: Literal["clear", "replace_last", "inject", "remove_last"]
     count: Optional[int] = Field(1, ge=1, le=20)
     new_messages: Optional[List[MessageEdit]] = None
+    system_prompt_append: Optional[str] = None 
 
 
 # ============================================
@@ -30,7 +31,7 @@ async def edit_conversation(request: ConversationEditRequest):
     Modify conversation history for active session.
     
     Actions:
-    - clear: Wipe all messages
+    - clear: Wipe all messages (optionally set system_prompt_append)
     - replace_last: Replace last N messages with new ones
     - inject: Append new messages
     - remove_last: Delete last N messages
@@ -40,22 +41,24 @@ async def edit_conversation(request: ConversationEditRequest):
         
         if request.action == "clear":
             cm.messages.clear()
-            cm.system_prompt = None   # für system prompt reset...noch checken
+            
+            if request.system_prompt_append is not None:
+                cm.set_system_prompt_append(request.system_prompt_append)
+            
             return {
                 "status": "success",
                 "action": "cleared",
-                "message_count": 0
+                "message_count": 0,
+                "system_prompt_append_set": request.system_prompt_append is not None
             }
         
         elif request.action == "replace_last":
             if not request.new_messages:
                 raise HTTPException(400, "new_messages required")
             
-            # Remove last N messages
             to_remove = min(request.count, len(cm.messages))
             cm.messages = cm.messages[:-to_remove] if to_remove > 0 else cm.messages
             
-            # Add new messages
             for msg in request.new_messages:
                 cm.messages.append({"role": msg.role, "content": msg.content})
             
@@ -107,7 +110,8 @@ async def get_status(user_hash: str):
             "user_hash": user_hash,
             "container_name": cm.container_name,
             "message_count": len(cm.messages),
-            "has_system_prompt": cm.system_prompt is not None
+            "has_system_prompt": cm.system_prompt is not None,
+            "system_prompt_append": cm.system_prompt_append
         }
     except Exception as e:
         raise HTTPException(500, f"Status check failed: {str(e)}")
@@ -115,7 +119,7 @@ async def get_status(user_hash: str):
 
 @router.post("/export")
 async def export_conversation(request: dict):
-
+    """Export full conversation data."""
     user_hash = request.get("user_hash")
     if not user_hash:
         raise HTTPException(400, "user_hash required")

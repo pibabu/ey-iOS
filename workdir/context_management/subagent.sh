@@ -22,12 +22,14 @@ runloopllm() {
     local conversation_history="[]"
     local current_prompt="$initial_prompt"
     local final_result=""
+    local result=""
     
     for ((i=1; i<=max_iterations; i++)); do
         echo "--- Iteration $i ---" >> "$log_file"
         
         # Call /quick with conversation history
-        local response=$(curl -s -X POST "${API_BASE}/api/llm/quick" \
+        local response
+        response=$(curl -s -X POST "${API_BASE}/api/llm/quick" \
             -H "Content-Type: application/json" \
             -d "$(jq -n \
                 --arg prompt "$current_prompt" \
@@ -39,8 +41,9 @@ runloopllm() {
         
         echo "$response" | jq '.' >> "$log_file"
         
-        local result=$(echo "$response" | jq -r '.result')
-        local is_complete=$(echo "$response" | jq -r '.complete // false')
+        result=$(echo "$response" | jq -r '.result')
+        local is_complete
+        is_complete=$(echo "$response" | jq -r '.complete // false')
         
         # Update history with this turn
         conversation_history=$(echo "$conversation_history" | jq \
@@ -56,14 +59,18 @@ runloopllm() {
             break
         fi
         
-        if [ $i -lt $max_iterations ]; then
+        if [ "$i" -lt "$max_iterations" ]; then
             current_prompt="Continue with the next step."
         else
-            current_prompt="Provide final condensed summary of all work done. Evaluate your job in 2-3 sentences
-            final_result="$result"
+            current_prompt="Provide final condensed summary of all work done. Evaluate your job in 2-3 sentences."
         fi
     done
     
+    # if the loop ended without marking completion, use the last result
+    if [ -z "$final_result" ] && [ -n "$result" ]; then
+        final_result="$result"
+    fi
+
     echo "=== Final Output ===" >> "$log_file"
     echo "$final_result" >> "$log_file"
     echo "=== End ===" >> "$log_file"

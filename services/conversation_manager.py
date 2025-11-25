@@ -17,6 +17,7 @@ class ConversationManager:
         self.container_name = self._find_container_by_hash(user_hash)
         self.messages: List[Dict] = []
         self.system_prompt: Optional[str] = None
+        self.system_prompt_append: str = ""  # handover prompt
 
     # ----------------------------------------------------------------------
     # Docker container management
@@ -41,8 +42,16 @@ class ConversationManager:
         return await execute_bash_command(command, self.container_name)
 
     # ----------------------------------------------------------------------
-    # System prompt
+    # System prompt management
     # ----------------------------------------------------------------------
+    def set_system_prompt_append(self, text: str):
+        """
+        Set custom text to append to system prompt.
+        Clears cached system prompt to force reload with new append text.
+        """
+        self.system_prompt_append = text
+        self.system_prompt = None  # Force reload on next get_messages()
+
     async def load_system_prompt(self) -> str:
         """Load and compose system prompt from multiple sources."""
         if self.system_prompt is None:
@@ -110,6 +119,9 @@ class ConversationManager:
                 f"Working Directory: {working_dir}\n\n"
                 f"```\n{tree}\n```"
             )
+
+        if self.system_prompt_append.strip():
+            parts.append("\n\n# Additional Instructions\n" + self.system_prompt_append)
 
         return "\n".join(parts)
 

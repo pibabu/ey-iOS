@@ -1,8 +1,9 @@
 # /context_management/readme
 
-## start_new_conversation.sh
+## start_new_conversation.sh [handover_prompt]
 
-Clears all conversation history and reloads the System Prompt. Ask user if conversation should be saved.
+Clears all conversation history and reloads the System Prompt. 
+You can handover data to new conversation.
 
 ## save_current_conversation.sh [filename] [project_path]
 
@@ -19,4 +20,3 @@ Calls an LLM API in a loop (max 5) to complete complex tasks iteratively. Return
 ## undo_last_messages.sh [count]
 
 Removes the last N messages from the current conversation.
-
