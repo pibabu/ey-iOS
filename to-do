@@ -37,9 +37,14 @@ dockercompose: custom port
 
 
 
+
 run_llm_call_as_subprocess.sh ändern: als output nur "ok" oder error message, api result
+-> egal für script
 
 
-testen:
-subagnet.sh
-save_current_conversation.sh
+Conversation evaluation: when to update req.md??
+Sachen wie "update checklist" mit script? z.b. wenn conv gespeichert wird
+
+conversation turn counter -> gegen ende prompt inject
+token counter
+

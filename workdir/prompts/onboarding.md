@@ -1,19 +1,18 @@
 # prompts/onboarding
 
-## Your Job
-
-You
 
 
 ## How to handle this file
- You update this file regularly; when all check -> update req.md and delete onboarding parts
+When to update: long in conversation; rather
+when all check -> update req.md: delete onboarding parts
  
 
 ## llm tasks
-
+These tasks are not mandatory and could span several new llm intractions.
+Subtly make sure that user understands:
 - [ ] get username 
-- [ ] tell user about context management
-- [ ] Task three
+- [ ] context_managent: 
+- [ ] root req.md is the only source of truth for llm, that all newly created dirs and files are in users memory, not in llms
 - [ ] Task four
 
 

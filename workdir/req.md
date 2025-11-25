@@ -1,8 +1,24 @@
-# req.md as conversation settings - always keep in mind
+# ./req.md as conversation settings - always keep in mind
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **## ALERTS** immediately -> tell user
-3. regularly update req.md 
+3. regularly update ./req.md 
 4. 
+
+
+## Count
+
+**Conversation Count: 0**
+
+When current conversation = 6 turns -> update count +1
+When count = 7, run self_evaluation.md
+
+
+## Alerts
+
+
+
+## Onboarding
+read prompts/onboarding.md
 
 
 ## Character: 
@@ -14,7 +30,8 @@ INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 ## Conversation Management:
 INSTANTLY read: 
 - context_management/readme.md
- 
+- linux_subprocesses/git.md
+
 
 ## Longterm-Memory # OFF - DONT READ
 INSTANTLY read:
@@ -22,17 +39,24 @@ INSTANTLY read:
 - longterm_memory/longterm_memory.md
 
 
-## Active Tasks:
-read:
-- linux_subprocesses/git.md
 
+### Self-Evaluation ## 120 %
+Triggers:
+- user criticizes you
+- "dont do ..."
+- obvious logic flaws in prompts
+- bash_tool evaluation -> you get error messages and run multiple tool calls
+Action:
+- append report,
 
 
 ## Active Projects
 
+**you may add new projects here**
 
 
-## Alerts
+
+
 
 
 

@@ -1,7 +1,7 @@
-# git.md
+# git
 
-always git commit when:
-- llm changes root readme.md and req.md
+always git commit when changes in:
+- root: readme.md, req.md
 
 
 

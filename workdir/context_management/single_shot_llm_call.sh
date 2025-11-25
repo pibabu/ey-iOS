@@ -5,14 +5,21 @@ export USER_HASH="${USER_HASH}"
 
 runonetimellm() {
     local prompt="$1"
-    local system_prompt="${2:-Execute the task and save results to a file using the bash tool.}"
+    local system_prompt_input="${2:-Execute the task and save results to a file using the bash tool.}"
     local output_path="${3:-/logs/single_shot/}"
+    local filename="${4:-single_$(date +%Y%m%d_%H%M%S).log}"  
 
-    # Create output directory
+
+    local system_prompt
+    if [ -f "$system_prompt_input" ]; then
+        system_prompt=$(cat "$system_prompt_input")
+        echo "Loaded system prompt from file: $system_prompt_input"
+    else
+        system_prompt="$system_prompt_input"
+    fi
     mkdir -p "$output_path"
 
-    # Log file
-    local log_file="${output_path}/single_$(date +%Y%m%d_%H%M%S).log"
+    local log_file="${output_path}/${filename}"
 
     echo "=== Single-Shot LLM Execution ===" >> "$log_file"
     echo "Timestamp: $(date -Iseconds)" >> "$log_file"
@@ -21,7 +28,6 @@ runonetimellm() {
     echo "System Prompt: $system_prompt" >> "$log_file"
     echo "---" >> "$log_file"
 
-    # API call
     local response
     response=$(curl -s -X POST "${API_BASE}/api/llm/quick" \
         -H "Content-Type: application/json" \
@@ -32,10 +38,10 @@ runonetimellm() {
             '{prompt: $prompt, system_prompt: $system, user_hash: $hash}'
         )")
 
-    # Log full response
+  
     echo "$response" | jq '.' >> "$log_file"
 
-    # Extract result
+
     local result
     result=$(echo "$response" | jq -r '.result')
 
