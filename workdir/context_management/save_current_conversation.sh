@@ -1,20 +1,8 @@
 # save_current_conversation.sh
 #!/bin/bash
-# ------------------------------------------------------------
-# Purpose : Fetches conversation data from the API and saves it
-#           as a JSON file. Allows optional filename and path parameters.
-# Usage   :
-#   save_current_conversation.sh
-#     → saves to /llm/private/conversation_history/conv_<timestamp>.json
-#   save_current_conversation.sh custom.json
-#     → saves to /llm/private/conversation_history/custom.json
-#   save_current_conversation.sh custom.json /path/to/dir
-#     → saves to /path/to/dir/custom.json
-#   save_current_conversation.sh "" /path/to/dir
-#     → saves to /path/to/dir/conv_<timestamp>.json
-# Notes
-#   - Default save folder: /llm/private/conversation_history/
-# ------------------------------------------------------------
+# Allows optional filename and path parameters.
+
+# Default save folder: /llm/private/conversation_history/
 
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
 export USER_HASH="${USER_HASH}"

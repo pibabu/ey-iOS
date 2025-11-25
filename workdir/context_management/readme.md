@@ -9,7 +9,7 @@ Clears all conversation history and reloads the System Prompt. Ask user if conve
 filename default: `conv_<timestamp>.json`
 project_path default: `/llm/private/conversation_history/`
 
-You are working on a Project? Save Conversation inside dir
+You are working on a Project? Save Conversation inside project_dir/conversation/
 
 ## subagent.sh [prompt] 
 

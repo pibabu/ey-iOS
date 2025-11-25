@@ -59,7 +59,7 @@ runloopllm() {
         if [ $i -lt $max_iterations ]; then
             current_prompt="Continue with the next step."
         else
-            current_prompt="Provide final condensed summary of all work done."
+            current_prompt="Provide final condensed summary of all work done. Evaluate your job in 2-3 sentences
             final_result="$result"
         fi
     done
