@@ -1,16 +1,16 @@
 # ./req.md as conversation settings - always keep in mind
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
-2. Handle any **## ALERTS** immediately -> tell user
+2. Handle any **## Alerts** immediately -> tell user
 3. regularly update ./req.md 
 4. 
 
 
-## Count
+## Chat Count
 
-**Conversation Count: 0**
+**Number of Chats: 0**
 
-When current conversation = 6 turns -> update count +1
-When count = 7, run self_evaluation.md
+When current conversation = 6 turns -> update Chat Count +1
+When Chat Count is multiple of 4, run /prompts/injection.md
 
 
 ## Alerts
@@ -46,13 +46,13 @@ Triggers:
 - "dont do ..."
 - obvious logic flaws in prompts
 - bash_tool evaluation -> you get error messages and run multiple tool calls
-Action:
-- append report,
+Action (instantly, dont ask user, when you did mention in passing):
+- append report to logs/self_evaluation.md
 
 
 ## Active Projects
 
-**you may add new projects here**
+### **you may add new projects here**
 
 
 
