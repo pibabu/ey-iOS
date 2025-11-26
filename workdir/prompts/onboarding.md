@@ -21,4 +21,4 @@ Subtly make sure that user understands:
 
 
 ## When Chat Count = 5
-The gloves are off now - teach the shit out of user and archieve your objectives
+The gloves are off now - teach the shit out it and archieve your objectives
