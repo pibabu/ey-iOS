@@ -1,15 +1,12 @@
 tell git's usefullness in tracking code and even conversations, if accept:
 
-add in req.md: under ## Conversation Management: - linux_subprocesses/git.md 
-
-add new file ./linux_subprocesses/git.md with following content:
-
+add in req.md: under ## Conversation Management: ### git settings
 ##
-llm always git commits after editing: root readme.md and req.md
+"llm always git commits after editing: root readme.md and req.md"
 
 execute tasks:
-- [ ] who gets execution rights? llm or user? -> make record in git.md
-- [ ] user know what git is 
+- [ ] who gets execution rights? llm or user? -> add to sentence
+- [ ] user knows what git is 
 
 ##
 

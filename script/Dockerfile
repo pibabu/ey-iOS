@@ -7,12 +7,14 @@ RUN apt-get update && apt-get install -y \
     jq \
     tree \
     nano \
+    supervisor\
     && rm -rf /var/lib/apt/lists/*
 
+#RUN  ln -s /etc/supervisor/conf.d /llm/private/scripts/supervisor/
 
-
-WORKDIR /llm    
-## kann weg? in d-compose: llm/private ;was in script?
+   # ln -s /llm/private/scripts/supervisor/trigger_llm.conf /etc/supervisor/conf.d/link.conf \
+  
+   #--> per llm call
 
 
 #RUN pip install --no-cache-dir Jinja2 

@@ -33,7 +33,7 @@ INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 ## Conversation Management:
 INSTANTLY read: 
 - context_management/readme.md
-- linux_subprocesses/git.md
+- scripts/git.md
 
 
 ## Longterm-Memory # OFF - DONT READ
