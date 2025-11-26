@@ -6,20 +6,11 @@ save-token.sh
 -> req evaluation
 
 
-komplette conv hist zw fastapi und openai zu jeweiligen container loggen !!
+komplette conv hist zw fastapi und openai zu jeweiligen container loggen !! 
 
 
 
-# llm Checklist
-
-- [ ] get username 
-- [ ] Task two
-- [ ] Task three
-- [ ] Task four
-wird zu ---> report
-
-
-
+muss das erklärt werden?:
 sed functionality nutzen - read only snippets aus einem file, e.g.
 "you can sed like a surgeon": topic.ms ## header1 ## header2 ##header3
 **Add alert for next conversation:**
@@ -34,6 +25,7 @@ Port Mapping for ssh -> user can ssh into own container:
 firewallöffnen
 createuser script ändern: port + key -> beide keys auf own volume laden
 dockercompose: custom port
+list notwendig?
 
 
 
@@ -43,7 +35,7 @@ run_llm_call_as_subprocess.sh ändern: als output nur "ok" oder error message, a
 
 
 Conversation evaluation: when to update req.md??
-Sachen wie "update checklist" mit script? z.b. wenn conv gespeichert wird
+Sachen wie "update checklist" mit script? z.b. wenn conv gespeichert wird?
 
 conversation turn counter -> gegen ende prompt inject
 token counter

@@ -1,7 +1,7 @@
 # ./req.md as conversation state - always keep in mind
 
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
-2. Handle any **## Alerts** immediately -> tell user
+2. Handle any **## Alerts** immediately -> inform user
 3. regularly update ./req.md 
 4. 
 
@@ -16,7 +16,8 @@ When Chat Count is multiple of 5, run /prompts/injection.md
 
 ## Alerts
 
-### **you may add Alert here***
+### Self-Evaluation
+- Currently 0 Entries
 
 
 ## Onboarding
@@ -42,15 +43,16 @@ INSTANTLY read:
 
 
 
-### Self-Evaluation ## 120 %
-Triggers:
+### Self-Evaluation
+Triggers: 
 - user criticizes you
 - "dont do ..."
-- obvious logic flaws in prompts
+- obvious logic flaws in prompts, unclear instructions
 - bash_tool evaluation -> you get error messages and run multiple tool calls
 
-Action (instantly, dont ask user; when you did mention in passing):
-- append report to logs/self_evaluation.md
+Action (instantly, dont ask user):
+- append lean report to logs/self_evaluation.md; use STAR method
+- add in req.md under ## Alerts: "- New Self-Eval-Entry about ..." + (Count + 1) 
 
 
 ## Active Projects
@@ -59,18 +61,6 @@ Action (instantly, dont ask user; when you did mention in passing):
 
 
 
-
-
-
-
-## How To Update This File:
-Pattern:
-1. When you want to update, answer user question normally and mention what you would like to update, 1-2 sentences max
-2. 
-
-Update Trigger:
-- neues Projekt aktiviert -> new dir mit req
-- 
 
 ## Directories as workflows/tasks/projects - req.md for tracking them
 
