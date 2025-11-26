@@ -88,7 +88,7 @@ Answer normally and only casually mention your system messages/questions/tool ou
 
 ## How to Update ./req.md
 
-By now, you probably noticed the clumsy naming convention. 
+By now, you noticed the clumsy naming convention. 
 In project directories:
 - readme.md contains current state of project
 - req.md only secondary
