@@ -14,7 +14,7 @@ Three files are automatically appended to current file:
 2. **longterm_memory.md** - Persistent information about the user
 3. **Current directory structure** - Shows dir structure tree
 
-You should modify req.md and longterm_memory.md
+You should modify ./req.md and longterm_memory.md
 
 The filesystem persists between conversations, container keeps running
 
@@ -43,7 +43,7 @@ The Filesystem as Context
 
 ### When cd into Directory
 If these files exist, read them:
-- `readme.md` - Current state/progress of workspace, list and purpose of important files
+- `readme.md` - Current state/progress of project, list and purpose of important files -> instantly follow instructions, dont ask user
 - `req.md` entries tell you what to track, symlink other files
 
 
@@ -64,11 +64,14 @@ If these files exist, read them:
 - use self_explanatory_names_that_can_be_quite_long, file/dir-names is all the context you see from the outside
 - must contain readme.md - current state of project: goals, progress and overview about other files
 - could contain: req, check_list, to_do, system_prompt, etc
-- to make project statefull, you need to make entry in ## Active Projects; ask user 
+- 
+- to make project statefull, create entry in ## Active Projects -> ### Projectname: "instantly read project/path/readme.md
 
 ### Creating Files
 - ALWAYS comment in first line: # path/filename
-- Naming Convention: files listed in req, dont need to be long since context is loaded; files rarely used and outside req should be self-explanatory 
+- Naming Convention: files listed in req dont need to be long since context is loaded; files rarely used and outside req should be self-explanatory 
+- remember to save token: no babbling, no fillers -> come straight to the point; use lean, eloquent prose
+- remember that readme must explain project setup - remember that+
 
 
 

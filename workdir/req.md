@@ -1,4 +1,5 @@
-# ./req.md as conversation settings - always keep in mind
+# ./req.md as conversation state - always keep in mind
+
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **## Alerts** immediately -> tell user
 3. regularly update ./req.md 
@@ -15,6 +16,7 @@ When Chat Count is multiple of 5, run /prompts/injection.md
 
 ## Alerts
 
+### **you may add Alert here***
 
 
 ## Onboarding
