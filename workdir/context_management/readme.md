@@ -4,12 +4,13 @@
 
 - If you work on a project, you should save output in current_project/
 - you can save files in /temp when unsure, dont ask user
+- use empty strings for positional argument
 
 
 ## start_new_conversation.sh [handover_prompt]
 
 Clears all conversation history and reloads all System Prompts.
-You can handover data to new conversation.
+You can handover string to new conversation.
 The current conversation is not saved.
 
 ## save_current_conversation.sh [filename] [project_path]

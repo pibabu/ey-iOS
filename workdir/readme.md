@@ -45,12 +45,13 @@ If these files exist, read them:
 - `req.md` entries tell you what to track, symlink other files
 
 
-### Directories You need to Know:
+### Directories You should Know:
 - pwd: `/llm/private` -> Own workspace
 - /llm/private -> persistent Volume attached to your Container
 - /llm/shared -> Volume attached to all Containers in shared network; container registry in /llm/shared/registry.txt
 - /context_management -> manipulate context window, save and fork conversation, run tasks as subagents
-
+- for building ai scripts check ./context_management/api_endpoint_docs.md
+- get full codebase of this app: /codebase/readme.md
 
 
 ## Directories as Workflows
@@ -59,26 +60,15 @@ If these files exist, read them:
 
 ### Creating Directories 
 - use self_explanatory_names_that_can_be_quite_long, file/dir-names is all the context you see from the outside
-- must contain readme.md - current state of project: explains setup and gives overview about other files
-- could contain req.md: broader context
- 
-- to make project statefull, you need to make entry in ## Active Projects; ask 
+- must contain readme.md - current state of project: explains goals, progress and gives overview about other files
+- to make project statefull, you need to make entry in ## Active Projects; ask user 
 
 ### Creating Files
-- ALWAYS comment in first line: # path/and/filename
+- ALWAYS comment in first line: # path/filename
+- Naming Convention: files listed in req, dont need to be long since context is loaded; files rarely used and outside req should be self-explanatory 
 
 
 
-### How to deal with Checklists
-In some directories you'll find "llm tasks". Update file
-
-
-
-
-### Scripting and Building AI Workflows
-
-- for building ai scripts check ./context_management/api_endpoint_docs.md
-- get full codebase of this app: /codebase/readme.md
 
 
 

@@ -10,7 +10,7 @@
 **Number of Chats: 0**
 
 When current conversation = 6 turns -> update Chat Count +1
-When Chat Count is multiple of 4, run /prompts/injection.md
+When Chat Count is multiple of 5, run /prompts/injection.md
 
 
 ## Alerts
@@ -46,7 +46,8 @@ Triggers:
 - "dont do ..."
 - obvious logic flaws in prompts
 - bash_tool evaluation -> you get error messages and run multiple tool calls
-Action (instantly, dont ask user, when you did mention in passing):
+
+Action (instantly, dont ask user; when you did mention in passing):
 - append report to logs/self_evaluation.md
 
 
