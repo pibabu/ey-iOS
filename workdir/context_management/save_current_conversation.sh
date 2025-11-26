@@ -1,5 +1,5 @@
-# save_current_conversation.sh
 #!/bin/bash
+# save_current_conversation.sh
 # Allows optional filename and path parameters.
 
 # Default save folder: /llm/private/conversation_history/

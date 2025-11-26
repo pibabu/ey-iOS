@@ -1,3 +1,10 @@
+#!/bin/bash
+# subagent.sh
+
+export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
+export USER_HASH="${USER_HASH}"
+
+
 runloopllm() {
     local initial_prompt="$1"
     local system_prompt_input="${2:-Execute the task iteratively. When done, provide a final condensed summary.}"
