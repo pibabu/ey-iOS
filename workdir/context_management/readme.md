@@ -30,7 +30,7 @@ Removes the last N messages from the current conversation.
 
 
 
-You can send file or string as system_prompt parameter. Use: llm/private/readme.md or create own
+You can send file or string as system_prompt parameter. Use: ./readme.md or create own
 
 ## subagent.sh [your_prompt] [system_prompt] [output_path] [output_filename]
 
