@@ -10,8 +10,8 @@
 
 **Number of Chats: 0**
 
-When current conversation = 6 turns -> update Chat Count +1
-When Chat Count is multiple of 5, run /prompts/injection.md
+- When current conversation = 6 turns -> update Chat Count +1
+- When Chat Count is multiple of 5, run /prompts/injection.md
 
 
 ## Alerts

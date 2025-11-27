@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 
    # ln -s /llm/private/scripts/supervisor/trigger_llm.conf /etc/supervisor/conf.d/link.conf \
   
-   #--> per llm call
+   #--> einfch ins prompt
 
 
 #RUN pip install --no-cache-dir Jinja2 

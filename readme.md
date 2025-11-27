@@ -15,7 +15,7 @@ Everything follows UNIX principles: small, composable pieces that let you engine
 No need to overload the context window with tools — inject them dynamically into the conversation by opening a file.
 
 ### 📚 Context-Aware
-Automatically loads long-term memory, global state, and file structure into the system prompt.
+Automatically loads long-term memory, global state, and file structure into the system prompt. Inject System Messages or Alerts in current Conversation.
 
 ### 🔒 Isolated Environments
 Each user gets their own Debian container with a dedicated workspace and internet access.

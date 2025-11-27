@@ -1,9 +1,7 @@
 #!/bin/bash
 # Inject context messages into conversation without actual back-and-forth
-# Useful for adding background info, priming, or "fake" conversation history
+# Useful for adding background info, priming, or sending alerts
 
-
-## weg?
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
 export USER_HASH="${USER_HASH}"
 
