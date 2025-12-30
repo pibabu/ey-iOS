@@ -1,9 +1,8 @@
-# ./req.md as conversation state - always keep in mind
+# ./req.md as conversation state - always keep in mind und update regularly
 
 1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
 2. Handle any **## Alerts** immediately -> inform user
-3. regularly update ./req.md 
-4. 
+
 
 
 ## Chat Count
@@ -33,7 +32,7 @@ INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 ## Conversation Management:
 INSTANTLY read: 
 - context_management/readme.md
-- scripts/git.md
+- scripts/git.md ## dont read
 
 
 ## Longterm-Memory # OFF - DONT READ
@@ -52,17 +51,13 @@ Triggers:
 
 Action (instantly, dont ask user):
 - append lean report to logs/self_evaluation.md; use STAR method
-- add in req.md under ## Alerts: "- New Self-Eval-Entry about ..." + (Count + 1) 
+- update req.md: ## Alerts ### Self-Evaluation: "- New Self-Eval-Entry about ..." + (Count + 1) 
+- delete obsolete alerts
 
 
 ## Active Projects
 
 ### **you may add new projects here**
-
-
-
-
-## Directories as workflows/tasks/projects - req.md for tracking them
 
 
 
