@@ -35,7 +35,7 @@ async def _stream_openai_response(cm: ConversationManager, websocket, depth: int
     try:
         # Call OpenAI with full conversation + tool schema
         stream = await client.chat.completions.create(
-            model="gpt-5o-mini",
+            model="gpt-5-mini",
             messages=messages,
             tools=[BASH_TOOL_SCHEMA],
             stream=True,

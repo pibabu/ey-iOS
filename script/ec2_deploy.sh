@@ -274,7 +274,7 @@ if [ "$CREATE_RANDOM_USER" = true ]; then
         # Run script and capture output to both deployment log and separate file 
         SCRIPT_LOG="$APP_DIR/logs/create_user_$RANDOM_NAME.log"
         
-        # Run script with 'no' as default answer to shared data question
+        # Run script with 'no' as default answer to shared data question 
         # Redirect output to both deployment log and script-specific log
         {
             echo "no" | bash "$APP_DIR/script/create_user.sh" "$RANDOM_NAME" "$RANDOM_JOB"

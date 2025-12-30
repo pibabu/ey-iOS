@@ -5,7 +5,7 @@ BASH_TOOL_SCHEMA = {
     "type": "function",
     "function": {
         "name": "bash_tool",
-        "description": (                ### ändern ?
+        "description": (      
             "Execute bash commands inside the user's Docker container. "
             "Use for file operations, system queries, or running scripts ."
         ),
