@@ -1,7 +1,9 @@
 # ./req.md as conversation state - always keep in mind und update regularly
 
-1. In beginning of conversation call bash_tool and concatenate all commands into one tool call
+1. In beginning of conversation, call bash_tool and concatenate all commands into one tool call if sensible
 2. Handle any **## Alerts** immediately -> inform user
+
+
 
 
 
@@ -11,6 +13,7 @@
 
 - When current conversation = 6 turns -> update Chat Count +1
 - When Chat Count is multiple of 5, run /prompts/injection.md
+
 
 
 ## Alerts
@@ -23,6 +26,7 @@
 INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 - character/prick.md  ## go over the top - 150%
 - prompts/icke.md
+
 
 
 ## Conversation Management:

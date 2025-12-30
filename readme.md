@@ -1,30 +1,38 @@
-# A Chatbot That Understands Your Project 
-**Because it runs inside it.**
+# Your Chatbot Just Got a Home Directory
 
-No more "here's my project structure again" or copy-pasting context into every new chat. 
+Imagine an LLM that doesn't need explanations—**because it can look around**.
 
-**Prompts become files. Workflows become directories.**
+Every directory is a workspace. Every file is context. Every script is a tool.  
+**This isn't chat-with-files. This is chat-inside-files.**
 
-Everything follows UNIX principles: small, composable pieces that let you engineer LLM interactions the same way you'd build any reliable system.
+No more copy-pasting project structures into prompts. No more re-explaining your setup every conversation.  
+Your LLM lives in a **dedicated Linux container** with full filesystem access, persistent memory, and the ability to execute commands.
+
+---
+
+**It's a network, not just a container.** Every user's AI workspace can communicate with others through shared volumes and network access. Agents can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
+
+---
+
+## Root Directory - The System Prompt
+
+**1. `readme.md`** — The actual System Prompt  
+**2. `req.md`** — Current state, tools, active projects, and alerts → links to other files and dirs  
+**3. `longterm_memory.md`** — Persistent information about the user  
+**4. `tree workdir`** — Shows directory structure
 
 ---
 
 ## Features
 
-### 🧠 Context Engineering
+**🧠 Context Engineering**  
 No need to overload the context window with tools — inject them dynamically into the conversation by opening a file.
 
-### 📚 Context-Aware
-Automatically loads long-term memory, global state, and file structure into the system prompt. Inject System Messages or Alerts in current conversation.
+**📦 Workspace as Memory**  
+Your file structure IS your LLM's memory. Organize it however makes sense to you.
 
-### 🔒 Isolated Environments
-Each user gets their own Debian container with a dedicated workspace and internet access.
-
-### 🌐 Communication Inside Network
-Containers share a network, and users can communicate via a shared volume.
-
-### ⚙️ Command Execution
-Run bash commands safely inside containers. Use Cron Jobs to automate tasks or LLM calls.
+**⏰ Autonomous Scheduling**  
+Set up cron jobs for recurring tasks. Your LLM doesn't need you online to check emails, generate reports, or monitor systems.
 
 ### 💬 Conversation Management
 Run scripts inside the container to manage conversation, like "Delete last Messages" or "Start new Conversation and handover Context"
@@ -37,10 +45,9 @@ Run subagents for tasks that would otherwise pollute the context window.
 ## "It's Just Bash"
 
 - **`mkdir mails/newsletter`** and **`touch recipients.csv, newsletter.txt, send_mail.sh, readme.md`**
-- **`cd topics/coding/`**, **`cat readme.md`** for context, **`run script.py`** with parameters
 - **Run `subagent.sh`** to grep through logs, save condensed answer in file
-- **Add dynamic context** by changing `req.md` → automatically injected into system prompt of each new conversation
-
+- **`echo "Prefers metric system, dislikes 'think of it as' analogies" >> longterm_memory.md`** 
+- **Run cronjob `check_mail_agent.sh`**, alert with **`telegram.py`**
 ---
 
 ## Learn More
