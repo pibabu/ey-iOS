@@ -39,8 +39,7 @@ Run subagents for tasks that would otherwise pollute the context window.
 - **`mkdir mails/newsletter`** and **`touch recipients.csv, newsletter.txt, send_mail.sh, readme.md`**
 - **`cd topics/coding/`**, **`cat readme.md`** for context, **`run script.py`** with parameters
 - **Run `subagent.sh`** to grep through logs, save condensed answer in file
-- **Add dynamic context** by changing `req.md` → automatically injected into system prompt
-- **Run `start_new_conversation.sh`** → start new Conversation and send Context as parameter
+- **Add dynamic context** by changing `req.md` → automatically injected into system prompt of each new conversation
 
 ---
 

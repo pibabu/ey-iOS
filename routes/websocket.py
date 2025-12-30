@@ -21,21 +21,7 @@ def container_exists_by_hash(user_hash: str) -> bool:
 
 @router.websocket("/ws/{user_hash}")
 async def websocket_endpoint(websocket: WebSocket, user_hash: str):
-    """
-    WebSocket chat endpoint.
-    
-    Flow:
-    1. Get shared ConversationManager from registry
-    2. Receive user messages
-    3. Add to cm.messages (Python list in memory)
-    4. Process with LLM
-    5. Add responses to cm.messages
-    
-    NO SAVING - cm.messages lives in RAM until:
-    - Server restarts (lost)
-    - User calls /edit with action="clear"
-    - LLM manually saves via bash tool
-    """
+
     print(f"DEBUG: WebSocket connection attempt for user_hash={user_hash}")
     
     # Verify container exists
@@ -109,13 +95,6 @@ async def websocket_endpoint(websocket: WebSocket, user_hash: str):
         except:
             pass
         
-        # Note: We DON'T remove from registry here
-        # The CM stays in memory for future connections
-        # If you want to clear on disconnect:
-        # from services.conversation_registry import remove_conversation
-        # remove_conversation(user_hash)
-
-
 @router.get("/ws/health")
 async def websocket_health():
     """Health check endpoint for WebSocket service."""

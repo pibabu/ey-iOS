@@ -16,12 +16,12 @@ router = APIRouter(prefix="/api/llm", tags=["llm"]) ##
 @router.post("/quick")
 async def quick_llm_call(
     prompt: str,
-    system_prompt: str = "Execute the task and save results to a file using the bash tool.", ### checken
-    user_hash: Optional[str] = None                         #  -> für bashtool muss prompt geändert werden, wieviel kontext??
+    system_prompt: str = "Execute the task and save results to a file using the bash tool.",
+    user_hash: Optional[str] = None     
 ):
     """
     One-time LLM call with bash tool support (for cron jobs, scripts, etc).
-    Completely separate from conversation history - creates isolated execution context.
+    Completely separate from conversation history - creates isolated execution context. 
     """
     try:
         # Get container name from user_hash if provided, otherwise use a default
