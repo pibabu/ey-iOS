@@ -47,6 +47,4 @@ Run subagents for tasks that would otherwise pollute the context window.
 ## Learn More
 
 
-Check **[`workdir/readme.md`](workdir/readme)** for more info
-
-[more info](workdir/readme.md)
+Check **[`workdir/readme.md`](workdir/readme.md)** for more info
