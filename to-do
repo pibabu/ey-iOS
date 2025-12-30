@@ -6,6 +6,9 @@ save-token.sh
 -> req evaluation
 
 
+save conversation in "last chats" autom 
+
+
 komplette conv hist zw fastapi und openai zu jeweiligen container loggen !! 
 
 
@@ -43,3 +46,8 @@ token counter
 
 
 terraform ebs in userdata script
+
+
+
+
+redis pub/sub   -> ey  

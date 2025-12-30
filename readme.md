@@ -1,7 +1,7 @@
-# A Chatbot That Actually Understands Your Project 
+# A Chatbot That Understands Your Project 
 **Because it runs inside it.**
 
-No more "here's my project structure again" or copy-pasting stuff into every new chat. 
+No more "here's my project structure again" or copy-pasting context into every new chat. 
 
 **Prompts become files. Workflows become directories.**
 
@@ -15,7 +15,7 @@ Everything follows UNIX principles: small, composable pieces that let you engine
 No need to overload the context window with tools — inject them dynamically into the conversation by opening a file.
 
 ### 📚 Context-Aware
-Automatically loads long-term memory, global state, and file structure into the system prompt. Inject System Messages or Alerts in current Conversation.
+Automatically loads long-term memory, global state, and file structure into the system prompt. Inject System Messages or Alerts in current conversation.
 
 ### 🔒 Isolated Environments
 Each user gets their own Debian container with a dedicated workspace and internet access.
@@ -46,4 +46,7 @@ Run subagents for tasks that would otherwise pollute the context window.
 
 ## Learn More
 
-Check **`workdir/readme.md`** for more info.
+
+Check **[`workdir/readme.md`](workdir/readme)** for more info
+
+[more info](workdir/readme.md)
