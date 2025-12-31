@@ -203,7 +203,7 @@ sudo systemctl start nginx
 sleep 5
 
 # ==========================================
-# SSL CERTIFICATE WITH CERTBOT
+# SSL CERTIFICATE WITH CERTBOT -> weg
 # ==========================================
 if [ "$USING_CUSTOM_SSL" = false ]; then
     log "Obtaining SSL certificate with Certbot..."

@@ -35,14 +35,14 @@ Your file structure IS your LLM's memory. Organize it however makes sense to you
 Set up cron jobs for recurring tasks. Your LLM doesn't need you online to check emails, generate reports, or monitor websites.
 
 ### 💬 Conversation Management
-Run scripts inside the container to manage conversation, like "Delete last Messages" or "Start new Conversation and handover Context"
+Run scripts inside the container to manage conversation, like "Delete last messages" or "Start new conversation and handover context".
 
 ### 🤖 Subagents
 Run subagents for tasks that would otherwise pollute the context window.
 
 ---
 
-## "It's Just Bash"
+## "It's Just Bash" 
 
 - **`mkdir mails/newsletter`** and **`touch recipients.csv newsletter.txt send_mail.sh readme.md`**
 - **Run `subagent.sh`** to grep through logs, save condensed answer in file

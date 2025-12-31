@@ -49,4 +49,4 @@ terraform ebs in userdata script
 
 
 
-redis pub/sub   -> ey  
+redis streams   -> ey  
