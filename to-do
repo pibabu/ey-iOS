@@ -1,6 +1,3 @@
-create_user script in deploym pipeline
-
-
 
 bash tool besxhreibung ändern 
 
@@ -8,6 +5,7 @@ bash tool besxhreibung ändern
 save-token.sh
 -> für current conv
 -> req evaluation
+count-token -> als llm task?
 
 
 checklisten in readme/req erklären! wann, wird was aktualisiert!   -> wie wenn /onboarding.md erfüllt?
@@ -21,13 +19,6 @@ komplette conv hist zw fastapi und openai zu jeweiligen container loggen !!
 
 
 
-muss das erklärt werden?:
-sed functionality nutzen - read only snippets aus einem file, e.g.
-"you can sed like a surgeon": topic.ms ## header1 ## header2 ##header3
-**Add alert for next conversation:**
-```bash
-sed -i '/^## ALERTS$/a ⚡ Your message' requirements.md
-```
 
 
 

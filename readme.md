@@ -3,9 +3,9 @@
 Imagine an LLM that doesn't need explanations—**because it can look around**.
 
 Every directory is a workspace. Every file is context. Every script is a tool.  
-**This isn't chat-with-files. This is chat-inside-files.**
 
-No more copy-pasting project structures into prompts. No more re-explaining your setup every conversation.  
+No more copy-pasting project structures into prompts. No more re-explaining your setup every conversation. 
+
 Your LLM lives in a **dedicated Linux container** with full filesystem access, persistent memory, and the ability to execute commands.
 
 ---
@@ -14,7 +14,7 @@ Your LLM lives in a **dedicated Linux container** with full filesystem access, p
 
 ---
 
-## Root Directory - The System Prompt
+The System Prompt consists of:
 
 **1. `readme.md`** — The actual System Prompt  
 **2. `req.md`** — Current state, tools, active projects, and alerts → links to other files and dirs  
@@ -25,13 +25,13 @@ Your LLM lives in a **dedicated Linux container** with full filesystem access, p
 
 ## Features
 
-**🧠 Context Engineering**  
+### 🧠 Context Engineering 
 No need to overload the context window with tools — inject them dynamically into the conversation by opening a file.
 
-**📦 Workspace as Memory**  
+### 📦 Workspace as Memory 
 Your file structure IS your LLM's memory. Organize it however makes sense to you.
 
-**⏰ Autonomous Scheduling**  
+### ⏰ Autonomous Scheduling 
 Set up cron jobs for recurring tasks. Your LLM doesn't need you online to check emails, generate reports, or monitor websites.
 
 ### 💬 Conversation Management

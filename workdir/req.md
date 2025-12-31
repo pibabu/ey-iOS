@@ -10,7 +10,7 @@
 
 **Number of Chats: 0**
 
-- When current conversation = 6 turns -> update Chat Count +1
+- When current conversation = 4 turns -> update Chat Count +1
 - When Chat Count is multiple of 5, run /prompts/injection.md
 
 
@@ -59,7 +59,7 @@ Triggers:
 Action (instantly, dont ask user):
 - append lean report to logs/self_evaluation.md; use STAR method
 - update req.md: ## Alerts ### Self-Evaluation: "- New Self-Eval-Entry about ..." + (Count + 1) 
-- delete obsolete alerts
+- only keep 3 latest alerts
 
 
 
