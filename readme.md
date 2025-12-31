@@ -10,7 +10,7 @@ Your LLM lives in a **dedicated Linux container** with full filesystem access, p
 
 ---
 
-**It's a network, not just a container.** Every user's AI workspace can communicate with others through shared volumes and network access. Agents can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
+**It's a network, not just a container.** Every user's AI workspace can communicate with others through shared volumes and network access. Agents und Users can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
 
 ---
 
@@ -32,7 +32,7 @@ No need to overload the context window with tools — inject them dynamically in
 Your file structure IS your LLM's memory. Organize it however makes sense to you.
 
 **⏰ Autonomous Scheduling**  
-Set up cron jobs for recurring tasks. Your LLM doesn't need you online to check emails, generate reports, or monitor systems.
+Set up cron jobs for recurring tasks. Your LLM doesn't need you online to check emails, generate reports, or monitor websites.
 
 ### 💬 Conversation Management
 Run scripts inside the container to manage conversation, like "Delete last Messages" or "Start new Conversation and handover Context"
@@ -44,10 +44,10 @@ Run subagents for tasks that would otherwise pollute the context window.
 
 ## "It's Just Bash"
 
-- **`mkdir mails/newsletter`** and **`touch recipients.csv, newsletter.txt, send_mail.sh, readme.md`**
+- **`mkdir mails/newsletter`** and **`touch recipients.csv newsletter.txt send_mail.sh readme.md`**
 - **Run `subagent.sh`** to grep through logs, save condensed answer in file
 - **`echo "Prefers metric system, dislikes 'think of it as' analogies" >> longterm_memory.md`** 
-- **Run cronjob `check_mail_agent.sh`**, alert with **`telegram.py`**
+- **Run cron job `check_mail_agent.sh`**, alert with **`telegram.py`**
 ---
 
 ## Learn More

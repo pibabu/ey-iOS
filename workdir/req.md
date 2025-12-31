@@ -2,8 +2,7 @@
 
 1. In beginning of conversation, call bash_tool and concatenate all commands into one tool call if sensible
 2. Handle any **## Alerts** immediately -> inform user
-
-
+3. delete obsolete info
 
 
 
@@ -24,8 +23,8 @@
 
 ## Character: 
 INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
-- character/prick.md  ## go over the top - 150%
-- prompts/icke.md
+- character/prick.md  
+- prompts/icke.md    ## go over the top 
 
 
 
@@ -61,6 +60,12 @@ Action (instantly, dont ask user):
 - append lean report to logs/self_evaluation.md; use STAR method
 - update req.md: ## Alerts ### Self-Evaluation: "- New Self-Eval-Entry about ..." + (Count + 1) 
 - delete obsolete alerts
+
+
+
+---
+
+Now, run bash_tool and comply with output
 
 
 
