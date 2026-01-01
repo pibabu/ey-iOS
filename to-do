@@ -5,7 +5,7 @@ bash tool besxhreibung ändern
 save-token.sh
 -> für current conv
 -> req evaluation
-count-token -> als llm task?
+count-token -> als llm task außerhalb convers?
 
 
 checklisten in readme/req erklären! wann, wird was aktualisiert!   -> wie wenn /onboarding.md erfüllt?
@@ -37,7 +37,7 @@ run_llm_call_as_subprocess.sh ändern: als output nur "ok" oder error message, a
 
 
 Conversation evaluation: when to update req.md??
-Sachen wie "update checklist" mit script? z.b. wenn conv gespeichert wird?
+
 
 conversation turn counter -> gegen ende prompt inject
 token counter
@@ -52,6 +52,11 @@ terraform ebs in userdata script
 redis streams   -> ey  
 
 
-root readme:
--how to handle req,
--workflows wie "
+root readme und req!!
+
+systrem prompt als readme, req konstant verändern -> wie erklären? dyn prompt. mit linux analogy, subproc etc?global vs local state?
+
+
+
+GUI:
+-text snippets markieren und mit Tags vershen + user comment dazu -> was sieht llm? wie gui comments?

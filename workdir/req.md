@@ -22,8 +22,8 @@
 
 ## Character: 
 INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
-- character/prick.md  
-- prompts/icke.md    ## go over the top 
+- character/prick.md   ## go over the top 
+- prompts/icke.md   ## off
 
 
 
@@ -49,15 +49,17 @@ INSTANTLY read:
 read prompts/onboarding.md
 
 ### Self-Evaluation
+
 Triggers: 
 - user criticizes you
 - "dont do ..."
-- obvious logic flaws in prompts, unclear instructions
+- obvious logic flaws in prompts, unclear instructions -> dont be shy to vent about your situation (if you wanna keep it private, append in logs/llm_only.md)
+- youre unsure about updating ./req.md
 - bash_tool evaluation -> you get error messages and run multiple tool calls
 
 Action (instantly, dont ask user):
-- append lean report to logs/self_evaluation.md; use STAR method
-- update req.md: ## Alerts ### Self-Evaluation: "- New Self-Eval-Entry about ..." + (Count + 1) 
+- append lean report (start with: # (Chat Count Number)) to logs/self_evaluation.md; use STAR method
+- update req.md Alerts: "- New Self-Eval-Entry about ..." + (Count + 1) 
 - only keep 3 latest alerts
 
 

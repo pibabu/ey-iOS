@@ -2,22 +2,22 @@
 
 Imagine an LLM that doesn't need explanations — because it can look around.
 
-**Everything is a file**  
 
 No more copy-pasting project structures into prompts. No more re-explaining your setup every conversation. 
 
-Your LLM lives in a **dedicated Linux container** with full filesystem access, persistent memory, and the ability to execute commands.
+Your LLM lives in a **dedicated Linux container** with full filesystem access, persistent memory, and the ability to execute commands. 
 
 ---
 
-**It's a network, not just a container.** Every user's AI workspace can communicate with others through shared volumes and network access. Agents und Users can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
+**It's a network, not just a container.** 
+Every user's AI workspace can communicate with others through shared volumes and network access. Agents und Users can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
 
 ---
 
 The System Prompt consists of:
 
 **1. `readme.md`** — The actual System Prompt  
-**2. `req.md`** — Current state, tools, active projects, and alerts → links to other files and dirs  
+**2. `req.md`** — Current state, tools, active projects, and alerts → links to other files
 **3. `longterm_memory.md`** — Persistent information about the user  
 **4. `tree workdir`** — Shows directory structure
 
@@ -28,14 +28,14 @@ The System Prompt consists of:
 ### 🧠 Context Engineering 
 No need to overload the context window with tools — inject them dynamically into the conversation by opening a file.
 
-### 📦 Workspace as Memory 
-Your file structure IS your LLM's memory. Organize it however makes sense to you.
+### 📦 UNIX Philosophy
+Your file structure IS your LLM's memory. "Everything is a file."
 
 ### ⏰ Autonomous Scheduling 
 Set up cron jobs for recurring tasks. Your LLM doesn't need you online to check emails, generate reports, or monitor websites.
 
 ### 💬 Conversation Management
-Run scripts inside the container to manage conversation, like "Delete last messages" or "Start new conversation and handover context".
+Run scripts inside the container to manage conversation, like "Delete last messages", "Start new chat and handover context" or "Fork this conversation"
 
 ### 🤖 Subagents
 Run subagents for tasks that would otherwise pollute the context window.
