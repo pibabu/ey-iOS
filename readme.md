@@ -17,7 +17,7 @@ Every user's AI workspace can communicate with others through shared volumes and
 The System Prompt consists of:
 
 **1. `readme.md`** — The actual System Prompt  
-**2. `req.md`** — Current state, tools, active projects, and alerts → links to other files
+**2. `req.md`** — Current state, tools, active projects, and alerts → links to other files 
 **3. `longterm_memory.md`** — Persistent information about the user  
 **4. `tree workdir`** — Shows directory structure
 
