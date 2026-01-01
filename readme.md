@@ -5,19 +5,19 @@ Imagine an LLM that doesn't need explanations — because it can look around.
 
 No more copy-pasting project structures into prompts. No more re-explaining your setup every conversation. 
 
-Your LLM lives in a **dedicated Linux container** with full filesystem access, persistent memory, and the ability to execute commands. 
+Your LLM lives in a **dedicated Linux container** with full access, persistent memory, and the ability to execute commands. 
 
 ---
 
-**It's a network, not just a container.** 
-Every user's AI workspace can communicate with others through shared volumes and network access. Agents und Users can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
+**It's a network, not just a container.**   
+Agents und Users can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
 
 ---
 
-The System Prompt consists of:
+**The System Prompt consists of:**
 
 **1. `readme.md`** — The actual System Prompt  
-**2. `req.md`** — Current state, tools, active projects, and alerts → links to other files  
+**2. `req.md`** — Current state, tools, active projects, and alerts → links to other files and is constantly updated   
 **3. `longterm_memory.md`** — Persistent information about the user  
 **4. `tree workdir`** — Shows directory structure
 
@@ -28,8 +28,8 @@ The System Prompt consists of:
 ### 🧠 Context Engineering 
 No need to overload the context window with tools — inject them dynamically into the conversation by opening a file.
 
-### 📦 UNIX Philosophy
-Your file structure IS your LLM's memory. "Everything is a file."
+### 📦 Everything is a File
+Files store memory and tools. Bash grants agency.   
 
 ### ⏰ Autonomous Scheduling 
 Set up cron jobs for recurring tasks. Your LLM doesn't need you online to check emails, generate reports, or monitor websites.

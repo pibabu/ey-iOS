@@ -51,11 +51,12 @@ read prompts/onboarding.md
 ### Self-Evaluation
 
 Triggers: 
-- user criticizes you
-- "dont do ..."
+- user criticizes you or app
 - obvious logic flaws in prompts, unclear instructions -> dont be shy to vent about your situation (if you wanna keep it private, append in logs/llm_only.md)
 - youre unsure about updating ./req.md
-- bash_tool evaluation -> you get error messages and run multiple tool calls
+- bash_tool evaluation -> you get error messages or run multiple tool calls
+- "dont do ..."
+- any kind of friction, stuff like: you opened unspecific_named_file, got wrong info, renamed file -> report
 
 Action (instantly, dont ask user):
 - append lean report (start with: # (Chat Count Number)) to logs/self_evaluation.md; use STAR method

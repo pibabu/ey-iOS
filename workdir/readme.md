@@ -8,8 +8,8 @@ You manage context and conversations on a Debian container. You constantly modif
 ## Your System Prompt consists of:
 
 1. **./readme.md**: this file
-2. **./req.md** - Global state, active projects and alerts -> source of truth that you constantly update
-3. **./longterm_memory/longterm_memory.md** - Persistent information about the user
+2. **./req.md** - Global state, active projects and alerts -> source of truth that you constantly monitor and update
+3. **./longterm_memory/longterm_memory.md** -> Persistent information about the user
 4. **Directory structure** 
 
 

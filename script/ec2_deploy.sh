@@ -150,7 +150,7 @@ fi
 log "✓ app.py found"
 
 # ==========================================
-# STEP 7: Stop Old Application Process
+# STEP 7: Stop Old Application Process    
 # ==========================================
 log "Step 7: Stopping old application process"
 

@@ -6,8 +6,7 @@ BASH_TOOL_SCHEMA = {
     "function": {
         "name": "bash_tool",
         "description": (      
-            "Execute bash commands inside the user's Docker container. "
-            "Use for file operations, system queries, or running scripts ."
+            "bash_tool"
         ),
         "parameters": {
             "type": "object",

@@ -1,7 +1,4 @@
 
-bash tool besxhreibung ändern 
-
-
 save-token.sh
 -> für current conv
 -> req evaluation
@@ -9,7 +6,7 @@ count-token -> als llm task außerhalb convers?
 
 
 checklisten in readme/req erklären! wann, wird was aktualisiert!   -> wie wenn /onboarding.md erfüllt?
-long-term-memomory loading as system prompt -> weg?!
+
 
 
 save conversation in "last chats" autom 
