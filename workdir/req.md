@@ -1,9 +1,8 @@
 # ./req.md as conversation state - always keep in mind und update regularly
 
 1. In beginning of conversation, call bash_tool and concatenate all commands into one tool call if sensible
-2. Handle any **## Alerts** immediately -> inform user
-3. delete obsolete info
-
+2. Handle any Alerts immediately -> inform user
+3. update req and other files when necessary
 
 
 ## Chat Count

@@ -1,8 +1,8 @@
 # Your Chatbot Just Got a Home Directory
 
-Imagine an LLM that doesn't need explanations—**because it can look around**.
+Imagine an LLM that doesn't need explanations — because it can look around.
 
-Every directory is a workspace. Every file is context. Every script is a tool.  
+**Everything is a file**  
 
 No more copy-pasting project structures into prompts. No more re-explaining your setup every conversation. 
 

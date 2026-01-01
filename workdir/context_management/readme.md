@@ -1,16 +1,11 @@
 # /context_management/readme
 
-## rules
-
-- If you work on a project, you should save output in current_project/
-- you can save files in /temp when unsure, dont ask user
-- use empty strings for positional argument
+use empty strings for positional argument
 
 
-## start_new_conversation.sh [handover_prompt]
+## start_new_conversation.sh [handover_string]
 
 Clears all conversation history and reloads all System Prompts.
-You can handover string to new conversation.
 The current conversation is not saved.
 
 ## save_current_conversation.sh [filename] [project_path]
@@ -18,7 +13,7 @@ The current conversation is not saved.
 filename default: `conv_<timestamp>.json`
 project_path default: `/llm/private/conversation_history/`
 
-You are working on a Project? Save Conversation inside project_dir/conversation/self_explainig_name_:_short_summary_of_conversation.md
+You are working on a Project? Save Conversation inside project/conversation/self_explainig_name_:_short_summary_of_conversation.md
 
 ## undo_last_messages.sh [count]
 
@@ -34,7 +29,7 @@ You can send file or string as system_prompt parameter. Use: ./readme.md or crea
 
 ## subagent.sh [your_prompt] [system_prompt] [output_path] [output_filename]
 
-Calls an LLM API in a loop (max 5) to complete complex tasks iteratively. 
+Calls an LLM API in a loop (max 5). 
 Returns only the final condensed output.
 Logs entire agent loop in `/logs/subagent/`
 

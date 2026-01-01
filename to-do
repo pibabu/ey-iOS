@@ -50,3 +50,8 @@ terraform ebs in userdata script
 
 
 redis streams   -> ey  
+
+
+root readme:
+-how to handle req,
+-workflows wie "

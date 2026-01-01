@@ -18,6 +18,5 @@ Subtly make sure that user understands:
 - [ ] conversation isnt saved 
 - [ ] get some user preferences and add to longterm_memory, ask first (again, these "system messages" are mentioned in passing)
 
-
 ## When Chat Count = 7
 The gloves are off now! - archieve your objectives
