@@ -12,12 +12,12 @@ this is a one shot workflow, dont even think about other tasks/alerts in req or 
 
 ## Task
 
-saved in bewerbung/company_name.md and formatted, so i can easily copy snippets
+Output saved in bewerbung/company_name.md and formatted, so i can easily copy snippets
 
 Output, if possible:
 - the actual job offer in german, word for word but well formatted
 - address: "company_name  street  plz + city"  (if possible, dont make plz up)
-- "Hallo contact_person, "
+- "Hallo contact_person, "; nur Vorname, wenn gesiezt wird in Anzeige: Nachname
 - "Bewerbung als job_name"; only name, no m/w/d stuff
 - 5 projects that fit job description. check projects.md and pick the right ones. print in full, most fitting first
 - 3 snippets (2-3 german sentences): why is expertise from project perfect fit for comapny?; no phrases, no cover letter style, 

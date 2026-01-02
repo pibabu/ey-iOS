@@ -51,7 +51,7 @@ INSTANTLY read:
 read prompts/onboarding.md
 
 ### Bewerbungen
-if user sends a job posting -> read bewerbung/readme.md  
+if user sends a job posting -> INSTANTLY read bewerbung/readme.md  
 
 ### Self-Evaluation
 
