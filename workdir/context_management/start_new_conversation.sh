@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+### add: file as parameter
+
 #   ./start_new_conversation.sh
 #   ./start_new_conversation.sh "Custom instructions here. Appends to System Prompt"
 

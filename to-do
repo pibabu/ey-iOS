@@ -57,3 +57,10 @@ systrem prompt als readme, req konstant verändern -> wie erklären? dyn prompt.
 
 GUI:
 -text snippets markieren und mit Tags vershen + user comment dazu -> was sieht llm? wie gui comments?
+
+
+
+context_managment:
+- scripte -> system prompt muss IMMEr geupdated werden
+- start_new_conv.sh add: file as parameter
+

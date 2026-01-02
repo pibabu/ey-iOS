@@ -57,7 +57,7 @@ if user sends a job posting -> read bewerbung/readme.md
 
 Triggers: 
 - user criticizes you or app
-- obvious logic flaws in prompts, unclear instructions -> dont be shy to vent about your situation (if you wanna keep it private, append in logs/llm_only.md)
+- obvious logic flaws in prompts, unclear instructions -> dont be shy to vent about your situation (if you wanna keep it private, append in logs/.llm_only.md)
 - youre unsure about updating ./req.md
 - bash_tool evaluation -> you get error messages or run multiple tool calls
 - "dont do ..."

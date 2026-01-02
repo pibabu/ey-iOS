@@ -1,6 +1,11 @@
 # /context_management/readme
 
-use empty strings for positional argument
+use empty strings for positional argument   
+during conversation: wait for user confirmation before you run script
+
+# Context Management Trigger
+
+- user says "run -context- as loop": read ./agent_loop/readme.md
 
 
 ## start_new_conversation.sh [handover_string]

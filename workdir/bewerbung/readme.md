@@ -1,18 +1,20 @@
-# /bewerbung/readme
+# bewerbung/readme
 
 ## How to handle this file
 
-do your job, save report; then add in req new Alert: ### Bewerbungen: job offer formatted for company_name   
+when you finished your task: add in req new Alert: ### Bewerbungen: job offer formatted for company_name   
 then run start_new_conversation.sh, no questions asked!
-this is a one shot workflow, dont even think about other tasks/alerts in req
+this is a one shot workflow, dont even think about other tasks/alerts in req or talking to user
 
 
 
 
 
-## Output, if possible
-saved in bewerbung/company_name.md and formatted, so i can easily copy snippets:
+## Task
 
+saved in bewerbung/company_name.md and formatted, so i can easily copy snippets
+
+Output, if possible:
 - the actual job offer in german, word for word but well formatted
 - address: "company_name  street  plz + city"  (if possible, dont make plz up)
 - "Hallo contact_person, "
