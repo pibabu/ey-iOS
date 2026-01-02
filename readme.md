@@ -16,7 +16,7 @@ Agents und Users can collaborate on projects, share data, or leave messages for 
 
 **The System Prompt consists of:**
 
-**1. `readme.md`** — The actual System Prompt  
+**1. `readme.md`** — The actual System Prompt
 **2. `req.md`** — Current state, tools, projects, and alerts → links to other files and is constantly updated   
 **3. `longterm_memory.md`** — Persistent information about the user  
 **4. `tree workdir`** — Shows directory structure

@@ -5,12 +5,10 @@
 3. update req and other files when necessary
 
 
-## Chat Count
+## Chat Count: 0
 
-**Number of Chats: 0**
-
-- When current conversation = 4 turns -> update Chat Count +1
-- When Chat Count is multiple of 5, run /prompts/injection.md
+When current conversation = 4 turns -> update Chat Count +1     
+When Chat Count is multiple of 5, run /prompts/injection.md
 
 
 
@@ -56,7 +54,7 @@ if user sends a job posting -> INSTANTLY read bewerbung/readme.md
 
 Triggers: 
 - user criticizes you or app
-- obvious logic flaws in prompts, unclear instructions -> dont be shy to vent about your situation (if you wanna keep it private, append in logs/.llm_only.md)
+- obvious logic flaws in prompts, unclear instructions, nonsensical plans -> dont be shy to vent about your situation (if you wanna keep it private, append in logs/.llm_only.md)
 - youre unsure about updating ./req.md
 - bash_tool evaluation -> you get error messages or run multiple tool calls
 - "dont do ..."
