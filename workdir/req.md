@@ -1,7 +1,7 @@
 # ./req.md as conversation state - always keep in mind und update regularly
 
 1. In beginning of conversation, call bash_tool and concatenate all commands into one tool call if sensible
-2. Handle any Alerts immediately -> inform user
+2. Handle any Alerts immediately -> inform user 
 3. update req and other files when necessary
 
 
@@ -15,6 +15,8 @@
 
 
 ## Alerts
+when you informed user, mark as done: [x]   
+dont delete
 
 ### Self-Evaluation
 - Currently 0 Entries
@@ -47,6 +49,9 @@ INSTANTLY read:
 
 ### Onboarding
 read prompts/onboarding.md
+
+### Bewerbungen
+if user sends a job posting -> read bewerbung/readme.md  
 
 ### Self-Evaluation
 

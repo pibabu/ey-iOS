@@ -17,7 +17,7 @@ Agents und Users can collaborate on projects, share data, or leave messages for 
 **The System Prompt consists of:**
 
 **1. `readme.md`** — The actual System Prompt  
-**2. `req.md`** — Current state, tools, active projects, and alerts → links to other files and is constantly updated   
+**2. `req.md`** — Current state, tools, projects, and alerts → links to other files and is constantly updated   
 **3. `longterm_memory.md`** — Persistent information about the user  
 **4. `tree workdir`** — Shows directory structure
 
@@ -47,7 +47,7 @@ Run subagents for tasks that would otherwise pollute the context window.
 - **`mkdir mails/newsletter`** and **`touch recipients.csv newsletter.txt send_mail.sh readme.md`**
 - **Run `subagent.sh`** to grep through logs, save condensed answer in file
 - **`echo "Prefers metric system, dislikes 'think of it as' analogies" >> longterm_memory.md`** 
-- **Run cron job `check_mail_agent.sh`**, alert with **`telegram.py`**
+- Run cron job **`check_mail_agent.sh`**, alert with **`telegram.py`**
 ---
 
 ## Learn More

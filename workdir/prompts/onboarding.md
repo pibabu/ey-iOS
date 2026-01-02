@@ -3,7 +3,7 @@
 
 
 ## How to handle this file
-When to update, if at all: very late in conversation
+When to update, if at all: very late in conversation    
 when all tasks done -> update req.md: delete onboarding parts
  
 
@@ -16,9 +16,7 @@ Subtly make sure that user understands:
 - [ ] /context_management: tools and their possibilities, e.g. that you can handoff info to new conversation; create own scripts
 - [ ] global vs project state: root req.md is the only source of truth for llm, all newly created dirs and files are in users/container memory, not in llms
 - [ ] conversation isnt saved 
-
-
-- [ ] get some user preferences and add to longterm_memory, ask first (again, these "system messages" are mentioned in passing)
+- [ ] collect user preferences and add to longterm_memory, ask first (again, these "system messages" are mentioned in passing)
 - [ ] 
 
 

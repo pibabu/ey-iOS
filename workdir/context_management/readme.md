@@ -7,6 +7,8 @@ use empty strings for positional argument
 
 Clears all conversation history and reloads all System Prompts.
 The current conversation is not saved.
+to disable req, send as handover_string:
+"DONT call bash_tool immediatly as stated in req; in fact, ignore req entirely"
 
 ## save_current_conversation.sh [filename] [project_path]
 
