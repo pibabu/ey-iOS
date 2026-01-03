@@ -12,8 +12,9 @@ checklisten in readme/req erklären! wann, wird was aktualisiert!   -> wie wenn 
 save conversation in "last chats" autom 
 
 
+---
 komplette conv hist zw fastapi und openai zu jeweiligen container loggen !! 
-
+---
 
 
 
@@ -49,18 +50,8 @@ terraform ebs in userdata script
 redis streams   -> ey  
 
 
-root readme und req!!
-
-systrem prompt als readme, req konstant verändern -> wie erklären? dyn prompt. mit linux analogy, subproc etc?global vs local state?
-
-
 
 GUI:
 -text snippets markieren und mit Tags vershen + user comment dazu -> was sieht llm? wie gui comments?
 
-
-
-context_managment:
-- scripte -> system prompt muss IMMEr geupdated werden
-- start_new_conv.sh add: file as parameter
 

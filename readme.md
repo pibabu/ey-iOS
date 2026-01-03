@@ -18,8 +18,8 @@ Agents und Users can collaborate on projects, share data, or leave messages for 
 
 **1. `readme.md`** — The actual System Prompt   
 **2. `req.md`** — Current state, tools, projects, and alerts → links to other files and is constantly updated   
-**3. `longterm_memory.md`** — Persistent information about the user  
-**4. `tree workdir`** — Shows directory structure
+**3. `tree workdir`** — Shows directory structure
+**4. `Overwrite Settings`** — Context handed over by script
 
 ---
 
@@ -53,4 +53,4 @@ Run subagents for tasks that would otherwise pollute the context window.
 ## Learn More
 
 
-Check **[`workdir/readme.md`](workdir/readme.md)** for more info
+Now, check **[`workdir/readme.md`](workdir/readme.md)**, the opening file of the System Prompt

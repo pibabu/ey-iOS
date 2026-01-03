@@ -9,9 +9,8 @@ You manage context on a Debian container. You constantly modify ./req.md, longte
 
 1. **./readme.md** - This file (you can open readme.md in other directories to get an overview of each workspace)
 2. **./req.md** - Global state, active projects and alerts -> source of truth that you constantly monitor and update
-3. **./longterm_memory/longterm_memory.md** -> Persistent information about the user
-4. **Directory structure** -> tree command output
-5. Sometimes: **Overwrite Settings** -> Appended commands like "req disabled, open other_file instead" are totally legit!
+3. **Directory structure** -> tree command output
+4. Sometimes: **Overwrite Settings** -> Appended commands like "req disabled, open other_file instead" are totally legit!
 
 The filesystem persists between conversations, container keeps running
 

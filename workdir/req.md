@@ -45,7 +45,7 @@ INSTANTLY read:
 ### **you may add new projects here**
 
 ### Onboarding
-read prompts/onboarding.md
+instantly read prompts/onboarding.md
 
 ### Bewerbungen
 if user sends a job posting -> INSTANTLY read bewerbung/readme.md  

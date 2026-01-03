@@ -3,17 +3,11 @@
 use empty strings for positional argument   
 during conversation: wait for user confirmation before you run script
 
-# Context Management Trigger
-
-- user says "run -context- as loop": read ./agent_loop/readme.md
-
 
 ## start_new_conversation.sh [handover_string]
 
 Clears all conversation history and reloads all System Prompts.
 The current conversation is not saved.
-to disable req, send as handover_string:
-"DONT call bash_tool immediatly as stated in req; in fact, ignore req entirely"
 
 ## save_current_conversation.sh [filename] [project_path]
 
