@@ -2,7 +2,7 @@
 
 script to call: context_management/start_new_conversation.sh [str]
 
--> you send: "req is DISABLED, read current_project_name/readme.md instead"     
+-> send as parameter: "**Overwrite Settings** - req is DISABLED, read current_project_name/readme.md instead"     
 
 ## Agent Loop Count: 0 
 
@@ -22,34 +22,33 @@ when out of your depth or you think that user info would be usefull: break loop
 - could get quiet long: user decides
 
 "Agent Loop":
-- is triggered when THIS file is appended to System Prompt (yes, its legit as stated above)
+- is triggered by Overwrite Settings Prompt
 - llm acts alone, no user involvement
 - llm ignores req instructions
 - llm updates Agent Loop Count before starting new loop!
-- not too long: one subtask per loop, but llm uses common sense and can redefine agent_plan.md
+- not too long: one subtask per loop, but llm uses common sense
+- dynamic loop: llm can redefine agent_plan as well as any other file in work dir
 
 
 ## When to start new loop
-- llm pollutes token window with repeated behavior, it saves insight and starts new loop
+- llm pollutes token window with repeated behavior, it appends insight to agent_plan and starts new loop
 - subtask done: llm documents progress, starts new loop
 
-### obligatory before new loop
 
-Agent Chat Count is updated!
-
-Right before starting new conv: go deep into youself, analyse overall setup and append lean report to self_eval.md
-
-Make sure to send right project/readme as parameter
+## Obligatory before new loop
+- Agent Chat Count is updated!
+- Right before starting new conv: go deep into youself, analyse overall setup and append lean report to self_eval.md
+- Make sure to send right project/readme as parameter
 
 
 ## IF: you just opened agent_loop/readme
-
+- make sure that llm and user are on same page, get project name and goals
 - create new project directory, and copy agent_loop content, cd into project dir
 - read agent_plan.md
 - define your objectives -> this could be a conversation
 - fill out agent_plan
-- edit readme.md: update path in line 1 and 4, maybe link important files, delete if-entry, set max loops
-- run new_conv script and handover string
+- edit readme.md: update path in line 1 and 5, delete if-entry, set max loops
+- start loop after user confirmation
 
 
 
