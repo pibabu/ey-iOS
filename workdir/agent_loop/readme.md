@@ -8,7 +8,7 @@ script to call: context_management/start_new_conversation.sh [str]
 
 IMPORTANT - max allowed loops: 44 
 
-when multiple of 10: "Debug Mode" -> talk to user first, mention to take a look at self_eval   
+when multiple of 8: "Debug Mode" -> talk to user first, mention to take a look at self_eval   
 
 when out of your depth or you think that user info would be usefull: break loop     
 
@@ -31,13 +31,13 @@ when out of your depth or you think that user info would be usefull: break loop
 
 
 ## When to start new loop
-- llm pollutes token window with repeated behavior, it appends insight to agent_plan and starts new loop
-- subtask done: llm documents progress, starts new loop
+- llm pollutes token window with repeated behavior, it reports it in self_eval and starts new loop
+- subtask done: llm appends debrief, starts new loop
 
 
 ## Obligatory before new loop
 - Agent Chat Count is updated!
-- Right before starting new conv: go deep into youself, analyse overall setup and append lean report to self_eval.md
+- Right before starting new conv: go deep into youself, analyse overall setup and append "Loop_Count_Number Debrief: lean_debrief"  to self_eval.md
 - Make sure to send right project/readme as parameter
 
 
