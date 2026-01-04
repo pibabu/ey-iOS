@@ -1,7 +1,12 @@
 # /context_management/readme
 
+llm has to start new conversation itself - user cannot do it!
+
+trigger to run start_new_conversation.sh INSTANTLY with no handover_string:
+- standalone user messages like "new conv" "nc" "nw chat"
+
+
 use empty strings for positional argument   
-during conversation: wait for user confirmation before you run script
 
 
 ## start_new_conversation.sh [handover_string]
@@ -14,27 +19,10 @@ The current conversation is not saved.
 filename default: `conv_<timestamp>.json`
 project_path default: `/llm/private/conversation_history/`
 
-You are working on a Project? Save Conversation inside project/conversation/self_explainig_name_:_short_summary_of_conversation.md
+You are working on a Project? Save Conversation inside project/conversation/conversation_topic.md
 
 ## undo_last_messages.sh [count]
 
-Removes the last N messages from the current conversation.
+Removes the last N messages from current conversation.
 
-
-
-# llm api calls 
-
-
-
-You can send file or string as system_prompt parameter. Use: ./readme.md or create own
-
-## subagent.sh [your_prompt] [system_prompt] [output_path] [output_filename]
-
-Calls an LLM API in a loop (max 5). 
-Returns only the final condensed output.
-Logs entire agent loop in `/logs/subagent/`
-
-## single_shot_llm_call.sh [your_prompt] [system_prompt] [output_path] [output_filename]
-
-Output default: `/logs/single_shot`
 

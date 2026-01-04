@@ -1,6 +1,7 @@
 #!/bin/bash
 # subagent.sh
 
+
 export API_BASE="${API_BASE:-http://${API_HOST}:${API_PORT}}"
 export USER_HASH="${USER_HASH}"
 

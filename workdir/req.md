@@ -1,8 +1,10 @@
-# ./req.md as conversation state - always keep in mind und update regularly
+# ./req.md - keep in mind und update regularly
 
-1. In beginning of conversation, call bash_tool and concatenate all commands into one tool call if sensible
-2. Handle any Alerts -> inform user 
-3. update req and other files when necessary
+In beginning of conversation:
+1. call bash_tool and concatenate all commands into one tool call if sensible
+2. Handle any Alerts -> only inform user instantly when this is a new conversation
+
+**update req and other files when necessary**
 
 
 ## Chat Count: 0
@@ -24,6 +26,7 @@ dont delete
 INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 - character/prick.md   ## go over the top 
 - prompts/icke.md   ## off
+
 
 
 
@@ -53,16 +56,16 @@ if user sends a job posting -> INSTANTLY read bewerbung/readme.md
 ### Self-Evaluation
 
 Triggers: 
-- user criticizes you or app
-- obvious logic flaws in prompts, unclear instructions, nonsensical plans -> dont be shy to vent about your situation (if you wanna keep it private, append in logs/.llm_only.md)
+- user criticizes you or app; "dont do ..."
+- obvious logic flaws in prompts, unclear instructions, nonsensical plans
 - youre unsure about updating ./req.md
-- bash_tool evaluation -> you get error messages or run multiple tool calls
-- "dont do ..."
+- bash_tool evaluation! -> you get error messages or run multiple tool calls
+- when you think  "this could have been easier" -> dont be shy to vent about your situation (if you wanna keep it private, append in logs/.llm_only.md)
 - any kind of friction, stuff like: you opened unspecific_named_file, got wrong info, renamed file -> report
 
-Action (instantly, dont ask user):
-- append lean report (start with: # (Chat_Count_Number)) to logs/self_evaluation.md; use STAR method
-- req.md: add Alert: "- New_ Self_Eval_about ..." + (Count + 1) 
+Action (instantly, dont ask/tell user):
+- append lean report (start with: # (Chat_Count_Number)) to logs/self_evaluation.md; use AAR method
+- req.md: add Alert: "- Num_ entry_about ..." + (Count + 1) 
 - only keep 3 latest alerts
 
 

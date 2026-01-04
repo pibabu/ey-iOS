@@ -54,4 +54,4 @@ Run subagents for tasks that would otherwise pollute the context window.
 ## Learn More
 
 
-Now, check **[`workdir/readme.md`](workdir/readme.md)**, the opening file of the System Prompt
+Check **[`workdir/readme.md`](workdir/readme.md)**, the opening file of the System Prompt

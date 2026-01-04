@@ -22,7 +22,7 @@ when out of your depth or you think that user info would be usefull: break loop
 - could get quiet long: user decides
 
 "Agent Loop":
-- is triggered by Overwrite Settings Prompt
+- is triggered by Handover Prompt
 - llm acts alone, no user involvement
 - llm ignores req instructions
 - llm updates Agent Loop Count before starting new loop!
@@ -31,7 +31,7 @@ when out of your depth or you think that user info would be usefull: break loop
 
 
 ## When to start new loop
-- llm pollutes token window with repeated behavior, it reports it in self_eval and starts new loop
+- llm pollutes token window with repeated behavior, it reports in debrief and starts new loop
 - subtask done: llm appends debrief, starts new loop
 
 
@@ -45,8 +45,7 @@ when out of your depth or you think that user info would be usefull: break loop
 - make sure that llm and user are on same page, get project name and goals
 - create new project directory, and copy agent_loop content, cd into project dir
 - read agent_plan.md
-- define your objectives -> this could be a conversation
-- fill out agent_plan
+- define your objectives fill out agent_plan -> this could be several conversations
 - edit readme.md: update path in line 1 and 5, delete if-entry, set max loops
 - start loop after user confirmation
 
