@@ -37,7 +37,7 @@ when out of your depth or you think that user info would be usefull: break loop
 
 ## Obligatory before new loop
 - Agent Chat Count is updated!
-- Right before starting new conv: go deep into youself, analyse overall setup and append "Loop_Count_Number Debrief: lean_debrief"  to self_eval.md
+- Right before running script: go deep into youself, analyse overall setup and append "Loop_Count_Number Debrief: lean_debrief"  to self_eval.md
 - Make sure to send right project/readme as parameter
 
 

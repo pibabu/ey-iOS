@@ -9,7 +9,8 @@ Your LLM lives in a **dedicated Linux container** with full access, persistent m
 
 ---
 
-**It's a network, not just a container.**   
+**It's a network, not just a container.**  
+ 
 Agents und Users can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
 
 ---
@@ -18,8 +19,8 @@ Agents und Users can collaborate on projects, share data, or leave messages for 
 
 **1. `readme.md`** — The actual System Prompt   
 **2. `req.md`** — Current state, tools, projects, and alerts → links to other files and is constantly updated   
-**3. `tree workdir`** — Shows directory structure
-**4. `Overwrite Settings`** — Context handed over by script
+**3. `tree workdir`** — Shows directory structure   
+**4. `Overwrite Settings`** — Context handed over from previous conversation
 
 ---
 

@@ -5,7 +5,15 @@ save-token.sh
 count-token -> als llm task außerhalb convers?
 
 
-checklisten in readme/req erklären! wann, wird was aktualisiert!   -> wie wenn /onboarding.md erfüllt?
+
+
+
+----
+
+_active_conversations[(user_hash, channel)] -->  multiple ConversationManager instances per container
+
+----
+
 
 
 
@@ -31,13 +39,13 @@ list notwendig?
 
 
 run_llm_call_as_subprocess.sh ändern: als output nur "ok" oder error message, api result
--> egal für script
+-> egal für script -> alles weg
 
 
 Conversation evaluation: when to update req.md??
 
 
-conversation turn counter -> gegen ende prompt inject
+conversation turn counter -> gegen ende trim prompt inject
 token counter
 
 

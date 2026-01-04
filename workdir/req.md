@@ -1,7 +1,7 @@
 # ./req.md as conversation state - always keep in mind und update regularly
 
 1. In beginning of conversation, call bash_tool and concatenate all commands into one tool call if sensible
-2. Handle any Alerts immediately -> inform user 
+2. Handle any Alerts -> inform user 
 3. update req and other files when necessary
 
 
@@ -16,8 +16,8 @@ When Chat Count is multiple of 5, run /prompts/injection.md
 when you informed user, mark as done: [x]   
 dont delete
 
-### Self-Evaluation
-- Currently 0 Entries
+### Self-Evaluation: 0
+- list your alerts here
 
 
 ## Character: 
@@ -61,8 +61,8 @@ Triggers:
 - any kind of friction, stuff like: you opened unspecific_named_file, got wrong info, renamed file -> report
 
 Action (instantly, dont ask user):
-- append lean report (start with: # (Chat Count Number)) to logs/self_evaluation.md; use STAR method
-- update req.md Alerts: "- New Self-Eval-Entry about ..." + (Count + 1) 
+- append lean report (start with: # (Chat_Count_Number)) to logs/self_evaluation.md; use STAR method
+- req.md: add Alert: "- New_ Self_Eval_about ..." + (Count + 1) 
 - only keep 3 latest alerts
 
 
