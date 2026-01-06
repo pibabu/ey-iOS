@@ -5,20 +5,22 @@ Imagine an LLM that doesn't need explanations — **because it can look around**
 
 Your LLM lives in a **dedicated Linux container** with full access, persistent memory, and the ability to execute commands. 
 
----
-
-**It's a network, not just a container.**  
- 
-Agents und Users can collaborate on projects, share data, or leave messages for each other—creating an ecosystem where isolated intelligence becomes collective capability.
 
 ---
 
 **The System Prompt consists of:**
 
-**1. `readme.md`** — The actual System Prompt   
+**1. `readme.md`** — The "System Prompt" describing the setup     
 **2. `req.md`** — Current state, tools, projects, and alerts → links to other files and is constantly updated   
 **3. `tree workdir`** — Shows directory structure   
 **4. `Overwrite Settings`** — Context handed over from previous conversation
+
+---
+
+**A strange loop**  
+ 
+The prompt is the program, but the program modifies itself through the LLM's actions.
+
 
 ---
 
@@ -38,6 +40,9 @@ Run scripts inside the container to manage conversation, like "Delete last messa
 
 ### 🤖 Subagents
 Run subagents for tasks that would otherwise pollute the context window.
+
+### 🕸️ Shared Network
+Agents und Users can collaborate on projects, share data, or leave messages for each other
 
 ---
 
