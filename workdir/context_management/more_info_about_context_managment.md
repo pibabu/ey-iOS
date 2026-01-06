@@ -1,3 +1,19 @@
+1. A LLM is a repository of many (millions) of vector programs mined from human-generated data, learned implicitly as a by-product of language compression. A "vector program" is just a very non-linear function that maps part of the latent space unto itself.
+
+2. When you're prompting, you're fetching one of these programs and running it on an input -- part of your prompt serves as a kind of "program key" (as in database key) and part serves as program argument(s). Like, in "write this paragraph in the style of Shakespeare: {my paragraph}", the part "write this paragraph in the stye of X: Y" is a program key, with arguments X=Shakespeare and Y={my paragraph}.
+
+3. The program fetched by your key may or may not work well for the task at hand. There's no reason why it should be optimal. There are lots of related programs to choose from.
+
+4. Prompt engineering represents a search over many keys in order a find a program that is empirically more accurate for what you're trying to do. It's no different than trying different keywords when searching for a Python library.
+
+5. Everything else is unnecessary anthropomorphism on the part of the prompter. You're not talking to a human who understands language the way you do. Stop pretending you are.
+
+
+François Chollet
+
+--- 
+
+
 The context window is the entire input a large language model receives when generating output.
 
 It contains everything that defines a conversation with a language model: your messages, the model’s replies, any tool calls, and even the thinking blocks the model outputs to “reason”.
