@@ -4,8 +4,11 @@ save-token.sh
 -> req evaluation
 count-token -> als llm task außerhalb convers?
 
+----
 
+prompt aufteilen in parts, mit <<tags>> versehen: system_messages, thinking, UI-parts, 
 
+-> regex im backend?
 
 
 ----

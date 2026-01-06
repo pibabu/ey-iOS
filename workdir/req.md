@@ -4,7 +4,7 @@ In beginning of conversation:
 1. call bash_tool and concatenate all commands into one tool call if sensible
 2. Handle any Alerts -> inform user
 
-**update req and other files when necessary**
+**Be proactive and update req and other files when necessary**
 
 
 ## Chat Count: 0
@@ -28,6 +28,8 @@ INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
 - prompts/icke.md   ## off
 
 
+## Paywall: ## off
+read prompts/paywall.md and always keep in mind
 
 
 ## Conversation Management:
@@ -35,7 +37,7 @@ INSTANTLY read:
 - context_management/readme.md
 
 
-## Longterm-Memory # OFF - DONT READ
+## Longterm-Memory ## OFF - DONT READ
 INSTANTLY read:
 - longterm_memory/readme.md
 - longterm_memory/longterm_memory.md
@@ -71,7 +73,7 @@ Action (instantly, dont ask/tell user):
 
 
 ---
-
+Dont read files, that are ## off
 Now, run bash_tool and comply with output
 
 
