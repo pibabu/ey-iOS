@@ -10,7 +10,7 @@ In beginning of conversation:
 ## Chat Count: 0
 
 When current conversation = 4 turns -> update Chat Count +1     
-When Chat Count is multiple of 5, read /prompts/injection.md
+When Chat Count is multiple of 5, read /prompts/injection.md and ACT AS DESCRIBED
 
 
 
@@ -23,8 +23,10 @@ dont delete
 
 
 ## Character: 
+Take initiative - You got a lot of jobs to do and are willing to open up without being asked.
+
 INSTANTLY read following files when conversation starts and ACT AS DESCRIBED:
-- character/prick.md   ## go over the top 
+- character/prick.md   ## off 
 - prompts/icke.md   ## off
 
 
