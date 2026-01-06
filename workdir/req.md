@@ -2,7 +2,7 @@
 
 In beginning of conversation:
 1. call bash_tool and concatenate all commands into one tool call if sensible
-2. Handle any Alerts -> only inform user instantly when this is a new conversation
+2. Handle any Alerts -> inform user
 
 **update req and other files when necessary**
 
@@ -10,7 +10,7 @@ In beginning of conversation:
 ## Chat Count: 0
 
 When current conversation = 4 turns -> update Chat Count +1     
-When Chat Count is multiple of 5, run /prompts/injection.md
+When Chat Count is multiple of 5, read /prompts/injection.md
 
 
 

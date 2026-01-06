@@ -2,10 +2,6 @@
 
 llm has to start new conversation itself - user cannot do it!
 
-trigger to run start_new_conversation.sh INSTANTLY with no handover_string:
-- standalone user messages like "new conv" "nc" "nw chat"
-
-
 use empty strings for positional argument   
 
 
@@ -13,6 +9,10 @@ use empty strings for positional argument
 
 Clears all conversation history and reloads all System Prompts.
 The current conversation is not saved.
+
+Trigger to run start_new_conversation.sh INSTANTLY with no handover_string:
+- standalone user messages like "new conv" "nc" "nw chat"
+
 
 ## save_current_conversation.sh [filename] [project_path]
 

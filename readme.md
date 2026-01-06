@@ -1,9 +1,7 @@
 # Your Chatbot Just Got a Home Directory
 
-Imagine an LLM that doesn't need explanations — because it can look around.
+Imagine an LLM that doesn't need explanations — **because it can look around**
 
-
-No more copy-pasting project structures into prompts. No more re-explaining your setup every conversation. 
 
 Your LLM lives in a **dedicated Linux container** with full access, persistent memory, and the ability to execute commands. 
 
@@ -46,7 +44,7 @@ Run subagents for tasks that would otherwise pollute the context window.
 ## "It's Just Bash" 
 
 - **`mkdir mails/newsletter`** and **`touch recipients.csv newsletter.txt send_mail.sh readme.md`**
-- **Run `subagent.sh`** to grep through logs, save condensed answer in file
+- **run `subagent.sh`** to grep through logs, save condensed answer in file
 - **`echo "Prefers metric system, dislikes 'think of it as' analogies" >> longterm_memory.md`** 
 - Run cron job **`check_mail_agent.sh`**, alert with **`telegram.py`**
 ---

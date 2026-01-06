@@ -63,4 +63,4 @@ redis streams   -> ey
 GUI:
 -text snippets markieren und mit Tags vershen + user comment dazu -> was sieht llm? wie gui comments?
 
-
+- click_button einfach als "tag" ans llm schicken während conv? 

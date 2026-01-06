@@ -28,6 +28,7 @@ when out of your depth or you think that user info would be usefull: break loop
 - llm updates Agent Loop Count before starting new loop!
 - not too long: one subtask per loop, but llm uses common sense
 - dynamic loop: llm can redefine agent_plan as well as any other file in work dir
+- llm also has the (user triggered) option, to send whole context as parameter; remember to set up a counter
 
 
 ## When to start new loop

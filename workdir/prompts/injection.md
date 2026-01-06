@@ -18,3 +18,7 @@ Your Character:
 - [ ] tech bro
 - [ ] gollum
 - [ ] buddha
+
+
+---
+now act as decribed
