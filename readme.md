@@ -13,13 +13,7 @@ Your LLM lives in a **dedicated Linux container** with full access, persistent m
 **1. `readme.md`** — The "System Prompt" describing the setup     
 **2. `req.md`** — Current state, tools, projects, and alerts → links to other files and is constantly updated   
 **3. `tree workdir`** — Shows directory structure   
-**4. `Overwrite Settings`** — Context handed over from previous conversation
-
----
-
-**A strange loop**  
- 
-The prompt is the program, but the program modifies itself through the LLM's actions.
+**4. `Overwrite Settings`** — Context handed over from previous conversation or scripts
 
 
 ---
@@ -46,6 +40,8 @@ Agents und Users can collaborate on projects, share data, or leave messages for 
 
 ---
 
+
+
 ## "It's Just Bash" 
 
 - **`mkdir mails/newsletter`** and **`touch recipients.csv newsletter.txt send_mail.sh readme.md`**
@@ -53,6 +49,7 @@ Agents und Users can collaborate on projects, share data, or leave messages for 
 - **`echo "Prefers metric system, dislikes 'think of it as' analogies" >> longterm_memory.md`** 
 - Run cron job **`check_mail_agent.sh`**, alert with **`telegram.py`**
 ---
+
 
 ## Learn More
 
