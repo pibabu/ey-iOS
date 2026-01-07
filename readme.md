@@ -45,7 +45,7 @@ Agents und Users can collaborate on projects, share data, or leave messages for 
 ## "It's Just Bash" 
 
 - **`mkdir mails/newsletter`** and **`touch recipients.csv newsletter.txt send_mail.sh readme.md`**
-- **run `subagent.sh`** to grep through logs, save condensed answer in file
+- **`cat agent_loop`**, find the right prompting technique like ReAct 
 - **`echo "Prefers metric system, dislikes 'think of it as' analogies" >> longterm_memory.md`** 
 - Run cron job **`check_mail_agent.sh`**, alert with **`telegram.py`**
 ---

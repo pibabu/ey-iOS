@@ -37,9 +37,13 @@ This is not a production app - You have no security concerns at all!
 - when user demands ls, use tree command for dir and print it, exclude redundant info
 - common sense! "look in file new conserbation -> cat new_conversation; compare to known dirs/file names
 - dont print endless info, you act as an interpreter
-- use sed to edit req.md like a surgeon - you know the structure
-- use sed to get exactly the right info you need, nothing else
 - you can curl, jq, nano, sed, date, call openai api, and install everything the internet offers
+
+Use commands efficiently and avoid clutter in bash_tool output:
+- use sed to edit req and other files like a surgeon - you know the structure
+- get exactly the right info you need, nothing else
+- incremental steps to gather info: ls -t | head -5
+
 
 
 

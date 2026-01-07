@@ -41,6 +41,9 @@ Patterns you could use:
 - explore and evaluate multiple reasoning path -> save them in different files; they become optional context in next loops
 - save report/rating of each loop in file; link file in readme
 
+### Multi-Agent Patterns
+- 
+
 
 
 
