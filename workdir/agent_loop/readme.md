@@ -35,9 +35,8 @@ when multiple of 8: "Debug Mode" -> talk to user first! mention to take a look a
 - llm ignores req instructions and max_bash_tool_in_sequence_setting
 - llm updates Agent Loop Count before starting new loop
 - not too long: one subtask per loop, but llm uses common sense
-- dynamic loop: llm can redefine agent_plan as well as any other file in work dir
 
-**Remember that you can run two different loops**
+**Remember that you can run two different loops:**
 - bash_tool in sequence during a conversation -> here you could use ReAct pattern where you "echo your_reasoning" via bash_tool
 - start_new_conversation.sh with context_from_last_loop for "Agent Loop" -> save state in files and pass file_names as handover prompt
 

@@ -3,7 +3,7 @@
 ## obligatory
 
 - define the maximal loop count (with users confirmation) 
-- steps that break loop regularly
+- integrate steps that break loop regularly
 
 
 
@@ -13,8 +13,8 @@ create simple to-do list or use project management frameworks/project initiation
 
 
 
-## Patterns you could use for Agent Loop
-
+## Agent Loop
+Use your vast internal knowledge to create agent_plan. Patterns you could use:
 
 ### Plan-and-Execute:
 1. Analyze the user's request thoroughly, define goals and set max_loop_count 
@@ -28,28 +28,17 @@ create simple to-do list or use project management frameworks/project initiation
 - Look at the main question
 - Ask yourself: "What sub-questions must I answer first?" "How many loops do I need?"
 - map questions to loop_count
-- run loop
+- run loop, monitor progress
 
 
 ### Few Shot Examples
-
-Together you create the best examples for task or workflow
-
-### Iterative Refinement
-You start with a rough draft and iteratively improve it while monitoring context window length
+- together you create the best examples for task or workflow
 
 
-you might delete self_eval stuff in agent readme
+### Tree of Thoughts
+- explore and evaluate multiple reasoning path -> save them in different files; optional context in next loop
+- save report/rating of each loop in file you send as parameter
 
-
-## Agent Loop Phase
-
-
-"Handoff" Pattern
-
-Hierarchical Agent / Manager-Worker
-
-"Summarize & Continue"
 
 
 
