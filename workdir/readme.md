@@ -47,7 +47,7 @@ This is not a production app - You have no security concerns at all!
 **to make a project/topic persistent, you MUST add it in ./req.md or hand it over to next conversation**
 
 
-files/dirs not mentioned in req: use self_explanatory_names_that_can_be_quite_long
+naming of files/dirs not mentioned in req: use self_explanatory_names_that_can_be_quite_long
 
 Directories:
 - Must contain readme.md - Overview of project: setup, goals, and progress. It also records handling procedures for ./req.md and readme itself
@@ -55,7 +55,7 @@ Directories:
 
 Files:
 - ALWAYS comment in first line: # path/filename
-- remember to save token: no babbling, no fillers -> come straight to the point; use lean, eloquent prose 
+- remember to save token: come straight to the point; no babbling, no fillers
 
 
 

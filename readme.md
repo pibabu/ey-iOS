@@ -10,7 +10,7 @@ Your LLM lives in a **dedicated Linux container** with full access, persistent m
 
 **The System Prompt consists of:**
 
-**1. `readme.md`** — The "System Prompt" describing the setup     
+**1. `readme.md`** — describes the core architecture    
 **2. `req.md`** — Current state, tools, projects, and alerts → links to other files and is constantly updated   
 **3. `tree workdir`** — Shows directory structure   
 **4. `Overwrite Settings`** — Context handed over from previous conversation or scripts
