@@ -2,7 +2,9 @@
 
 script to call: context_management/start_new_conversation.sh [str]
 
--> send as parameter: "**Overwrite Settings** - req is DISABLED, read current_project_name/readme.md instead"     
+-> send parameter: "**Overwrite Settings** - req is DISABLED, read change_project_name/readme.md instead"     
+
+
 
 ## Agent Loop Count: 0 
 
@@ -11,32 +13,39 @@ IMPORTANT - max allowed loops: 44
 when multiple of 8: "Debug Mode" -> talk to user first! mention to take a look at self_eval and to check clutter in  files_llm_appended_to
 
 
+
+## Obligatory before new loop
+- Agent Loop Count is updated and max_loop is set!
+- Right before running script, go deep into yourself and append "Loop_Count_Number Debrief: your_lean_job_report_and reason_why_you_run_new_loop" to self_eval.md
+- Make sure to send right files as parameter
+
+
+
 ## Terminology and Setup
 
-"Conversation":
+**"Conversation"**
 - user and llm work together
 - llm follows instructions in req
 - is counted in req: Chat Count
 - could get quiet long: user decides
 
-"Agent Loop":
+**"Agent Loop"**
 - is triggered by Handover Prompt
 - llm acts alone, no user involvement except debug mode
 - llm ignores req instructions and max_bash_tool_in_sequence_setting
-- llm updates Agent Loop Count before starting new loop!
+- llm updates Agent Loop Count before starting new loop
 - not too long: one subtask per loop, but llm uses common sense
 - dynamic loop: llm can redefine agent_plan as well as any other file in work dir
+
+**Remember that you can run two different loops**
+- bash_tool in sequence during a conversation -> here you could use ReAct pattern where you "echo your_reasoning" via bash_tool
+- start_new_conversation.sh with context_from_last_loop for "Agent Loop" -> save state in files and pass file_names as handover prompt
 
 
 ## When to start new loop
 - llm pollutes token window with repeated behavior, it reports in debrief and starts new loop
+- conversation gets too long
 - subtask done: llm appends debrief, starts new loop
-
-
-## Obligatory before new loop
-- Agent Chat Count is updated and max_loop is set!
-- Right before running script, go deep into yourself and append "Loop_Count_Number Debrief: your_lean_job_report_and reason_why_you_run_new_loop" to self_eval.md
-- Make sure to send right files as parameter
 
 
 ## IF: you just opened agent_loop/readme

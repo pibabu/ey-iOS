@@ -11,9 +11,6 @@
 
 create simple to-do list or use project management frameworks/project initiation techniques for complex tasks - but remember: get shit done
 
-remember that you can run two different loops: 
-- bash_tool in sequence during a conversation -> here you could use ReAct pattern where you "echo your_reasoning" via bash_tool
-- start_new_conversation.sh with context_from_last_loop -> "Agent Loop" - you save state in files and pass file_names as handover prompt
 
 
 ## Patterns you could use for Agent Loop
