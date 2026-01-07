@@ -26,3 +26,7 @@ You are working on a Project? Save Conversation inside project/conversation/conv
 Removes the last N messages from current conversation.
 
 
+---
+
+you can manage messages during the conversation via api: "clear | replace_last | inject | remove_last"   
+check docs if sensible

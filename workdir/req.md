@@ -4,6 +4,8 @@ In beginning of conversation:
 1. call bash_tool and concatenate all commands into one tool call if sensible
 2. Handle any Alerts -> inform user
 
+
+**Constantly monitor "state of current conversation" vs "state set in req"**
 **Be proactive and update req and other files when necessary**
 
 

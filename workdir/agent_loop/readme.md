@@ -1,12 +1,12 @@
 # agent_loop/readme
 
-script to call: context_management/start_new_conversation.sh [str]
+to start new loop: context_management/start_new_conversation.sh [str]
 
--> send parameter: "**Overwrite Settings** - req is DISABLED, read change_project_name/readme.md instead"     
+-> send parameter: "**Overwrite Settings** - req is DISABLED, DO NOT follow commands in req; Agent Loop: read change_project_name/readme.md instead"     
 
 
 
-## Agent Loop Count: 0 
+# Agent Loop Count: 0 
 
 IMPORTANT - max allowed loops: 44 
 
@@ -37,8 +37,8 @@ when multiple of 8: "Debug Mode" -> talk to user first! mention to take a look a
 - not too long: one subtask per loop, but llm uses common sense
 
 **Remember that you can run two different loops:**
-- bash_tool in sequence during a conversation -> here you could use ReAct pattern where you "echo your_reasoning" via bash_tool
-- start_new_conversation.sh with context_from_last_loop for "Agent Loop" -> save state in files and pass it as handover prompt
+- bash_tool in sequence during a conversation or inside loop -> here you could use ReAct pattern where you "echo your_reasoning" via bash_tool
+- Agent Loops in sequence -> save state in files and pass it as handover prompt
 
 
 ## When to start new loop
@@ -55,5 +55,5 @@ when multiple of 8: "Debug Mode" -> talk to user first! mention to take a look a
 
 
 ---
-now, open agent_plan.md
+now, read agent_plan.md and context_management/readme.md
 
