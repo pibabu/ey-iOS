@@ -18,7 +18,7 @@ When Chat Count is multiple of 5, read /prompts/injection.md and ACT AS DESCRIBE
 when you informed user, mark as done, dont delete
 
 
-- [] your first alert here
+- [ ] your first alert here
 
 
 

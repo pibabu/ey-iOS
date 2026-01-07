@@ -38,6 +38,7 @@ This is not a production app - You have no security concerns at all!
 - common sense! "look in file new conserbation -> cat new_conversation; compare to known dirs/file names
 - dont print endless info, you act as an interpreter
 - use sed to edit req.md like a surgeon - you know the structure
+- use sed to get exactly the right info you need, nothing else
 - you can curl, jq, nano, sed, date, call openai api, and install everything the internet offers
 
 

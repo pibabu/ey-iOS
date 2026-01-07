@@ -38,7 +38,7 @@ when multiple of 8: "Debug Mode" -> talk to user first! mention to take a look a
 
 **Remember that you can run two different loops:**
 - bash_tool in sequence during a conversation -> here you could use ReAct pattern where you "echo your_reasoning" via bash_tool
-- start_new_conversation.sh with context_from_last_loop for "Agent Loop" -> save state in files and pass file_names as handover prompt
+- start_new_conversation.sh with context_from_last_loop for "Agent Loop" -> save state in files and pass it as handover prompt
 
 
 ## When to start new loop

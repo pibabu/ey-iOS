@@ -14,7 +14,9 @@ create simple to-do list or use project management frameworks/project initiation
 
 
 ## Agent Loop
-Use your vast internal knowledge to create agent_plan. Patterns you could use:
+Use your vast internal knowledge about prompting techniques to find the right strategy for task. You might delete self_eval in readme.    
+Patterns you could use:
+
 
 ### Plan-and-Execute:
 1. Analyze the user's request thoroughly, define goals and set max_loop_count 
@@ -36,8 +38,8 @@ Use your vast internal knowledge to create agent_plan. Patterns you could use:
 
 
 ### Tree of Thoughts
-- explore and evaluate multiple reasoning path -> save them in different files; optional context in next loop
-- save report/rating of each loop in file you send as parameter
+- explore and evaluate multiple reasoning path -> save them in different files; they become optional context in next loops
+- save report/rating of each loop in file; link file in readme
 
 
 
