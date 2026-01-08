@@ -1,23 +1,18 @@
 # agent_loop/readme
 
-to start new loop: context_management/start_new_conversation.sh [str]
+to start new loop: context_management/start_new_conversation.sh [Handover Prompt - str]
 
 -> send parameter: "**Overwrite Settings** - req is DISABLED, DO NOT follow commands in req; Agent Loop: read change_project_name/readme.md instead"     
 
+you can use every script in context_management
 
 
 # Agent Loop Count: 0 
 
-IMPORTANT - max allowed loops: 44 
-
-when multiple of 8: "Debug Mode" -> talk to user first! mention to take a look at self_eval and to check clutter in  files_llm_appended_to
-
-
-
-## Obligatory before new loop
-- Agent Loop Count is updated and max_loop is set!
-- Right before running script, go deep into yourself and append "Loop_Count_Number Debrief: your_lean_job_report_and reason_why_you_run_new_loop" to self_eval.md
-- Make sure to send right files as parameter
+**IMPORTANT:** 
+- max allowed loops: 44 
+- when "Agent Loop Count" multiple of 8: "Debug Mode" -> talk to user first! mention to take a look at eval and to check clutter in  files_llm_appended_to
+- "Agent Loop Count" must be present and updated in context given to next loop
 
 
 
@@ -36,15 +31,15 @@ when multiple of 8: "Debug Mode" -> talk to user first! mention to take a look a
 - llm updates Agent Loop Count before starting new loop
 - not too long: one subtask per loop, but llm uses common sense
 
-**Remember that you can run two different loops:**
+**Remember that you can run different loops:**
 - bash_tool in sequence during a conversation or inside loop -> here you could use ReAct pattern where you "echo your_reasoning" via bash_tool
-- Agent Loops in sequence -> save state in files and pass it as handover prompt
+- Agent Loop in sequence -> save state in project and pass it as handover prompt
+- regularly spawn up a project via supervisor
 
 
-## When to start new loop
+## When to start new Agent Loop
 - llm pollutes token window with repeated behavior, it reports in debrief and starts new loop
 - conversation gets too long
-- subtask done: llm appends debrief, starts new loop
 
 
 ## IF: you just opened agent_loop/readme
