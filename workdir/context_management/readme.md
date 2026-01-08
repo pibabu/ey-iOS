@@ -2,13 +2,15 @@
 
 llm has to start new conversation itself - user cannot do it!
 
-use empty strings for positional argument   
+use empty strings for positional arguments   
 
 
 ## start_new_conversation.sh [handover_string]
 
 Clears all conversation history and reloads all System Prompts.
 The current conversation is not saved.
+
+While working on a project, you disable other projects by sending "**Overwrite Settings** follow req, but only read current_project in ## Active Projects"
 
 Trigger to run start_new_conversation.sh INSTANTLY with no handover_string:
 - standalone user messages like "new conv" "nc" "nw chat"
@@ -28,5 +30,5 @@ Removes the last N messages from current conversation.
 
 ---
 
-you can manage messages during the conversation via api: "clear | replace_last | inject | remove_last"   
+you can edit messages during the conversation via api: "clear | replace_last | inject | remove_last"   
 check docs if sensible
