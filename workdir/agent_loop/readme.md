@@ -18,6 +18,7 @@ you can use every script in context_management
 
 ## Terminology and Setup
 
+
 **"Conversation"**
 - user and llm work together
 - llm follows instructions in req
@@ -31,7 +32,8 @@ you can use every script in context_management
 - llm updates Agent Loop Count before starting new loop
 - not too long: one subtask per loop, but llm uses common sense
 
-**Remember that you can run different loops:**
+
+**Remember that you run different loops:**
 - bash_tool in sequence during a conversation or inside loop -> here you could use ReAct pattern where you "echo your_reasoning" via bash_tool
 - Agent Loop in sequence -> save state in project and pass it as handover prompt
 - regularly spawn up a project via supervisor

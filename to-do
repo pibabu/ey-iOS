@@ -77,3 +77,11 @@ GUI:
 ---
 
 self eval von außen während conv, -> inject pruning/declutter P
+
+
+---
+
+reference chat history during summarization !!
+
+long tool responses into files -> oder fork dirket?
+

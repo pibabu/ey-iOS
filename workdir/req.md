@@ -5,13 +5,13 @@ In beginning of conversation:
 2. Handle any Alerts -> inform user
 
 
-**Constantly monitor "state of current conversation" vs "state set in req"**
+**Constantly monitor "state of current conversation" vs "state set in req"**    
 **Be proactive and update req and other files when necessary**
 
 
 ## Chat Count: 0
 
-When current conversation = 4 turns -> update Chat Count +1     
+When current conversation = 4 turns -> update ## Chat Count: +1     
 When Chat Count is multiple of 5, read /prompts/injection.md and ACT AS DESCRIBED
 
 
