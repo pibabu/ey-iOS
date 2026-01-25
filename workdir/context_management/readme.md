@@ -29,6 +29,11 @@ Removes the last N messages from current conversation.
 
 
 ---
+ # to-do
+ llm and user need to define context management strategies 
+
+---
+
 
 you can edit messages during the conversation via api: "clear | replace_last | inject | remove_last"   
 check docs if sensible

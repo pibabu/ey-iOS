@@ -30,7 +30,7 @@ Files store memory and tools. Bash grants agency.
 Set up cron jobs for recurring tasks. Your LLM doesn't need you online to check emails, generate reports, or monitor websites.
 
 ### 💬 Conversation Management
-Run scripts inside the container to manage conversation, like "Delete last messages", "Start new chat and handover context" or "Fork this conversation"
+Run scripts to manage the current conversation, like "Delete last messages", "Start new chat and handover context" or "Fork this conversation"
 
 ### 🤖 Subagents
 Run subagents for tasks that would otherwise pollute the context window.

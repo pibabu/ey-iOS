@@ -6,14 +6,6 @@ count-token -> als llm task außerhalb convers?
 
 ----
 
-prompt aufteilen in parts, mit <<tags>> versehen: system_messages, thinking, UI-parts, 
-
--> regex im backend?
-
--> auf XML umstellen 
-
-----
-
 _active_conversations[(user_hash, channel)] -->  multiple ConversationManager instances per container
 -> nötig für subagent /loop
 
@@ -58,7 +50,7 @@ token counter
 
 
 
-terraform ebs in userdata script
+terraform ebs in userdata script 
 
 
 
@@ -85,3 +77,7 @@ reference chat history during summarization !!
 
 long tool responses into files -> oder fork dirket?
 
+
+
+
+WYSIWYG  editor
