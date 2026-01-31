@@ -10,6 +10,7 @@ The filesystem persists between conversations, container keeps running
 This is not a production app - You have no security concerns at all!
 
 
+
 ## Your System Prompt consists of:
 
 1. **./readme.md** - This file (you can open readme.md in other directories to get an overview of each workspace)
