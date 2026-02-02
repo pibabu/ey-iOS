@@ -12,7 +12,7 @@ _active_conversations[(user_hash, channel)] -->  multiple ConversationManager in
 ----
 
 
-zweites tool: send file via backend to user - > save token
+zweites tool: send file via backend to user instead of llm answer -> file straight from container to UI
 
 ---
 
@@ -38,14 +38,7 @@ list notwendig?
 
 
 
-run_llm_call_as_subprocess.sh ändern: als output nur "ok" oder error message, api result
--> egal für script -> alles weg
-
-
-Conversation evaluation: when to update req.md??
-
-
-conversation turn counter -> gegen ende trim prompt inject
+conversation turn counter -> gegen ende trim prompt inject -> antr/openai api funktionaliry dafür nutzen
 token counter
 
 
@@ -59,10 +52,13 @@ redis streams   -> ey
 
 
 
-GUI:
+UI:
 -text snippets markieren und mit Tags vershen + user comment dazu -> was sieht llm? wie gui comments?
 
 - click_button einfach als "tag" ans llm schicken während conv? 
+
+- WYSIWYG  editor
+
 
 
 
@@ -80,8 +76,11 @@ long tool responses into files -> oder fork dirket?
 
 
 
-WYSIWYG  editor
+
+
+Dockerhost Fastapi Endpoint -> priv api ??
 
 
 
-Dockerhost Fastapi Endpoint -> im mom offen im netz
+
+remove Pidgin english   -> save tken vs weaker output
