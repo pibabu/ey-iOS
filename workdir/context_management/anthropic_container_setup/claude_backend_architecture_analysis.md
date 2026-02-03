@@ -199,6 +199,11 @@ Mount                      | FD  | Access | Purpose
 /mnt/user-data/outputs    | 8   | RW     | Files shared with user
 /mnt/user-data/uploads    | 9   | RO     | User uploaded files
 /mnt/transcripts          | 10  | RO     | Conversation history
+
+## /mnt/user-data/tool_results (RO, FD 11) 
+
+## FDs 0, 1, 2 are host:[1], host:[2], host:[3] - these are gofer endpoints back to the gVisor host! These are how gVisor passes data to/from the real host.
+
 ```
 
 ### 9p Transport

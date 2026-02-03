@@ -87,4 +87,4 @@ remove Pidgin english   -> save tken vs weaker output
 
 
 
-add in req: command boot: date -> in jeden file bei file edit
+add in req: command boot: date -> bei file edit update erste spalte: path + date/time updated
