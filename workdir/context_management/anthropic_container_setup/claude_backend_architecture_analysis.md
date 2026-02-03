@@ -471,33 +471,6 @@ All state lost
 - ✅ Network connections
 - ❌ Only outputs in /mnt/user-data/outputs persist
 
----
-
-## Comparison: Tool vs Agent Architecture
-
-### Anthropic's Design (Tool)
-
-| Aspect | Implementation | Purpose |
-|--------|---------------|---------|
-| **Persistence** | None - ephemeral | Security, cost control |
-| **Network** | Completely blocked | Prevent data exfiltration |
-| **State** | Stateless per session | Simplicity, isolation |
-| **Autonomy** | User-triggered only | Human in the loop |
-| **Communication** | User only | Controlled interaction |
-| **Execution** | On-demand | Resource efficiency |
-
-### Agent Architecture (Alternative)
-
-| Aspect | Implementation | Purpose |
-|--------|---------------|---------|
-| **Persistence** | Volumes, databases | Memory across sessions |
-| **Network** | Full access | API calls, web access |
-| **State** | Stateful with DB | Goal tracking, memory |
-| **Autonomy** | Continuous loops | Independent operation |
-| **Communication** | Container-to-container | Collaboration |
-| **Execution** | Supervisor/cron | Scheduled tasks |
-
-**Trade-off**: Security ↔ Autonomy
 
 ---
 
@@ -542,21 +515,6 @@ All state lost
 - Shell exploration teaches architecture, not exploitation
 - Real research requires source code and fuzzing
 - Focus on understanding, not breaking
-
-### For Agent Builders
-**Learn from this architecture:**
-- Multi-layer security (if needed)
-- 9p for controlled filesystem access
-- WebSocket for communication
-- Resource limits via cgroups
-
-**Adapt for autonomy:**
-- Remove network blocks
-- Add persistent volumes
-- Enable inter-container communication
-- Add scheduler (supervisor/cron)
-- Implement state management
-
 
 ---
 
