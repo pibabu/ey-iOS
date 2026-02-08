@@ -258,27 +258,6 @@ skill-name.skill (ZIP file)
 
 ## Model Context Protocol (MCP)
 
-### What is MCP?
-**Model Context Protocol** - A standardized way for LLMs to interact with external services through well-defined tools.
-
-### MCP Architecture
-```
-┌──────────────┐
-│   Claude     │
-└──────┬───────┘
-       │ MCP Protocol
-       ↓
-┌──────────────────┐
-│   MCP Server     │
-│   (Python/TS)    │
-└──────┬───────────┘
-       │ API Calls
-       ↓
-┌──────────────────┐
-│  External API    │
-│  (GitHub, etc)   │
-└──────────────────┘
-```
 
 ### MCP Components
 **Tools**: Actions the LLM can perform
