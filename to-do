@@ -1,11 +1,4 @@
 
-save-token.sh
--> für current conv
--> req evaluation
-count-token -> als llm task außerhalb convers?
-
-----
-
 _active_conversations[(user_hash, channel)] -->  multiple ConversationManager instances per container
 -> nötig für subagent /loop
 

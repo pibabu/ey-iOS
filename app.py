@@ -22,4 +22,4 @@ app.include_router(subagent.router)
 async def get():
     with open('index.html', 'r', encoding='utf-8') as f:
         html_content = f.read()
-    return HTMLResponse(content=html_content)
+    return HTMLResponse(content=html_content) 
