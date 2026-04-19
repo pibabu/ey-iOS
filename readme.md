@@ -54,4 +54,4 @@ Agents und Users can collaborate on projects, share data, or leave messages for 
 ## Learn More
 
 
-Check **[`workdir/readme.md`](workdir/readme.md)**, the opening file of the System Prompt
+Check **[`workdir/readme.md`](workdir/)**, the opening file of the System Prompt
